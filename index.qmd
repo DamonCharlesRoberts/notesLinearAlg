@@ -1,0 +1,11 @@
+# What this is
+
+These are my personal notes on *Practical Linear Algebra for Data Science* by Mike X. Cohen. There is an additional goal in which I seek to accomplish: learn Julia. So while the book uses code examples with Python, here I translate (to the best of my ability) the code examples using `Julia`.
+
+## Notes on the code
+
+- Need to have `Julia` installed.
+    - Relies on the `LinearAlgebra` pkg.
+- Uses `Juypter` to execute the `julia` code. So, I have a `poetry` virtual environment that contains those details. Requirements of note:
+    - `jupyter`
+    - `jupyter-cache`

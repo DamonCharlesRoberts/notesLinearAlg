@@ -1,0 +1,122 @@
+# Chapter 3, Vectors Part II
+
+```{julia}
+#| label: setup-packages
+# Load packages
+using LinearAlgebra
+```
+
+## Key points
+
+The material in this chapter is a bit abstract and I have a bit of a difficult time following the author's attempts to explain the purpose of some of these concepts. So, I've tried to provide some analogies. But to tie it explicitly to how I would think of this in an abstract regression setting, this is what I could come up with:
+
+A vector space would be like the population. There are all these possible observations (row vectors) with all of these possible responses. These vector spaces should span all possible measures. A vector would be a particular, observed, vector.
+
+The basis would be a set of independent variables that can be linearly combined to explain our outcome of interest. Now, there is also a basis vector space which reflects all of the possible vectors that I could use to come up with a linear weighted combination of those vectors to produce a given outcome vector. However, the task is to find the particular basis that is most likely to produce the outcome in a given basis vector space -- Bayesian statistics calculates this probability directly (think first few chapters of McElreath's book).
+
+## Vector sets
+- Is a collection of vectors.
+- Denoted with capital italic letters.
+    - E.g., $S$ or $V$
+
+## Linear weighted combinations
+- It is a way of mixing information from multiple variables, vectors, with some vectors contributing more information than others.
+- Sometimes called linear mixture or weighted combination
+- Coefficients are another term for the scalar that summarizes the weight for a particular vector in the weighted combination that they provide.
+- To perform a linear weighted combination:
+    - Take some finite set of vectors, do scalar-vector multiplication and add them.
+    $$
+    w = \lambda_1v_2 + \lambda_2v_2 + \ldots + \lambda_iv_i
+    $$
+- Example:
+```{julia}
+#| label: weighted-combinations
+# Define the vectors.
+v1 = [4,5,1]
+v2 = [-4,0,-4]
+v3 = [1,3,2]
+# Define the weights.
+l1 = 1
+l2 = 2
+l3 = -3
+# Calculate the linear weighted combination.
+w = l1 * v1 + l2 * v2 + l3 * v3
+# Print the result.
+println("w = $w")
+```
+
+## Linear dependence
+
+If you can find some $\lambda$s that make the following equation true, then the vectors in the given set, $V$ are linarly dependent.
+$$
+0 = \lambda_1v_2 + \lambda_2v_2 + \ldots + \lambda_iv_, \space \space \lambda \in \mathbb{R}
+$$
+
+This excludes the trivial solution where $\lambda = 0$.
+
+## Subspace and span
+
+::: {.callout-note title="Definitions"}
+
+- Vector Subspace:
+    - If I have a set of vectors, the span is the set of all possible vectors I can obtain from adding them together and scaling them by any scalar.
+- Vector Span:
+    - The verb of a vector subspace. The subspace a particular vector spans.
+:::
+
+## Basis
+
+::: {.callout-note title="Definitions"}
+- Basis:
+    - The combination of span and vectors: a set of vectors can be a basis for sume subspace if it spans that subspace and is an independent set of vectors.
+:::
+
+- We can use a number of different ways to describe the unit of some quantified thing. For example 2000 miles versus ~3218 kilometers.
+- Cartesian axis:
+    - The familiar XY plane.
+    - Comprise vectors that are mutually orthogonal and unit length.
+    - Example with a 2D Cartesian graph:
+$$
+S_2 = \begin{Bmatrix}\begin{bmatrix}1\\0\end{bmatrix},\begin{bmatrix}0\\1\end{bmatrix}\end{Bmatrix}
+$$
+    - Example with a 3D Cartesian graph:
+$$
+S_3 = \begin{Bmatrix}\begin{bmatrix}1\\0\\0\end{bmatrix},\begin{bmatrix}0\\1\\0\end{bmatrix},\begin{bmatrix}0\\0\\1\end{bmatrix}\end{Bmatrix}
+$$
+- Other Basis set for $\mathbb{R}^2$:
+$$
+T = \begin{Bmatrix}\begin{bmatrix}3\\1\end{bmatrix},\begin{bmatrix}-3\\1\end{bmatrix}\end{Bmatrix}
+$$
+
+Both $S_2$ and $T$ span the same subspace (all of $\mathbb{R}^2$). However, these are just different ways of describing the data.
+
+::: {.callout-tip title="Attempting to make it less abstract"}
+
+NOTE: THIS IS FROM CHATGPT
+
+Imagine you're navigating through a city using a map. In this analogy:
+
+1. **Vector Space**: The space you're moving around in, which could represent the city streets and intersections. Each point in this space corresponds to a location in the city.
+
+2. **Vector**: Your position or direction of movement at any given time. For example, if you're at the intersection of Main Street and Elm Street and you're moving north, your position can be represented as a vector.
+
+Now, let's talk about the basis in this context:
+
+**Basis**:
+
+Think of the basis as a set of fundamental directions or movements that you can use to describe any position or movement within the city. These fundamental directions should be enough to reach any point in the city and should be independent of each other.
+
+1. **Linear Independence**: Each fundamental direction should be distinct and not redundant. For example, you might choose north, south, east, and west as your fundamental directions. Each direction is distinct and cannot be represented as a combination of the others.
+
+2. **Spanning**: Together, these fundamental directions should cover all possible movements within the city. You should be able to reach any location by combining these fundamental movements in the right proportions.
+
+**Example**:
+
+Let's say you've chosen the following basis for navigating the city: north, south, east, and west. Each of these directions represents a unit vector in the corresponding direction.
+
+Now, if you want to describe a specific movement within the city, such as going from your current location to the nearest park, you can express this movement as a combination of the fundamental directions in your basis. For instance, you might need to move two blocks north and then three blocks west.
+
+In this example, the basis vectors (north, south, east, and west) allow you to describe any movement or position within the city by combining them appropriately. They form the building blocks that enable you to navigate and understand spatial relationships within the city.
+
+So, in this less abstract example, the concept of a vector basis is akin to choosing a set of fundamental directions or movements that allow you to describe any position or movement within a given space, such as navigating through a city using cardinal directions.
+:::

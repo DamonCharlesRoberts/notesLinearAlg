@@ -1,0 +1,16 @@
+project:
+  type: book
+book:
+  title: "Notes on *Practical Linear Algebra for Data Science* by Mike X Cohen"
+  author: "Damon C. Roberts"
+  chapters:
+    - index.qmd
+    - ch_2.qmd
+    - ch_3.qmd
+    - ch_4.qmd
+  output-file: notes
+format:
+  html:
+    theme: zephyr
+execute:
+  echo: true

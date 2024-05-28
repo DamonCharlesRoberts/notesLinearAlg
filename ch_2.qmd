@@ -1,0 +1,333 @@
+# Chapter 2: Vectors, Part I
+
+```{julia}
+#| label: ch2-setup
+# Load packages.
+using LinearAlgebra
+```
+
+## Key points
+
+- Vectors are **ordered** lists of numbers.
+- There are quite a few operations available for vectors. All of which require that vectors be the same orientation and dimensionality.
+- There are a few ways to abstract this: thinking of the linear algebra, or thinking about it geometrically.
+- Dot products are the basis for a lot of important tasks in linear algebra. A dot product is essentially a non-normalized coefficient as it is a way to summarize the relationship between two vectors.
+
+## Defining vectors
+
+::: {.callout-note title="Definitions"}
+- Vectors: an ordered list of numbers
+    - Often denoted with lower-case letters.
+    - E.g., $v$.
+- Dimensionality: Number of elements in a vector.
+    - Denoted with $\mathbb{R}^N$
+- Orientation: Whether it is a row or a column vector.
+:::
+
+- Characteristics of a vector:
+    1. Dimensionality
+    2. Orientation
+- Illustrating the dimensionality of a vector.
+
+```{julia}
+#| label: vector-dimensionality
+# Dimensionality: 1
+R1 = [1]
+println("Dimensionality of R1: $length(R1)")
+# Dimensionality: 2
+R2 = [1,2]
+println("Dimensionality of R2: $length(R2)")
+# Dimensionality: 3
+R3 = [1,2,3]
+println("Dimensionality of R3: $length(R3)")
+```
+## Geometry of a vector
+::: {.callout-note title="Definitions"}
+- Euclidean distance
+    - One measure describing vectors.
+    - It is the squareroot of the sum of squared vector elements.
+    $$
+    ||v|| = \sqrt{\sum^n_{i=1} v^2_i}
+    $$
+- Magnitude of a vector
+    - The length of the line produced by the vector.
+    - AKA the geometric length or norm of a vector.
+    - Computed using the Euclidean distance of a vector.
+    - Denoted as: $||v||$
+- Angle of a vector
+    - Direction of a vector represented with a straight line.
+- Tail of a vector
+    - The **start** of the line produced by the vector.
+- Head of a vector
+    - The **end** of the line produced by the vector.
+:::
+
+- Simply a graphical way to think of a vector; as opposed to the linear algebra way.
+- Comes with slightly different language.
+
+
+## Vector operations
+
+::: {.callout-note title="Definitions"}
+- Vector broadcasting
+    - Repeatedly perform an operation between one vector and each element of another vector.
+    - Not a concept in linear algebra. Only in modern linear algebra.
+:::
+
+- Almost all operations require that vectors have the same dimensionality and orientation.
+    - If not, this can lead to broadcasting.
+
+### Addition
+
+- Element-wise addition.
+- Example:
+
+```{julia}
+#| label: vector-addition
+# Define the vectors.
+a = [1, 2, 3]
+b = [1, 2, 3]
+# Add the vectors.
+sum = a + b
+# Print the result.
+println("a+b = $sum")
+```
+
+- Geometric vector addition would be done with the following steps:
+    - Place them such that the tail of one is at the head of the other.
+    - The summed vector traverses from the tail of the first vector and the head of the second.
+
+### Vector subtraction
+
+- Element-wise subtraction.
+- Example:
+
+```{julia}
+#| label: vector-subtraction
+# Define the vectors.
+a = [2, 4, 6]
+b = [1, 2, 3]
+# Subtract the vectors
+difference = a - b
+# Print the result
+println("a-b = $difference")
+```
+
+- Geometric vector subtraction:
+    - Line up the vectors so that their tails are at the same coordinate. The difference vector is the line going from the head of the negative vector to the head of the positive vector.
+
+### Vector-scalar multiplication
+
+::: {.callout-note title="Definitions"}
+- Scalar: A single number
+    - Often denoted with lower-case greek letters.
+    - E.g., $\lambda$
+- Zero's vector: A special type of vector
+    - Denoted as $0$.
+    - Used to solve trivial solutions in linear algebra.
+:::
+
+- Multiply each vector element by the vector.
+- Example:
+
+```{julia}
+#| label: vector-scalar-multiplication
+# Define the scalar.
+lambda = 2
+# Define the vector
+a = [1, 2, 3]
+# Compute the product.
+product = 2 * a
+# Print the result.
+println("2 * a = $product")
+```
+
+### Transposing vectors
+
+- Each vector element has a row and column index.
+    - With row vectors, the index is (N, 0)
+    - With column vectors, the index is (0, N)
+- Transposing a vector simply switches the row and column indexes.
+
+### Vector dot product
+
+:::{.callout-note title="Definitions"}
+- Dot product
+    - Is a single number that represents the relationship between two vectors.
+    - Can be thought of as the unnormalized correlation coefficient.
+    - Very common in data science.
+    - Often debicted as: $a^Tb$, $a \cdot b$, $\langle a, b \rangle$
+- Distributive property:
+$$
+a(b+c) = ab + ac
+$$
+:::
+
+- To compute the dot product, you muliply each element between two vectors and then sum the products
+    - A formulaic expression:
+$$
+a^Tb = \sum^n_{i=1}a_ib_i
+$$
+
+- Example:
+
+```{julia}
+#| label: vector-dot-products
+# Define the vectors.
+a = [1, 2, 3]
+b = [1, 2, 3]
+
+# Use the LinearAlgebra package to compute the dot product.
+ab_built = LinearAlgebra.dot(a,b)
+
+# Roll your own dot product.
+#   - Find the length of the existing vectors.
+n = min(length(a), length(b))
+#   - Pre-allocate the space needed for the vector of products.
+products_vector = similar(a, Int, n)
+#   - Create the products vector.
+for i in 1:n
+    products_vector[i] = a[i] * b[i]
+end
+#   - Now sum the products.
+ab_ryo = LinearAlgebra.sum(products_vector)
+
+# Confirm they both match
+println("Is LinearAlgebra.dot() == MyOwn.dot()? $(ab_built == ab_ryo)")
+
+## Print the dot product.
+println("a^Tb: $ab_built")
+```
+
+- If we scale a vector, then it scales the dot-product by the same amount.
+- Revised example:
+```{julia}
+#| label: scaled-vector-dot-product
+
+# Define the vectors.
+a = [1, 2, 3]
+b = [1, 2, 3]
+
+# Define the scalar.
+lambda = 10
+
+# Rescale the vector.
+a = lambda * a
+
+# Calculate the dot product.
+ab = LinearAlgebra.dot(a, b)
+
+# Print the dot product.
+println("10a^Tb = $ab")
+```
+
+- The dot product is distributive.
+$$
+a^T(b+c) = a^Tb+a^Tc
+$$
+
+```{julia}
+#| label: distributive-dot-product
+# Define the vectors.
+a = [1, 2, 3]
+b = [1, 2, 3]
+c = [10, 20, 30]
+# Calculate the dot products
+left_side = LinearAlgebra.dot(a, b+c)
+right_side = LinearAlgebra.dot(a, b) + LinearAlgebra.dot(a, c)
+# Left-side and right-side should be equal.
+println("a^T(b+c) == a^Tb+a^Tc? $(left_side == right_side)")
+```
+
+- Geometric definitions of the dot product:
+    - It is the product of the magnitudes of the two vectors which is scaled by the cosine of the angle between them.
+$$
+\alpha = cos(\theta_{a,b}) ||v|| ||w||
+$$
+
+::: {.callout-warning title="Remembe!"}
+Orthogonal vectors have a dot product of 0.
+:::
+
+### Alternatives to dot products
+- Hadamard multiplication
+    - Element-wise multiplication of two vectors.
+- Outer product
+    - Each element in a column-vector is multiplied by each element of a row-vector.
+    - Denoted as: $ab^T$
+    - Example
+$$
+\begin{bmatrix} a \\ b \\ c \end{bmatrix} \cdot \begin{bmatrix} d & e \end{bmatrix} = \begin{bmatrix} ad & ae\\ bd & be \\ cd & ce \end{bmatrix}
+$$
+
+### Vector decompositions
+::: {.callout-note title="Definitions"}
+- Vector decomposition:
+    - Break up the matrix into multiple smaller pieces.
+:::
+
+- Used to reveal hidden information in a matrix, make it easier to work with, or to compress the data.
+- Common types of decomposition is the Gram-Schmidt procedure and QR decomposition.
+- Examples of decomposition:
+    - $42.01 = 42 + 0.01$. Can pull out the noise that we might think the $0.01$ represents. Or it could be used to compress the data as the integer requires less memory than the floating point.
+    - Can also decompose 42 further into the product of the prime numbers 2, 3, and 7. This is called *prime factorization*.
+- Often in data science it is used to break it into two vectors: a vector orthoganal to a reference vector and the other vector remains parallel to the reference vector.
+
+
+#### Orthogonal projection
+- Often in data science it is used to break the reference vector, $r$, into two vectors: a vector orthoganal  to a target vector, $t_{\bot r}$, and the other vector remains parallel to the target vector, $t_{\parallel r}$.
+    - E.g., Used in ordinary least squares.
+    - This means that we need to decompose the target vector into two vectors such that the two resulting vectors are the sum of the target vector and that one of them is parallel to the reference vector.
+
+- Geometric way of doing this:
+    - Say that we have two vectors, $a$ and $b$. Now we want to find the point on $a$ that is as close as possible to the head of $b$. That is, project $b$ on $a$ so that the projection distance is minimized. This projection point on $a$ will be $\beta a$. Now we need to find the scalar $\beta$.
+        - To find the point on $a$ that is closes to the head of $b$ can be found by drawing a line from $b$ that meets $a$ at a right angle. In linear algebra terms, find the dot product between $a$ and the decomposed part of $b$ that is perpendicular as the dot product needs to equal zero. So what this would imply would be $a^T(b-\beta a)=0$.
+        - Then to find what $\beta$ is, we need to do a bit of algebra:
+        $$
+        \begin{aligned}
+        a^T(b-\beta a) = 0\\
+        \beta a^Ta = a^Tb\\
+        \beta = \frac{a^Tb}{a^Ta}\\
+        \end{aligned}
+        $$
+- Linear algebraic way:
+    - First will define the parallel component, $t_{\parallel r}$
+        - It can be any scaled version of $r$ will be parallel to $r$.
+        $$
+        t_{\parallel r} = r \frac{t^Tr}{r^Tr}
+        $$
+        - We do not want to just compute the scalar $\beta$, but rather the scaled vector $\beta r$
+    - How do we compute the perpendicular component?
+        - Since we already know that the two vector components need to sum to the original target fector, we can just do:
+        $$
+        \begin{aligned}
+        t = t_{\bot r} + t_{\parallel r}\\
+        t_{\bot r} = t - t_{\parallel r}\\
+        \end{aligned}
+        $$
+- Example:
+```{julia}
+#| label: projection-decomposition
+# Define the scaling parameters.
+
+# Define the vectors.
+t = [2,4]
+r = [1,2]
+
+# Compute the scaled vector of beta times b, parallel component.
+t_dot_r = LinearAlgebra.dot(t, r)
+r_dot_r = LinearAlgebra.dot(r, r)
+t_parallel_r = r * (t_dot_r / r_dot_r)
+
+# Compute the perpendicular component.
+t_perpendicular_r = t - t_parallel_r
+
+# Check that perpendicular is actually perpendicular.
+println("0 = t_perpendicular_r^Tr? $(0 == LinearAlgebra.dot(t_perpendicular_r, r))")
+
+# Print the parallel component.
+println("Parallel component: $t_parallel_r")
+
+# Print the perpendicular component.
+println("Perpendicular component: $t_perpendicular_r")
+```
