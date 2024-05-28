@@ -245,7 +245,7 @@ $$
 \alpha = cos(\theta_{a,b}) ||v|| ||w||
 $$
 
-::: {.callout-warning title="Remembe!"}
+::: {.callout-important title="Remember!"}
 Orthogonal vectors have a dot product of 0.
 :::
 

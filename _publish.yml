@@ -1,4 +1,4 @@
 - source: project
   netlify:
     - id: ebaf12d7-c0f8-4249-9c60-6849191a9bd8
-      url: 'https://linear-algebra-notes.netlify.app'
+      url: 'https://linear.alg.notes.damoncroberts.com'

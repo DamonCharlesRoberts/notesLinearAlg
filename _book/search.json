@@ -1,0 +1,132 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Notes on Practical Linear Algebra for Data Science by Mike X Cohen",
+    "section": "",
+    "text": "1 What this is\nThese are my personal notes on Practical Linear Algebra for Data Science by Mike X. Cohen. There is an additional goal in which I seek to accomplish: learn Julia. So while the book uses code examples with Python, here I translate (to the best of my ability) the code examples using Julia.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What this is</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#notes-on-the-code",
+    "href": "index.html#notes-on-the-code",
+    "title": "Notes on Practical Linear Algebra for Data Science by Mike X Cohen",
+    "section": "1.1 Notes on the code",
+    "text": "1.1 Notes on the code\n\nNeed to have Julia installed.\n\nRelies on the LinearAlgebra pkg.\n\nUses Juypter to execute the julia code. So, I have a poetry virtual environment that contains those details. Requirements of note:\n\njupyter\njupyter-cache",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What this is</span>"
+    ]
+  },
+  {
+    "objectID": "ch_2.html",
+    "href": "ch_2.html",
+    "title": "2  Chapter 2: Vectors, Part I",
+    "section": "",
+    "text": "2.1 Key points",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Vectors, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_2.html#key-points",
+    "href": "ch_2.html#key-points",
+    "title": "2  Chapter 2: Vectors, Part I",
+    "section": "",
+    "text": "Vectors are ordered lists of numbers.\nThere are quite a few operations available for vectors. All of which require that vectors be the same orientation and dimensionality.\nThere are a few ways to abstract this: thinking of the linear algebra, or thinking about it geometrically.\nDot products are the basis for a lot of important tasks in linear algebra. A dot product is essentially a non-normalized coefficient as it is a way to summarize the relationship between two vectors.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Vectors, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_2.html#defining-vectors",
+    "href": "ch_2.html#defining-vectors",
+    "title": "2  Chapter 2: Vectors, Part I",
+    "section": "2.2 Defining vectors",
+    "text": "2.2 Defining vectors\n\n\n\n\n\n\nDefinitions\n\n\n\n\nVectors: an ordered list of numbers\n\nOften denoted with lower-case letters.\nE.g., \\(v\\).\n\nDimensionality: Number of elements in a vector.\n\nDenoted with \\(\\mathbb{R}^N\\)\n\nOrientation: Whether it is a row or a column vector.\n\n\n\n\nCharacteristics of a vector:\n\nDimensionality\nOrientation\n\nIllustrating the dimensionality of a vector.\n\n\n# Dimensionality: 1\nR1 = [1]\nprintln(\"Dimensionality of R1: $length(R1)\")\n# Dimensionality: 2\nR2 = [1,2]\nprintln(\"Dimensionality of R2: $length(R2)\")\n# Dimensionality: 3\nR3 = [1,2,3]\nprintln(\"Dimensionality of R3: $length(R3)\")\n\nDimensionality of R1: length(R1)\nDimensionality of R2: length(R2)\nDimensionality of R3: length(R3)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Vectors, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_2.html#geometry-of-a-vector",
+    "href": "ch_2.html#geometry-of-a-vector",
+    "title": "2  Chapter 2: Vectors, Part I",
+    "section": "2.3 Geometry of a vector",
+    "text": "2.3 Geometry of a vector\n\n\n\n\n\n\nDefinitions\n\n\n\n\nEuclidean distance\n\nOne measure describing vectors.\nIt is the squareroot of the sum of squared vector elements. \\[\n  ||v|| = \\sqrt{\\sum^n_{i=1} v^2_i}\n  \\]\n\nMagnitude of a vector\n\nThe length of the line produced by the vector.\nAKA the geometric length or norm of a vector.\nComputed using the Euclidean distance of a vector.\nDenoted as: \\(||v||\\)\n\nAngle of a vector\n\nDirection of a vector represented with a straight line.\n\nTail of a vector\n\nThe start of the line produced by the vector.\n\nHead of a vector\n\nThe end of the line produced by the vector.\n\n\n\n\n\nSimply a graphical way to think of a vector; as opposed to the linear algebra way.\nComes with slightly different language.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Vectors, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_2.html#vector-operations",
+    "href": "ch_2.html#vector-operations",
+    "title": "2  Chapter 2: Vectors, Part I",
+    "section": "2.4 Vector operations",
+    "text": "2.4 Vector operations\n\n\n\n\n\n\nDefinitions\n\n\n\n\nVector broadcasting\n\nRepeatedly perform an operation between one vector and each element of another vector.\nNot a concept in linear algebra. Only in modern linear algebra.\n\n\n\n\n\nAlmost all operations require that vectors have the same dimensionality and orientation.\n\nIf not, this can lead to broadcasting.\n\n\n\n2.4.1 Addition\n\nElement-wise addition.\nExample:\n\n\n# Define the vectors.\na = [1, 2, 3]\nb = [1, 2, 3]\n# Add the vectors.\nsum = a + b\n# Print the result.\nprintln(\"a+b = $sum\")\n\na+b = [2, 4, 6]\n\n\n\nGeometric vector addition would be done with the following steps:\n\nPlace them such that the tail of one is at the head of the other.\nThe summed vector traverses from the tail of the first vector and the head of the second.\n\n\n\n\n2.4.2 Vector subtraction\n\nElement-wise subtraction.\nExample:\n\n\n# Define the vectors.\na = [2, 4, 6]\nb = [1, 2, 3]\n# Subtract the vectors\ndifference = a - b\n# Print the result\nprintln(\"a-b = $difference\")\n\na-b = [1, 2, 3]\n\n\n\nGeometric vector subtraction:\n\nLine up the vectors so that their tails are at the same coordinate. The difference vector is the line going from the head of the negative vector to the head of the positive vector.\n\n\n\n\n2.4.3 Vector-scalar multiplication\n\n\n\n\n\n\nDefinitions\n\n\n\n\nScalar: A single number\n\nOften denoted with lower-case greek letters.\nE.g., \\(\\lambda\\)\n\nZero’s vector: A special type of vector\n\nDenoted as \\(0\\).\nUsed to solve trivial solutions in linear algebra.\n\n\n\n\n\nMultiply each vector element by the vector.\nExample:\n\n\n# Define the scalar.\nlambda = 2\n# Define the vector\na = [1, 2, 3]\n# Compute the product.\nproduct = 2 * a\n# Print the result.\nprintln(\"2 * a = $product\")\n\n2 * a = [2, 4, 6]\n\n\n\n\n2.4.4 Transposing vectors\n\nEach vector element has a row and column index.\n\nWith row vectors, the index is (N, 0)\nWith column vectors, the index is (0, N)\n\nTransposing a vector simply switches the row and column indexes.\n\n\n\n2.4.5 Vector dot product\n\n\n\n\n\n\nDefinitions\n\n\n\n\nDot product\n\nIs a single number that represents the relationship between two vectors.\nCan be thought of as the unnormalized correlation coefficient.\nVery common in data science.\nOften debicted as: \\(a^Tb\\), \\(a \\cdot b\\), \\(\\langle a, b \\rangle\\)\n\nDistributive property: \\[\na(b+c) = ab + ac\n\\]\n\n\n\n\nTo compute the dot product, you muliply each element between two vectors and then sum the products\n\nA formulaic expression: \\[\na^Tb = \\sum^n_{i=1}a_ib_i\n\\]\n\nExample:\n\n\n# Define the vectors.\na = [1, 2, 3]\nb = [1, 2, 3]\n\n# Use the LinearAlgebra package to compute the dot product.\nab_built = LinearAlgebra.dot(a,b)\n\n# Roll your own dot product.\n#   - Find the length of the existing vectors.\nn = min(length(a), length(b))\n#   - Pre-allocate the space needed for the vector of products.\nproducts_vector = similar(a, Int, n)\n#   - Create the products vector.\nfor i in 1:n\n    products_vector[i] = a[i] * b[i]\nend\n#   - Now sum the products.\nab_ryo = LinearAlgebra.sum(products_vector)\n\n# Confirm they both match\nprintln(\"Is LinearAlgebra.dot() == MyOwn.dot()? $(ab_built == ab_ryo)\")\n\n## Print the dot product.\nprintln(\"a^Tb: $ab_built\")\n\nIs LinearAlgebra.dot() == MyOwn.dot()? true\na^Tb: 14\n\n\n\nIf we scale a vector, then it scales the dot-product by the same amount.\nRevised example:\n\n\n# Define the vectors.\na = [1, 2, 3]\nb = [1, 2, 3]\n\n# Define the scalar.\nlambda = 10\n\n# Rescale the vector.\na = lambda * a\n\n# Calculate the dot product.\nab = LinearAlgebra.dot(a, b)\n\n# Print the dot product.\nprintln(\"10a^Tb = $ab\")\n\n10a^Tb = 140\n\n\n\nThe dot product is distributive. \\[\na^T(b+c) = a^Tb+a^Tc\n\\]\n\n\n# Define the vectors.\na = [1, 2, 3]\nb = [1, 2, 3]\nc = [10, 20, 30]\n# Calculate the dot products\nleft_side = LinearAlgebra.dot(a, b+c)\nright_side = LinearAlgebra.dot(a, b) + LinearAlgebra.dot(a, c)\n# Left-side and right-side should be equal.\nprintln(\"a^T(b+c) == a^Tb+a^Tc? $(left_side == right_side)\")\n\na^T(b+c) == a^Tb+a^Tc? true\n\n\n\nGeometric definitions of the dot product:\n\nIt is the product of the magnitudes of the two vectors which is scaled by the cosine of the angle between them. \\[\n\\alpha = cos(\\theta_{a,b}) ||v|| ||w||\n\\]\n\n\n\n\n\n\n\n\nRemembe!\n\n\n\nOrthogonal vectors have a dot product of 0.\n\n\n\n\n2.4.6 Alternatives to dot products\n\nHadamard multiplication\n\nElement-wise multiplication of two vectors.\n\nOuter product\n\nEach element in a column-vector is multiplied by each element of a row-vector.\nDenoted as: \\(ab^T\\)\nExample \\[\n\\begin{bmatrix} a \\\\ b \\\\ c \\end{bmatrix} \\cdot \\begin{bmatrix} d & e \\end{bmatrix} = \\begin{bmatrix} ad & ae\\\\ bd & be \\\\ cd & ce \\end{bmatrix}\n\\]\n\n\n\n\n2.4.7 Vector decompositions\n\n\n\n\n\n\nDefinitions\n\n\n\n\nVector decomposition:\n\nBreak up the matrix into multiple smaller pieces.\n\n\n\n\n\nUsed to reveal hidden information in a matrix, make it easier to work with, or to compress the data.\nCommon types of decomposition is the Gram-Schmidt procedure and QR decomposition.\nExamples of decomposition:\n\n\\(42.01 = 42 + 0.01\\). Can pull out the noise that we might think the \\(0.01\\) represents. Or it could be used to compress the data as the integer requires less memory than the floating point.\nCan also decompose 42 further into the product of the prime numbers 2, 3, and 7. This is called prime factorization.\n\nOften in data science it is used to break it into two vectors: a vector orthoganal to a reference vector and the other vector remains parallel to the reference vector.\n\n\n2.4.7.1 Orthogonal projection\n\nOften in data science it is used to break the reference vector, \\(r\\), into two vectors: a vector orthoganal to a target vector, \\(t_{\\bot r}\\), and the other vector remains parallel to the target vector, \\(t_{\\parallel r}\\).\n\nE.g., Used in ordinary least squares.\nThis means that we need to decompose the target vector into two vectors such that the two resulting vectors are the sum of the target vector and that one of them is parallel to the reference vector.\n\nGeometric way of doing this:\n\nSay that we have two vectors, \\(a\\) and \\(b\\). Now we want to find the point on \\(a\\) that is as close as possible to the head of \\(b\\). That is, project \\(b\\) on \\(a\\) so that the projection distance is minimized. This projection point on \\(a\\) will be \\(\\beta a\\). Now we need to find the scalar \\(\\beta\\).\n\nTo find the point on \\(a\\) that is closes to the head of \\(b\\) can be found by drawing a line from \\(b\\) that meets \\(a\\) at a right angle. In linear algebra terms, find the dot product between \\(a\\) and the decomposed part of \\(b\\) that is perpendicular as the dot product needs to equal zero. So what this would imply would be \\(a^T(b-\\beta a)=0\\).\nThen to find what \\(\\beta\\) is, we need to do a bit of algebra: \\[\n  \\begin{aligned}\n  a^T(b-\\beta a) = 0\\\\\n  \\beta a^Ta = a^Tb\\\\\n  \\beta = \\frac{a^Tb}{a^Ta}\\\\\n  \\end{aligned}\n  \\]\n\n\nLinear algebraic way:\n\nFirst will define the parallel component, \\(t_{\\parallel r}\\)\n\nIt can be any scaled version of \\(r\\) will be parallel to \\(r\\). \\[\n  t_{\\parallel r} = r \\frac{t^Tr}{r^Tr}\n  \\]\nWe do not want to just compute the scalar \\(\\beta\\), but rather the scaled vector \\(\\beta r\\)\n\nHow do we compute the perpendicular component?\n\nSince we already know that the two vector components need to sum to the original target fector, we can just do: \\[\n  \\begin{aligned}\n  t = t_{\\bot r} + t_{\\parallel r}\\\\\n  t_{\\bot r} = t - t_{\\parallel r}\\\\\n  \\end{aligned}\n  \\]\n\n\nExample:\n\n\n# Define the scaling parameters.\n\n# Define the vectors.\nt = [2,4]\nr = [1,2]\n\n# Compute the scaled vector of beta times b, parallel component.\nt_dot_r = LinearAlgebra.dot(t, r)\nr_dot_r = LinearAlgebra.dot(r, r)\nt_parallel_r = r * (t_dot_r / r_dot_r)\n\n# Compute the perpendicular component.\nt_perpendicular_r = t - t_parallel_r\n\n# Check that perpendicular is actually perpendicular.\nprintln(\"0 = t_perpendicular_r^Tr? $(0 == LinearAlgebra.dot(t_perpendicular_r, r))\")\n\n# Print the parallel component.\nprintln(\"Parallel component: $t_parallel_r\")\n\n# Print the perpendicular component.\nprintln(\"Perpendicular component: $t_perpendicular_r\")\n\n0 = t_perpendicular_r^Tr? true\nParallel component: [2.0, 4.0]\nPerpendicular component: [0.0, 0.0]",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Vectors, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_3.html",
+    "href": "ch_3.html",
+    "title": "3  Chapter 3, Vectors Part II",
+    "section": "",
+    "text": "3.1 Key points\nThe material in this chapter is a bit abstract and I have a bit of a difficult time following the author’s attempts to explain the purpose of some of these concepts. So, I’ve tried to provide some analogies. But to tie it explicitly to how I would think of this in an abstract regression setting, this is what I could come up with:\nA vector space would be like the population. There are all these possible observations (row vectors) with all of these possible responses. These vector spaces should span all possible measures. A vector would be a particular, observed, vector.\nThe basis would be a set of independent variables that can be linearly combined to explain our outcome of interest. Now, there is also a basis vector space which reflects all of the possible vectors that I could use to come up with a linear weighted combination of those vectors to produce a given outcome vector. However, the task is to find the particular basis that is most likely to produce the outcome in a given basis vector space – Bayesian statistics calculates this probability directly (think first few chapters of McElreath’s book).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_3.html#vector-sets",
+    "href": "ch_3.html#vector-sets",
+    "title": "3  Chapter 3, Vectors Part II",
+    "section": "3.2 Vector sets",
+    "text": "3.2 Vector sets\n\nIs a collection of vectors.\nDenoted with capital italic letters.\n\nE.g., \\(S\\) or \\(V\\)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_3.html#linear-weighted-combinations",
+    "href": "ch_3.html#linear-weighted-combinations",
+    "title": "3  Chapter 3, Vectors Part II",
+    "section": "3.3 Linear weighted combinations",
+    "text": "3.3 Linear weighted combinations\n\nIt is a way of mixing information from multiple variables, vectors, with some vectors contributing more information than others.\nSometimes called linear mixture or weighted combination\nCoefficients are another term for the scalar that summarizes the weight for a particular vector in the weighted combination that they provide.\nTo perform a linear weighted combination:\n\nTake some finite set of vectors, do scalar-vector multiplication and add them. \\[\n  w = \\lambda_1v_2 + \\lambda_2v_2 + \\ldots + \\lambda_iv_i\n  \\]\n\nExample:\n\n\n# Define the vectors.\nv1 = [4,5,1]\nv2 = [-4,0,-4]\nv3 = [1,3,2]\n# Define the weights.\nl1 = 1\nl2 = 2\nl3 = -3\n# Calculate the linear weighted combination.\nw = l1 * v1 + l2 * v2 + l3 * v3\n# Print the result.\nprintln(\"w = $w\")\n\nw = [-7, -4, -13]",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_3.html#linear-dependence",
+    "href": "ch_3.html#linear-dependence",
+    "title": "3  Chapter 3, Vectors Part II",
+    "section": "3.4 Linear dependence",
+    "text": "3.4 Linear dependence\nIf you can find some \\(\\lambda\\)s that make the following equation true, then the vectors in the given set, \\(V\\) are linarly dependent. \\[\n0 = \\lambda_1v_2 + \\lambda_2v_2 + \\ldots + \\lambda_iv_, \\space \\space \\lambda \\in \\mathbb{R}\n\\]\nThis excludes the trivial solution where \\(\\lambda = 0\\).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_3.html#subspace-and-span",
+    "href": "ch_3.html#subspace-and-span",
+    "title": "3  Chapter 3, Vectors Part II",
+    "section": "3.5 Subspace and span",
+    "text": "3.5 Subspace and span\n\n\n\n\n\n\nDefinitions\n\n\n\n\nVector Subspace:\n\nIf I have a set of vectors, the span is the set of all possible vectors I can obtain from adding them together and scaling them by any scalar.\n\nVector Span:\n\nThe verb of a vector subspace. The subspace a particular vector spans.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_3.html#basis",
+    "href": "ch_3.html#basis",
+    "title": "3  Chapter 3, Vectors Part II",
+    "section": "3.6 Basis",
+    "text": "3.6 Basis\n\n\n\n\n\n\nDefinitions\n\n\n\n\nBasis:\n\nThe combination of span and vectors: a set of vectors can be a basis for sume subspace if it spans that subspace and is an independent set of vectors.\n\n\n\n\n\nWe can use a number of different ways to describe the unit of some quantified thing. For example 2000 miles versus ~3218 kilometers.\nCartesian axis:\n\nThe familiar XY plane.\nComprise vectors that are mutually orthogonal and unit length.\nExample with a 2D Cartesian graph: \\[\nS_2 = \\begin{Bmatrix}\\begin{bmatrix}1\\\\0\\end{bmatrix},\\begin{bmatrix}0\\\\1\\end{bmatrix}\\end{Bmatrix}\n\\]\nExample with a 3D Cartesian graph: \\[\nS_3 = \\begin{Bmatrix}\\begin{bmatrix}1\\\\0\\\\0\\end{bmatrix},\\begin{bmatrix}0\\\\1\\\\0\\end{bmatrix},\\begin{bmatrix}0\\\\0\\\\1\\end{bmatrix}\\end{Bmatrix}\n\\]\n\nOther Basis set for \\(\\mathbb{R}^2\\): \\[\nT = \\begin{Bmatrix}\\begin{bmatrix}3\\\\1\\end{bmatrix},\\begin{bmatrix}-3\\\\1\\end{bmatrix}\\end{Bmatrix}\n\\]\n\nBoth \\(S_2\\) and \\(T\\) span the same subspace (all of \\(\\mathbb{R}^2\\)). However, these are just different ways of describing the data.\n\n\n\n\n\n\nAttempting to make it less abstract\n\n\n\nNOTE: THIS IS FROM CHATGPT\nImagine you’re navigating through a city using a map. In this analogy:\n\nVector Space: The space you’re moving around in, which could represent the city streets and intersections. Each point in this space corresponds to a location in the city.\nVector: Your position or direction of movement at any given time. For example, if you’re at the intersection of Main Street and Elm Street and you’re moving north, your position can be represented as a vector.\n\nNow, let’s talk about the basis in this context:\nBasis:\nThink of the basis as a set of fundamental directions or movements that you can use to describe any position or movement within the city. These fundamental directions should be enough to reach any point in the city and should be independent of each other.\n\nLinear Independence: Each fundamental direction should be distinct and not redundant. For example, you might choose north, south, east, and west as your fundamental directions. Each direction is distinct and cannot be represented as a combination of the others.\nSpanning: Together, these fundamental directions should cover all possible movements within the city. You should be able to reach any location by combining these fundamental movements in the right proportions.\n\nExample:\nLet’s say you’ve chosen the following basis for navigating the city: north, south, east, and west. Each of these directions represents a unit vector in the corresponding direction.\nNow, if you want to describe a specific movement within the city, such as going from your current location to the nearest park, you can express this movement as a combination of the fundamental directions in your basis. For instance, you might need to move two blocks north and then three blocks west.\nIn this example, the basis vectors (north, south, east, and west) allow you to describe any movement or position within the city by combining them appropriately. They form the building blocks that enable you to navigate and understand spatial relationships within the city.\nSo, in this less abstract example, the concept of a vector basis is akin to choosing a set of fundamental directions or movements that allow you to describe any position or movement within a given space, such as navigating through a city using cardinal directions.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
+    ]
+  }
+]
