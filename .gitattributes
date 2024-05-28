@@ -3,11 +3,13 @@
 
 # Mark output files as generated, so they don't affect language statistics
 *.html linguist-generated=true
-*.pdf linguist-generated=true
 *.md linguist-generated=true
 *.ipynb linguist-generated=true
 *.png linguist-generated=true
 *.jpg linguist-generated=true
 *.jpeg linguist-generated=true
 *.svg linguist-generated=true
-output/* linguist-generated=true
+_book/* linguist-generated=true
+.quarto/* linguist-generated=true
+_freeze/* linguist-generated=true
+*.yml linguist-generated=true
