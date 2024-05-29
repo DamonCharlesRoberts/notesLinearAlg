@@ -4,6 +4,7 @@
 # Mark output files as generated, so they don't affect language statistics
 *.html linguist-generated=true
 *.md linguist-generated=true
+**/*.js linguist-generated=true
 _book/* linguist-generated=true
 .quarto/* linguist-generated=true
 _freeze/* linguist-generated=true
