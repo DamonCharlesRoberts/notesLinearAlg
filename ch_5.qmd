@@ -1,0 +1,246 @@
+# Matrices, Part I
+
+```{julia}
+#| label: setup
+# Load packages
+using LinearAlgebra
+```
+
+## Matrices
+
+::: {.callout-note title="Defintions"}
+- Matrices:
+	- Highly versitile mathematical objects.
+	- In DS, they are often conceptualized as a horizontally stacked set of column vectors.
+		- Often appear in the observations-by-feature format.
+			- Rows are observations.
+			- Columns are features (variables).
+		- Indices are often denoted as Row $\times$ Column.
+	- Denoted with bold-faced capital letters.
+		- E.g., **A** or **M**
+:::
+
+- Example of matrices:
+
+```{julia}
+# Define a 3x5 matrix.
+A = [[1,0,1] [3,2,4] [5,4,7] [7,6,8] [9,8,9]]
+println(A)
+# Ensure that it is 3x5
+num_rows = size(A)[1]
+num_columns = size(A)[2]
+println("A has $num_rows rows.")
+println("A has $num_columns columns.")
+# Slicing
+#     - Slice the first row.
+first_row = A[1, :]
+println("A's first row is: $first_row")
+#     - Slice the first column.
+first_column = A[:;:1]
+println("A's first column is: $first_column")
+#    - Slice the last row.
+#			- Note that there are shortcuts.
+last_row = A[end, :]
+println("A's last row is: $last_row")
+#			- Slice the last column.
+#				- Note the shortcut.
+last_column = A[:, end]
+println("A's last column is: $last_column")
+```
+
+## Types of matrices
+- There are an infinite number of matrices. However, there are certain classes that are relatively common.
+
+### Random numbers matrix
+- Contains numbers drawn at random from some distribution.
+
+- Example:
+
+```{julia}
+#| label: random-matrix
+# There are many packages available.
+
+# Create a 3x3 matrix randomly generated from Gaussian dist.
+#		- Create a Gaussian distribution with mean = 5 and std. dev = 2.
+mu = 5
+sigma_squared = 2
+dist = Distributions.Normal(mu, sigma_squared)
+# 	- Generate the matrix pulling from the dist.
+num_rows = 3
+num_features = 4
+matrix = Random.rand(dist, num_rows, num_features)
+matrix
+```
+
+### Square and rectangular matrices
+
+- The **Square matrix** is $\mathbb{R}^{N \times N}$
+	- The matrix has the same number of rows as columns.
+- The **Rectangular matrix** is $\mathbb{R}^{M \times N}$ or $\mathbb{R}^{N \times M}$ where $M > N$.
+	- **Tall** rectangular matrices are the former ($M \times N$)
+	- **Wide** rectangular matrices are the latter ($N \times M$)
+
+- Example of square and rectangular matrices.
+
+```{julia}
+#| label: square-nonsquare-matrices
+
+# Define a Square matrix.
+square_matrix = rand(3,3)
+println("Example of a Square Matrix:")
+square_matrix
+
+# Define a Tall matrix.
+tall_matrix = rand(4,3)
+println("Example of a Tall Matrix:")
+tall_matrix
+
+# Define a Wide matrix.
+wide_matrix = rand(3, 4)
+println("Example of a Wide Matrix:")
+wide_matrix
+```
+
+### Diagonal matrix
+
+- A square matrix that has zeros on all of the off-diagonal elements.
+
+- Example
+
+```{julia}
+#| label: diagonal-matrix
+
+# Create a diagonal matrix.
+#		- Define the elements on the diagonal.
+diag_ele = [1, 2, 3, 4]
+#		- Create the matrix.
+D = LinearAlgebra.Diagonal(diag_ele)
+println("Example of a Diagonal Matrix:")
+D
+```
+
+### Identity Matrix
+
+- A special type of a square diagonal matrix where the elements on the diagonal are 1's.
+- Usually denoted as **I**.
+
+- Example
+
+```{julia}
+#| label: identity-matrix
+# Create a identity matrix.
+#		- Define the size of the matrix.
+n = 4
+# 	- Create the matrix.
+I = LinearAlgebra.I(n)
+println("Example of a Identity Matrix:")
+I
+```
+
+### Triangular Matrix
+- A matrix contains all zeros either above (**Upper Triangular**) or below (**Lower Triangular**) the diagonal.
+
+```{julia}
+#| label: triangular-matrices
+
+# Create a diagonal matrix.
+diag_ele = [1, 2, 3, 4]
+D = LinearAlgebra.Diagonal(diag_ele)
+println("Diagonal Matrix:")
+D
+#	The Upper Triangle.
+UT = LinearAlgebra.triu(D)
+println("Example of an Upper Triangle Matrix:")
+UT
+# The Lower Triangle.
+LT = LinearAlgebra.tril(D)
+println("Example of a Lower Triangle Matrix:")
+LT
+```
+
+### Zeros matrix
+- It is a Matrix of all Zeros.
+- Usually denoted as **0**.
+
+```{julia}
+#| label: zeros-matrix
+
+# Create a 4x4 Zeros matrix.
+O = LinearAlgebra.zeros(4,4)
+println("Example of a 4x4 Zero's Matrix:")
+O
+```
+## Matrix Addition
+
+- To add two matrices, you add their corresponding elements. That is:
+
+$$
+A+B = \begin{bmatrix}(A11 + B11) & (A21 + B21)\\ (A12 + B12) & (A22 + B22)\\\end{bmatrix}
+$$
+
+- As usual, they must be of the same size.
+- Example
+
+```{julia}
+#| label: adding-matrices
+
+# Defining the matrices.
+A = [[1, 2] [3, 4]]
+B = [[5, 6] [7, 8]]
+println("Matrix A:")
+A
+println("Matrix B:")
+B
+# Add the matrices
+C = A + B
+println("Result of adding the two matrices:")
+C
+```s
+
+## "Shifting" a matrix
+
+- You cannot formally add a scalar to a matrix as in $\lambda + A$
+- You can broadcast a scalar to a square matrix. This is what is referred to as "Shifting" a matrix.
+	- To do this, you take the scalar and multiply it to an identity matrix and then add the identity matrix to the resulting matrix.
+$$
+A + \lambda I
+$$
+
+- Only the diagonal elements change. You don't want to shift much of the matrix. How much you shift a matrix depends a lot and is somewhat relative.
+- Shifting has two really important applications: finding eigenvalues of a matrix and regularizing matrices when fitting models to data.
+
+- Here's a numerical example
+
+$$
+\begin{bmatrix}4 & 5 & 1\\ 0 & 1 & 11 \\ 4 & 9 & 7\\\end{bmatrix} + 6 \begin{bmatrix}1 & 0 & 0\\ 0 & 1 & 0\\ 0 & 0 & 1\\\end{bmatrix} = \begin{bmatrix}10 & 5 & 1\\ 0 & 7 & 11\\ 4 & 9 & 13\\\end{bmatrix}
+$$
+
+- Here's how to do it in Julia.
+
+```{julia}
+#| label: matrix-shifting
+
+# Define the matrix.
+A = [[1, 2, 3] [4, 5, 6] [7, 8, 9]]
+println("Matrix A:")
+A
+# Define the scalar.
+lambda = 2
+
+# Shift A.
+B = A + (lambda * LinarAlgebra.I(size(A, 1))
+println("Shifted version of A + 2I")
+B
+```
+
+## Scalar and Hadamard multiplications
+
+- Both types of multiplication work element-wise.
+
+
+
+
+
+
+
+
