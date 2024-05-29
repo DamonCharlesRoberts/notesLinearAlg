@@ -128,5 +128,45 @@
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
     ]
+  },
+  {
+    "objectID": "ch_4.html",
+    "href": "ch_4.html",
+    "title": "4  Chapter 4, Vector Applications",
+    "section": "",
+    "text": "4.1 Key points",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Chapter 4, Vector Applications</span>"
+    ]
+  },
+  {
+    "objectID": "ch_4.html#correlation-and-cosine-similarity",
+    "href": "ch_4.html#correlation-and-cosine-similarity",
+    "title": "4  Chapter 4, Vector Applications",
+    "section": "4.2 Correlation and Cosine similarity",
+    "text": "4.2 Correlation and Cosine similarity\n\n\n\n\n\n\nDefinitions\n\n\n\n\nCorrelation coefficient:\n\nA scalar that uantifies the linear relationship between two variables.\n[-1, 1]\n\n\n\n\n\nDot product with some normalizations:\n\nMean centering: Subtracting the average value from each data value.\nDivide the dot product from the product of the vector norms. This allows one to cancel measurement units and scales.\n\nFamiliar way:\n\n\\[\nr = \\frac{\\sum^n_{i=1} (x_i - \\bar{x_i})(y_i - \\bar{y_i})}{\\sqrt{\\sum^n_{i=1} (x_i - \\bar{x_i})^2} \\sqrt{\\sum^n_{i=1} (y_i - \\bar{y_i})^2}}\n\\]\n\nLinear algebra way \\[\nr = \\frac{\\tilde{x}^T\\tilde{y}}{||\\tilde{x}|| ||\\tilde{y}||}\n\\]\n\nwhere \\(\\tilde{x}\\) and \\(\\tilde{y}\\) are mean-centered vectors.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Chapter 4, Vector Applications</span>"
+    ]
+  },
+  {
+    "objectID": "ch_4.html#correlation",
+    "href": "ch_4.html#correlation",
+    "title": "4  Chapter 4, Vector Applications",
+    "section": "4.2 Correlation",
+    "text": "4.2 Correlation\n\n\n\n\n\n\nDefinitions\n\n\n\n\nCorrelation coefficient:\n\nA scalar that uantifies the linear relationship between two variables.\n[-1, 1]\n\n\n\n\n\nDot product with some normalizations:\n\nMean centering: Subtracting the average value from each data value.\nDivide the dot product from the product of the vector norms. This allows one to cancel measurement units and scales.\n\nFamiliar way:\n\n\\[\nr = \\frac{\\sum^n_{i=1} (x_i - \\bar{x_i})(y_i - \\bar{y_i})}{\\sqrt{\\sum^n_{i=1} (x_i - \\bar{x_i})^2} \\sqrt{\\sum^n_{i=1} (y_i - \\bar{y_i})^2}}\n\\]\n\nLinear algebra way \\[\nr = \\frac{\\tilde{x}^T\\tilde{y}}{||\\tilde{x}|| ||\\tilde{y}||}\n\\]\n\nwhere \\(\\tilde{x}\\) and \\(\\tilde{y}\\) are mean-centered vectors.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Chapter 4, Vector Applications</span>"
+    ]
+  },
+  {
+    "objectID": "ch_4.html#cosine-similarity",
+    "href": "ch_4.html#cosine-similarity",
+    "title": "4  Chapter 4, Vector Applications",
+    "section": "4.3 Cosine similarity",
+    "text": "4.3 Cosine similarity\n\nAlternative to way to assess similarity between vectors other than using correlation.\nDefined as the geometric formula for the dot product when solved for the cosine term.\n\n\\[\ncos(\\theta_{x,y}) = \\frac{x^Ty}{||x|| ||y||}\n\\]\n\nThe difference between this and correlation is that I am not first normalizing \\(x\\) and \\(y\\) by mean-centering them.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Chapter 4, Vector Applications</span>"
+    ]
   }
 ]

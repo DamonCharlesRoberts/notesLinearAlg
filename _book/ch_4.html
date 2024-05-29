@@ -68,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -135,7 +164,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link active" data-scroll-target="#key-points"><span class="header-section-number">4.1</span> Key points</a></li>
+  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation"><span class="header-section-number">4.2</span> Correlation</a></li>
+  <li><a href="#cosine-similarity" id="toc-cosine-similarity" class="nav-link" data-scroll-target="#cosine-similarity"><span class="header-section-number">4.3</span> Cosine similarity</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -159,8 +196,63 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="key-points" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">4.1</span> Key points</h2>
+</section>
+<section id="correlation" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="correlation"><span class="header-section-number">4.2</span> Correlation</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Definitions">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definitions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Correlation coefficient:
+<ul>
+<li>A scalar that uantifies the linear relationship between two variables.</li>
+<li>[-1, 1]</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<ul>
+<li>Dot product with some normalizations:
+<ol type="1">
+<li>Mean centering: Subtracting the average value from each data value.</li>
+<li>Divide the dot product from the product of the vector norms. This allows one to cancel measurement units and scales.</li>
+</ol></li>
+<li>Familiar way:</li>
+</ul>
+<p><span class="math display">\[
+r = \frac{\sum^n_{i=1} (x_i - \bar{x_i})(y_i - \bar{y_i})}{\sqrt{\sum^n_{i=1} (x_i - \bar{x_i})^2} \sqrt{\sum^n_{i=1} (y_i - \bar{y_i})^2}}
+\]</span></p>
+<ul>
+<li>Linear algebra way <span class="math display">\[
+r = \frac{\tilde{x}^T\tilde{y}}{||\tilde{x}|| ||\tilde{y}||}
+\]</span></li>
+</ul>
+<p>where <span class="math inline">\(\tilde{x}\)</span> and <span class="math inline">\(\tilde{y}\)</span> are mean-centered vectors.</p>
+</section>
+<section id="cosine-similarity" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="cosine-similarity"><span class="header-section-number">4.3</span> Cosine similarity</h2>
+<ul>
+<li>Alternative to way to assess similarity between vectors other than using correlation.</li>
+<li>Defined as the geometric formula for the dot product when solved for the cosine term.</li>
+</ul>
+<p><span class="math display">\[
+cos(\theta_{x,y}) = \frac{x^Ty}{||x|| ||y||}
+\]</span></p>
+<ul>
+<li>The difference between this and correlation is that I am not first normalizing <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> by mean-centering them.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -1,1 +1,40 @@
 # Chapter 4, Vector Applications
+
+## Key points
+
+## Correlation
+
+:::{.callout-note title="Definitions"}
+
+- Correlation coefficient:
+    - A scalar that uantifies the linear relationship between two variables.
+    - [-1, 1]
+:::
+
+- Dot product with some normalizations:
+    1. Mean centering: Subtracting the average value from each data value.
+    2. Divide the dot product from the product of the vector norms. This allows one to cancel measurement units and scales.
+
+- Familiar way:
+
+$$
+r = \frac{\sum^n_{i=1} (x_i - \bar{x_i})(y_i - \bar{y_i})}{\sqrt{\sum^n_{i=1} (x_i - \bar{x_i})^2} \sqrt{\sum^n_{i=1} (y_i - \bar{y_i})^2}}
+$$
+
+- Linear algebra way
+$$
+r = \frac{\tilde{x}^T\tilde{y}}{||\tilde{x}|| ||\tilde{y}||}
+$$
+
+where $\tilde{x}$ and $\tilde{y}$ are mean-centered vectors.
+
+## Cosine similarity
+
+- Alternative to way to assess similarity between vectors other than using correlation.
+- Defined as the geometric formula for the dot product when solved for the cosine term.
+
+$$
+cos(\theta_{x,y}) = \frac{x^Ty}{||x|| ||y||}
+$$
+
+- The difference between this and correlation is that I am not first normalizing $x$ and $y$ by mean-centering them.
