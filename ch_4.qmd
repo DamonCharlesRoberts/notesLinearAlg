@@ -38,3 +38,55 @@ cos(\theta_{x,y}) = \frac{x^Ty}{||x|| ||y||}
 $$
 
 - The difference between this and correlation is that I am not first normalizing $x$ and $y$ by mean-centering them.
+
+## Time series Filtering and Feature (Variable) detection
+
+::: {.callout-note title="Definitions"}
+
+- Kernel
+	- Refers to a smooth "template" series that we can use to pull a real series to to smoothen it a bit as a feature-detection method.
+:::
+
+- We can use the dot product for time series filtering. 
+	- Where filtering is basically a feature-detection method. It essentially detects patterns and signals and pulls out noise from the time series. The effect of this is to "smoothen" the series.
+
+- Can use it for convolution:	
+1. The dot product is computed for the kernel and the time series signal.
+		- Often filtering requires local feature detection and the kernel is shorter than the whole series.
+		- This means that we often compute the dot product between the kernel and a shorter chunk of the sereis that is the same length of the kernel.
+2. This results in a time point of the filtered signal.
+3. We then move one time period later and compute the dot product with a different and overlapping signal segment.
+
+## k-Means clustering
+
+::: {.callout-note title="Definitions"}
+
+- k-Means clustering
+	- Unsupervised method of putting multivariate data into a relatively small number of groups or categories.
+:::
+
+- With concepts covered in the earlier chapters,this is how this procedure is done:
+
+1. Define $k$ centroids as random points in the vector space.
+	- Each centroid is a class, or category.
+2. Compute the Euclidean distance between each observation and each centroid.
+3. Assign each data observation to the group with the closest centroid (the smallest Euclidean distance).
+4. Update the centroid location by taking the average of all data observations assigned to the centroid.
+5. Repeat steps 2-4 until a convergence criteria is satisfied or N iterations have completed.
+	- Often these conditions are either until N iterations occur.
+	- More sophisticated implementations are often to repeat these steps until centroid locations do not move much.
+
+```{julia}
+#| label: kmeans-clustering
+
+# Try to write your own k-means clustering algorithm here.
+# Rather than writing double for-loop, can use broadcasting for efficiency.
+```
+
+
+
+
+
+
+
+ 
