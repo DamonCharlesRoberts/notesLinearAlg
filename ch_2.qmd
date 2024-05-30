@@ -1,4 +1,4 @@
-# Chapter 2: Vectors, Part I
+# Vectors, Part I
 
 ```{julia}
 #| label: ch2-setup

@@ -1,0 +1,386 @@
+# Matrices, Part I
+
+```{julia}
+#| label: setup
+# Load packages
+using LinearAlgebra
+using Distributions
+using Random
+```
+
+## Matrices
+
+::: {.callout-note title="Defintions"}
+- Matrices:
+	- Highly versitile mathematical objects.
+	- In DS, they are often conceptualized as a horizontally stacked set of column vectors.
+		- Often appear in the observations-by-feature format.
+			- Rows are observations.
+			- Columns are features (variables).
+		- Indices are often denoted as Row $\times$ Column.
+	- Denoted with bold-faced capital letters.
+		- E.g., **A** or **M**
+:::
+
+- Example of matrices:
+
+```{julia}
+# Define a 3x5 matrix.
+A = [[1,0,1] [3,2,4] [5,4,7] [7,6,8] [9,8,9]]
+println("A, a 3x5 Matrix:$A")
+
+# Ensure that it is 3x5
+num_rows = size(A, 1)
+num_columns = size(A, 2)
+println("A has $num_rows rows.")
+println("A has $num_columns columns.")
+# Slicing
+#     - Slice the first row.
+first_row = A[1, :]
+println("A's first row is: $first_row")
+#     - Slice the first column.
+first_column = A[:, 1]
+println("A's first column is: $first_column")
+#    - Slice the last row.
+#			- Note that there are shortcuts.
+last_row = A[end, :]
+println("A's last row is: $last_row")
+#			- Slice the last column.
+#				- Note the shortcut.
+last_column = A[:, end]
+println("A's last column is: $last_column")
+```
+
+## Types of matrices
+- There are an infinite number of matrices. However, there are certain classes that are relatively common.
+
+### Random numbers matrix
+- Contains numbers drawn at random from some distribution.
+
+- Example:
+
+```{julia}
+#| label: random-matrix
+# There are many packages available.
+
+# Create a 3x3 matrix randomly generated from Gaussian dist.
+#		- Create a Gaussian distribution with mean = 5 and std. dev = 2.
+mu = 5
+sigma_squared = 2
+dist = Distributions.Normal(mu, sigma_squared)
+# 	- Generate the matrix pulling from the dist.
+num_rows = 3
+num_features = 4
+matrix = Random.rand(dist, num_rows, num_features)
+matrix
+```
+
+### Square and rectangular matrices
+
+- The **Square matrix** is $\mathbb{R}^{N \times N}$
+	- The matrix has the same number of rows as columns.
+- The **Rectangular matrix** is $\mathbb{R}^{M \times N}$ or $\mathbb{R}^{N \times M}$ where $M > N$.
+	- **Tall** rectangular matrices are the former ($M \times N$)
+	- **Wide** rectangular matrices are the latter ($N \times M$)
+
+- Example of square and rectangular matrices.
+
+```{julia}
+#| label: square-matrix
+
+# Define a Square matrix.
+square_matrix = Random.rand(3,3)
+println("Example of a Square Matrix:")
+square_matrix
+```
+
+```{julia}
+#| label: tall-matrix
+# Define a Tall matrix.
+tall_matrix = Random.rand(4,3)
+println("Example of a Tall Matrix:")
+tall_matrix
+```
+
+```{julia}
+#| label: wide-matrix
+# Define a Wide matrix.
+wide_matrix = Random.rand(3, 4)
+println("Example of a Wide Matrix:")
+wide_matrix
+```
+
+### Diagonal matrix
+
+- A square matrix that has zeros on all of the off-diagonal elements.
+
+- Example
+
+```{julia}
+#| label: diagonal-matrix
+
+# Create a diagonal matrix.
+#		- Define the elements on the diagonal.
+diag_ele = [1, 2, 3, 4]
+#		- Create the matrix.
+D = LinearAlgebra.Diagonal(diag_ele)
+println("Example of a Diagonal Matrix:")
+D
+```
+
+### Identity Matrix
+
+- A special type of a square diagonal matrix where the elements on the diagonal are 1's.
+- Usually denoted as **I**.
+
+- Example
+
+```{julia}
+#| label: identity-matrix
+# Create a identity matrix.
+#		- Define the size of the matrix.
+n = 4
+# 	- Create the matrix.
+I = LinearAlgebra.I(n)
+println("Example of a Identity Matrix:")
+I
+```
+
+### Triangular Matrix
+- A matrix contains all zeros either above (**Upper Triangular**) or below (**Lower Triangular**) the diagonal.
+
+```{julia}
+#| label: triangular-matrices
+
+# Create a diagonal matrix.
+diag_ele = [1, 2, 3, 4]
+D = LinearAlgebra.Diagonal(diag_ele)
+println("Diagonal Matrix:")
+D
+#	The Upper Triangle.
+UT = LinearAlgebra.triu(D)
+println("Example of an Upper Triangle Matrix:")
+UT
+# The Lower Triangle.
+LT = LinearAlgebra.tril(D)
+println("Example of a Lower Triangle Matrix:")
+LT
+```
+
+### Zeros matrix
+- It is a Matrix of all Zeros.
+- Usually denoted as **0**.
+
+```{julia}
+#| label: zeros-matrix
+
+# Create a 4x4 Zeros matrix.
+O = LinearAlgebra.zeros(4,4)
+println("Example of a 4x4 Zero's Matrix:")
+O
+```
+## Matrix Addition
+
+- To add two matrices, you add their corresponding elements. That is:
+
+$$
+A+B = \begin{bmatrix}(A11 + B11) & (A21 + B21)\\ (A12 + B12) & (A22 + B22)\\\end{bmatrix}
+$$
+
+- As usual, they must be of the same size.
+- Example
+
+```{julia}
+#| label: adding-matrices
+
+# Defining the matrices.
+A = [[1, 2] [3, 4]]
+B = [[5, 6] [7, 8]]
+println("Matrix A:")
+A
+```
+
+```{julia}
+#| label: adding-matrices-b
+println("Matrix B:")
+B
+```
+
+```{julia}
+#| label: adding-matrices-result
+# Add the matrices
+C = A + B
+println("Result of adding the two matrices:")
+C
+```
+
+## "Shifting" a matrix
+
+- You cannot formally add a scalar to a matrix as in $\lambda + A$
+- You can broadcast a scalar to a square matrix. This is what is referred to as "Shifting" a matrix.
+	- To do this, you take the scalar and multiply it to an identity matrix and then add the identity matrix to the resulting matrix.
+$$
+A + \lambda I
+$$
+
+- Only the diagonal elements change. You don't want to shift much of the matrix. How much you shift a matrix depends a lot and is somewhat relative.
+- Shifting has two really important applications: finding eigenvalues of a matrix and regularizing matrices when fitting models to data.
+
+- Here's a numerical example
+
+$$
+\begin{bmatrix}4 & 5 & 1\\ 0 & 1 & 11 \\ 4 & 9 & 7\\\end{bmatrix} + 6 \begin{bmatrix}1 & 0 & 0\\ 0 & 1 & 0\\ 0 & 0 & 1\\\end{bmatrix} = \begin{bmatrix}10 & 5 & 1\\ 0 & 7 & 11\\ 4 & 9 & 13\\\end{bmatrix}
+$$
+
+- Here's how to do it in Julia.
+
+```{julia}
+#| label: matrix-shifting
+
+# Define the matrix.
+A = [[1, 2, 3] [4, 5, 6] [7, 8, 9]]
+println("Matrix A:")
+A
+# Define the scalar.
+lambda = 2
+
+# Shift A.
+B = A + (lambda * LinearAlgebra.I(size(A, 1)))
+println("Shifted version of A + 2I")
+B
+```
+
+## Scalar and Hadamard multiplications
+
+- Both types of multiplication work element-wise.
+- Hadamard multiplication is identified with $A \odot B$.
+
+- Example of scalar multiplication:
+
+```{julia}
+#| label: scalar-multiplication
+# Define the matrix.
+A = [[1,2] [1,2]]
+println("A:$A")
+# Define the scalar.
+lambda = 2
+# Print the result of the scalar-multiplied A.
+lambda * A
+```
+
+- Example of Hadamard multiplication:
+
+```{julia}
+#| label: hadamard-multiplication
+# Define the two matrices.
+A = [[1, 1] [1, 1]]
+B = [[1, 2] [1, 2]]
+# Multiply the matrices.
+#   - Use the .* to do element-wise multiplication.
+A .* B
+```
+
+## Matrix multiplication
+
+- Recall the dot product between two vectors:
+
+$$
+a^Tb = \sum^n_{i=1}a_ib_i
+$$
+
+- Matrix multiplication is essentially the collection of dot products between rows of one matrix and columns of the other matrix.
+    - Specifically, the $(i,j)$th element in the product matrix is the dot product between the $i$th row of the left matrix and the $j$th column in the right matrix.
+- Conditions:
+    - If $A$ is $\mathbb{R}^{M \times N}$ then $B$ must be $\mathbb{R}^{N \times K}$.
+        - In words, the inner dimensions must mactch
+    - The result produces the outer dimensions, $AB$ is $\mathbb{R}^{M \times K}$.
+    - Does not obey the commutative law. So $AB$ may be valid but $BA$ will not be valid as $K \neq M$.
+- Interpreting it: The product matrix is one that stores all of the pairwise linear relationships between the rows of the left matrix and the columns of the right matrix. This is the basis for computing covariance and correlation matrices, GLM, and many other applications.
+- Numerical example
+
+$$
+\begin{bmatrix}2&3\\4&5\\\end{bmatrix}\begin{bmatrix}a&b\\c&d\\\end{bmatrix} = \begin{bmatrix}(2a + 3c) & (2b + 3d)\\(4a + 5c) & (4b + 5d)\\\end{bmatrix}
+$$
+
+- Example in julia
+
+```{julia}
+#| label: matrix-multiplication
+# Define the matrices.
+A = [[2,4] [3,5]]
+B = [[2,4] [3,5]]
+println("A:$A")
+println("B:$B")
+# Multiply the matrices.
+A*B
+```
+## Matrix-vector multiplication
+
+- Essentially matrix multiplication where one matrix happens to be a vector.
+- Extending the rules from matrix multiplication:
+    - A matrix can be right-multiplied by a column vector but not a row vector. $Av$ and $v^TA$ are valid but $Av^T$ and $vA$ are not valid.
+    - The product is always a vector and the orientation of the vector depends on the orientation of the multiplicand vector: premultiplying a row vector produces a row vector and postmultiplying a matrix by a column vector produces a column vector.
+- This is often used when obtaining the model-predicted values by multiplying the design matrix by the regression coefficients, $X\beta$.
+
+## Linear weighted combinations
+- In the previous chapter we calculated these with separate scalars and vectors. Now we can do this in a more compact and scalable method: put the vectors in a matrix, put the weights into corresponding elements of a vector, then multiply.
+
+- Numerical example:
+
+$$
+4 \begin{bmatrix}3\\0\\6\\\end{bmatrix} + 3 \begin{bmatrix}1\\2\\5\\\end{bmatrix} \implies \begin{bmatrix}3&1\\0&2\\6&5\\\end{bmatrix}\begin{bmatrix}4\\3\end{bmatrix}\\
+= \begin{bmatrix}(12 + 3)\\(0 + 6)\\ (24 + 15)\\\end{bmatrix}
+$$
+
+- Numerical example in Julia:
+
+```{julia}
+#| label: linear-weighted
+# Define the matrices.
+A = [[3,0,6] [1,2,5]]
+b = [4,3]
+# Multiply them.
+println("A*b: ", A*b)
+```
+
+## Transposing matrices
+
+- You swap the row and column indices.
+- Denoted with $A^T$.
+- Numerical example
+$$
+\begin{bmatrix}
+    3&0&4\\
+    9&8&3\\
+\end{bmatrix}^T
+= \begin{bmatrix}
+    3&9\\
+    0&8\\
+    4&3\\
+\end{bmatrix}
+$$
+- Example in Julia
+```{julia}
+#| label: transpose
+# Define the matrix
+A = [[3,9] [0,8] [4,3]]
+# Transpose the matrix
+A'
+```
+- For two column vectors of $M\times 1$, transposing the vector and not the second gives a $1 \times M$ matrix and a $M \times 1$ matrix. The inner dimensions match and the product is $1 \times 1$. This is why the dot product is denoted with $a^Tb$.
+
+## Order of operations: LIVE EVIL
+
+- The transose of multiplied matrices is the same as the individual matrices transposed and multiplied in rversed order.
+$$
+(LIVE)^T = E^TV^TI^TL^T
+$$
+
+## Symmetric matrices
+- The corresponding rows and columns are equal. This means that when you swap rows and columns, nothing changes.
+    - $A^T = A$
+- Needs to be a square matrix.
+- To create a symmetric matrix, you need to multipy any matrix (including nonsquare and nonsymmetric) by its transpose will produce a square symmetric matrix.
+    - $A^TA$ and $AA^T$ are both square symmetric.
+- The proof:
+    - If $A$ is $\mathbb{R}^{M \times N}$, then $A^T$ is $\mathbb{R}^{N \times M}$. $A^TA$ must then be $\mathbb{R}^{N \times N}$.
