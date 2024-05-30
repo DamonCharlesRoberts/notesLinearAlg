@@ -1,4 +1,4 @@
-# Chapter 4, Vector Applications
+# Vector Applications
 
 ## Key points
 
@@ -47,10 +47,10 @@ $$
 	- Refers to a smooth "template" series that we can use to pull a real series to to smoothen it a bit as a feature-detection method.
 :::
 
-- We can use the dot product for time series filtering. 
+- We can use the dot product for time series filtering.
 	- Where filtering is basically a feature-detection method. It essentially detects patterns and signals and pulls out noise from the time series. The effect of this is to "smoothen" the series.
 
-- Can use it for convolution:	
+- Can use it for convolution:
 1. The dot product is computed for the kernel and the time series signal.
 		- Often filtering requires local feature detection and the kernel is shorter than the whole series.
 		- This means that we often compute the dot product between the kernel and a shorter chunk of the sereis that is the same length of the kernel.
@@ -82,11 +82,3 @@ $$
 # Try to write your own k-means clustering algorithm here.
 # Rather than writing double for-loop, can use broadcasting for efficiency.
 ```
-
-
-
-
-
-
-
- 

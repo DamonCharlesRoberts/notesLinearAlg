@@ -4,6 +4,8 @@
 #| label: setup
 # Load packages
 using LinearAlgebra
+using Distributions
+using Random
 ```
 
 ## Matrices
@@ -25,10 +27,11 @@ using LinearAlgebra
 ```{julia}
 # Define a 3x5 matrix.
 A = [[1,0,1] [3,2,4] [5,4,7] [7,6,8] [9,8,9]]
-println(A)
+println("A, a 3x5 Matrix:$A")
+
 # Ensure that it is 3x5
-num_rows = size(A)[1]
-num_columns = size(A)[2]
+num_rows = size(A, 1)
+num_columns = size(A, 2)
 println("A has $num_rows rows.")
 println("A has $num_columns columns.")
 # Slicing
@@ -36,7 +39,7 @@ println("A has $num_columns columns.")
 first_row = A[1, :]
 println("A's first row is: $first_row")
 #     - Slice the first column.
-first_column = A[:;:1]
+first_column = A[:, 1]
 println("A's first column is: $first_column")
 #    - Slice the last row.
 #			- Note that there are shortcuts.
@@ -83,20 +86,26 @@ matrix
 - Example of square and rectangular matrices.
 
 ```{julia}
-#| label: square-nonsquare-matrices
+#| label: square-matrix
 
 # Define a Square matrix.
-square_matrix = rand(3,3)
+square_matrix = Random.rand(3,3)
 println("Example of a Square Matrix:")
 square_matrix
+```
 
+```{julia}
+#| label: tall-matrix
 # Define a Tall matrix.
-tall_matrix = rand(4,3)
+tall_matrix = Random.rand(4,3)
 println("Example of a Tall Matrix:")
 tall_matrix
+```
 
+```{julia}
+#| label: wide-matrix
 # Define a Wide matrix.
-wide_matrix = rand(3, 4)
+wide_matrix = Random.rand(3, 4)
 println("Example of a Wide Matrix:")
 wide_matrix
 ```
@@ -189,13 +198,21 @@ A = [[1, 2] [3, 4]]
 B = [[5, 6] [7, 8]]
 println("Matrix A:")
 A
+```
+
+```{julia}
+#| label: adding-matrices-b
 println("Matrix B:")
 B
+```
+
+```{julia}
+#| label: adding-matrices-result
 # Add the matrices
 C = A + B
 println("Result of adding the two matrices:")
 C
-```s
+```
 
 ## "Shifting" a matrix
 
@@ -228,7 +245,7 @@ A
 lambda = 2
 
 # Shift A.
-B = A + (lambda * LinarAlgebra.I(size(A, 1))
+B = A + (lambda * LinearAlgebra.I(size(A, 1)))
 println("Shifted version of A + 2I")
 B
 ```
@@ -236,11 +253,134 @@ B
 ## Scalar and Hadamard multiplications
 
 - Both types of multiplication work element-wise.
+- Hadamard multiplication is identified with $A \odot B$.
 
+- Example of scalar multiplication:
 
+```{julia}
+#| label: scalar-multiplication
+# Define the matrix.
+A = [[1,2] [1,2]]
+println("A:$A")
+# Define the scalar.
+lambda = 2
+# Print the result of the scalar-multiplied A.
+lambda * A
+```
 
+- Example of Hadamard multiplication:
 
+```{julia}
+#| label: hadamard-multiplication
+# Define the two matrices.
+A = [[1, 1] [1, 1]]
+B = [[1, 2] [1, 2]]
+# Multiply the matrices.
+#   - Use the .* to do element-wise multiplication.
+A .* B
+```
 
+## Matrix multiplication
 
+- Recall the dot product between two vectors:
 
+$$
+a^Tb = \sum^n_{i=1}a_ib_i
+$$
 
+- Matrix multiplication is essentially the collection of dot products between rows of one matrix and columns of the other matrix.
+    - Specifically, the $(i,j)$th element in the product matrix is the dot product between the $i$th row of the left matrix and the $j$th column in the right matrix.
+- Conditions:
+    - If $A$ is $\mathbb{R}^{M \times N}$ then $B$ must be $\mathbb{R}^{N \times K}$.
+        - In words, the inner dimensions must mactch
+    - The result produces the outer dimensions, $AB$ is $\mathbb{R}^{M \times K}$.
+    - Does not obey the commutative law. So $AB$ may be valid but $BA$ will not be valid as $K \neq M$.
+- Interpreting it: The product matrix is one that stores all of the pairwise linear relationships between the rows of the left matrix and the columns of the right matrix. This is the basis for computing covariance and correlation matrices, GLM, and many other applications.
+- Numerical example
+
+$$
+\begin{bmatrix}2&3\\4&5\\\end{bmatrix}\begin{bmatrix}a&b\\c&d\\\end{bmatrix} = \begin{bmatrix}(2a + 3c) & (2b + 3d)\\(4a + 5c) & (4b + 5d)\\\end{bmatrix}
+$$
+
+- Example in julia
+
+```{julia}
+#| label: matrix-multiplication
+# Define the matrices.
+A = [[2,4] [3,5]]
+B = [[2,4] [3,5]]
+println("A:$A")
+println("B:$B")
+# Multiply the matrices.
+A*B
+```
+## Matrix-vector multiplication
+
+- Essentially matrix multiplication where one matrix happens to be a vector.
+- Extending the rules from matrix multiplication:
+    - A matrix can be right-multiplied by a column vector but not a row vector. $Av$ and $v^TA$ are valid but $Av^T$ and $vA$ are not valid.
+    - The product is always a vector and the orientation of the vector depends on the orientation of the multiplicand vector: premultiplying a row vector produces a row vector and postmultiplying a matrix by a column vector produces a column vector.
+- This is often used when obtaining the model-predicted values by multiplying the design matrix by the regression coefficients, $X\beta$.
+
+## Linear weighted combinations
+- In the previous chapter we calculated these with separate scalars and vectors. Now we can do this in a more compact and scalable method: put the vectors in a matrix, put the weights into corresponding elements of a vector, then multiply.
+
+- Numerical example:
+
+$$
+4 \begin{bmatrix}3\\0\\6\\\end{bmatrix} + 3 \begin{bmatrix}1\\2\\5\\\end{bmatrix} \implies \begin{bmatrix}3&1\\0&2\\6&5\\\end{bmatrix}\begin{bmatrix}4\\3\end{bmatrix}\\
+= \begin{bmatrix}(12 + 3)\\(0 + 6)\\ (24 + 15)\\\end{bmatrix}
+$$
+
+- Numerical example in Julia:
+
+```{julia}
+#| label: linear-weighted
+# Define the matrices.
+A = [[3,0,6] [1,2,5]]
+b = [4,3]
+# Multiply them.
+println("A*b: ", A*b)
+```
+
+## Transposing matrices
+
+- You swap the row and column indices.
+- Denoted with $A^T$.
+- Numerical example
+$$
+\begin{bmatrix}
+    3&0&4\\
+    9&8&3\\
+\end{bmatrix}^T
+= \begin{bmatrix}
+    3&9\\
+    0&8\\
+    4&3\\
+\end{bmatrix}
+$$
+- Example in Julia
+```{julia}
+#| label: transpose
+# Define the matrix
+A = [[3,9] [0,8] [4,3]]
+# Transpose the matrix
+A'
+```
+- For two column vectors of $M\times 1$, transposing the vector and not the second gives a $1 \times M$ matrix and a $M \times 1$ matrix. The inner dimensions match and the product is $1 \times 1$. This is why the dot product is denoted with $a^Tb$.
+
+## Order of operations: LIVE EVIL
+
+- The transose of multiplied matrices is the same as the individual matrices transposed and multiplied in rversed order.
+$$
+(LIVE)^T = E^TV^TI^TL^T
+$$
+
+## Symmetric matrices
+- The corresponding rows and columns are equal. This means that when you swap rows and columns, nothing changes.
+    - $A^T = A$
+- Needs to be a square matrix.
+- To create a symmetric matrix, you need to multipy any matrix (including nonsquare and nonsymmetric) by its transpose will produce a square symmetric matrix.
+    - $A^TA$ and $AA^T$ are both square symmetric.
+- The proof:
+    - If $A$ is $\mathbb{R}^{M \times N}$, then $A^T$ is $\mathbb{R}^{N \times M}$. $A^TA$ must then be $\mathbb{R}^{N \times N}$.

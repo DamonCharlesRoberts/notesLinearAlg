@@ -22,151 +22,281 @@
   {
     "objectID": "ch_2.html",
     "href": "ch_2.html",
-    "title": "2  Chapter 2: Vectors, Part I",
+    "title": "2  Vectors, Part I",
     "section": "",
     "text": "2.1 Key points",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Vectors, Part I</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vectors, Part I</span>"
     ]
   },
   {
     "objectID": "ch_2.html#key-points",
     "href": "ch_2.html#key-points",
-    "title": "2  Chapter 2: Vectors, Part I",
+    "title": "2  Vectors, Part I",
     "section": "",
     "text": "Vectors are ordered lists of numbers.\nThere are quite a few operations available for vectors. All of which require that vectors be the same orientation and dimensionality.\nThere are a few ways to abstract this: thinking of the linear algebra, or thinking about it geometrically.\nDot products are the basis for a lot of important tasks in linear algebra. A dot product is essentially a non-normalized coefficient as it is a way to summarize the relationship between two vectors.",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Vectors, Part I</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vectors, Part I</span>"
     ]
   },
   {
     "objectID": "ch_2.html#defining-vectors",
     "href": "ch_2.html#defining-vectors",
-    "title": "2  Chapter 2: Vectors, Part I",
+    "title": "2  Vectors, Part I",
     "section": "2.2 Defining vectors",
     "text": "2.2 Defining vectors\n\n\n\n\n\n\nDefinitions\n\n\n\n\nVectors: an ordered list of numbers\n\nOften denoted with lower-case letters.\nE.g., \\(v\\).\n\nDimensionality: Number of elements in a vector.\n\nDenoted with \\(\\mathbb{R}^N\\)\n\nOrientation: Whether it is a row or a column vector.\n\n\n\n\nCharacteristics of a vector:\n\nDimensionality\nOrientation\n\nIllustrating the dimensionality of a vector.\n\n\n# Dimensionality: 1\nR1 = [1]\nprintln(\"Dimensionality of R1: $length(R1)\")\n# Dimensionality: 2\nR2 = [1,2]\nprintln(\"Dimensionality of R2: $length(R2)\")\n# Dimensionality: 3\nR3 = [1,2,3]\nprintln(\"Dimensionality of R3: $length(R3)\")\n\nDimensionality of R1: length(R1)\nDimensionality of R2: length(R2)\nDimensionality of R3: length(R3)",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Vectors, Part I</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vectors, Part I</span>"
     ]
   },
   {
     "objectID": "ch_2.html#geometry-of-a-vector",
     "href": "ch_2.html#geometry-of-a-vector",
-    "title": "2  Chapter 2: Vectors, Part I",
+    "title": "2  Vectors, Part I",
     "section": "2.3 Geometry of a vector",
     "text": "2.3 Geometry of a vector\n\n\n\n\n\n\nDefinitions\n\n\n\n\nEuclidean distance\n\nOne measure describing vectors.\nIt is the squareroot of the sum of squared vector elements. \\[\n  ||v|| = \\sqrt{\\sum^n_{i=1} v^2_i}\n  \\]\n\nMagnitude of a vector\n\nThe length of the line produced by the vector.\nAKA the geometric length or norm of a vector.\nComputed using the Euclidean distance of a vector.\nDenoted as: \\(||v||\\)\n\nAngle of a vector\n\nDirection of a vector represented with a straight line.\n\nTail of a vector\n\nThe start of the line produced by the vector.\n\nHead of a vector\n\nThe end of the line produced by the vector.\n\n\n\n\n\nSimply a graphical way to think of a vector; as opposed to the linear algebra way.\nComes with slightly different language.",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Vectors, Part I</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vectors, Part I</span>"
     ]
   },
   {
     "objectID": "ch_2.html#vector-operations",
     "href": "ch_2.html#vector-operations",
-    "title": "2  Chapter 2: Vectors, Part I",
+    "title": "2  Vectors, Part I",
     "section": "2.4 Vector operations",
     "text": "2.4 Vector operations\n\n\n\n\n\n\nDefinitions\n\n\n\n\nVector broadcasting\n\nRepeatedly perform an operation between one vector and each element of another vector.\nNot a concept in linear algebra. Only in modern linear algebra.\n\n\n\n\n\nAlmost all operations require that vectors have the same dimensionality and orientation.\n\nIf not, this can lead to broadcasting.\n\n\n\n2.4.1 Addition\n\nElement-wise addition.\nExample:\n\n\n# Define the vectors.\na = [1, 2, 3]\nb = [1, 2, 3]\n# Add the vectors.\nsum = a + b\n# Print the result.\nprintln(\"a+b = $sum\")\n\na+b = [2, 4, 6]\n\n\n\nGeometric vector addition would be done with the following steps:\n\nPlace them such that the tail of one is at the head of the other.\nThe summed vector traverses from the tail of the first vector and the head of the second.\n\n\n\n\n2.4.2 Vector subtraction\n\nElement-wise subtraction.\nExample:\n\n\n# Define the vectors.\na = [2, 4, 6]\nb = [1, 2, 3]\n# Subtract the vectors\ndifference = a - b\n# Print the result\nprintln(\"a-b = $difference\")\n\na-b = [1, 2, 3]\n\n\n\nGeometric vector subtraction:\n\nLine up the vectors so that their tails are at the same coordinate. The difference vector is the line going from the head of the negative vector to the head of the positive vector.\n\n\n\n\n2.4.3 Vector-scalar multiplication\n\n\n\n\n\n\nDefinitions\n\n\n\n\nScalar: A single number\n\nOften denoted with lower-case greek letters.\nE.g., \\(\\lambda\\)\n\nZero’s vector: A special type of vector\n\nDenoted as \\(0\\).\nUsed to solve trivial solutions in linear algebra.\n\n\n\n\n\nMultiply each vector element by the vector.\nExample:\n\n\n# Define the scalar.\nlambda = 2\n# Define the vector\na = [1, 2, 3]\n# Compute the product.\nproduct = 2 * a\n# Print the result.\nprintln(\"2 * a = $product\")\n\n2 * a = [2, 4, 6]\n\n\n\n\n2.4.4 Transposing vectors\n\nEach vector element has a row and column index.\n\nWith row vectors, the index is (N, 0)\nWith column vectors, the index is (0, N)\n\nTransposing a vector simply switches the row and column indexes.\n\n\n\n2.4.5 Vector dot product\n\n\n\n\n\n\nDefinitions\n\n\n\n\nDot product\n\nIs a single number that represents the relationship between two vectors.\nCan be thought of as the unnormalized correlation coefficient.\nVery common in data science.\nOften debicted as: \\(a^Tb\\), \\(a \\cdot b\\), \\(\\langle a, b \\rangle\\)\n\nDistributive property: \\[\na(b+c) = ab + ac\n\\]\n\n\n\n\nTo compute the dot product, you muliply each element between two vectors and then sum the products\n\nA formulaic expression: \\[\na^Tb = \\sum^n_{i=1}a_ib_i\n\\]\n\nExample:\n\n\n# Define the vectors.\na = [1, 2, 3]\nb = [1, 2, 3]\n\n# Use the LinearAlgebra package to compute the dot product.\nab_built = LinearAlgebra.dot(a,b)\n\n# Roll your own dot product.\n#   - Find the length of the existing vectors.\nn = min(length(a), length(b))\n#   - Pre-allocate the space needed for the vector of products.\nproducts_vector = similar(a, Int, n)\n#   - Create the products vector.\nfor i in 1:n\n    products_vector[i] = a[i] * b[i]\nend\n#   - Now sum the products.\nab_ryo = LinearAlgebra.sum(products_vector)\n\n# Confirm they both match\nprintln(\"Is LinearAlgebra.dot() == MyOwn.dot()? $(ab_built == ab_ryo)\")\n\n## Print the dot product.\nprintln(\"a^Tb: $ab_built\")\n\nIs LinearAlgebra.dot() == MyOwn.dot()? true\na^Tb: 14\n\n\n\nIf we scale a vector, then it scales the dot-product by the same amount.\nRevised example:\n\n\n# Define the vectors.\na = [1, 2, 3]\nb = [1, 2, 3]\n\n# Define the scalar.\nlambda = 10\n\n# Rescale the vector.\na = lambda * a\n\n# Calculate the dot product.\nab = LinearAlgebra.dot(a, b)\n\n# Print the dot product.\nprintln(\"10a^Tb = $ab\")\n\n10a^Tb = 140\n\n\n\nThe dot product is distributive. \\[\na^T(b+c) = a^Tb+a^Tc\n\\]\n\n\n# Define the vectors.\na = [1, 2, 3]\nb = [1, 2, 3]\nc = [10, 20, 30]\n# Calculate the dot products\nleft_side = LinearAlgebra.dot(a, b+c)\nright_side = LinearAlgebra.dot(a, b) + LinearAlgebra.dot(a, c)\n# Left-side and right-side should be equal.\nprintln(\"a^T(b+c) == a^Tb+a^Tc? $(left_side == right_side)\")\n\na^T(b+c) == a^Tb+a^Tc? true\n\n\n\nGeometric definitions of the dot product:\n\nIt is the product of the magnitudes of the two vectors which is scaled by the cosine of the angle between them. \\[\n\\alpha = cos(\\theta_{a,b}) ||v|| ||w||\n\\]\n\n\n\n\n\n\n\n\nRemember!\n\n\n\nOrthogonal vectors have a dot product of 0.\n\n\n\n\n2.4.6 Alternatives to dot products\n\nHadamard multiplication\n\nElement-wise multiplication of two vectors.\n\nOuter product\n\nEach element in a column-vector is multiplied by each element of a row-vector.\nDenoted as: \\(ab^T\\)\nExample \\[\n\\begin{bmatrix} a \\\\ b \\\\ c \\end{bmatrix} \\cdot \\begin{bmatrix} d & e \\end{bmatrix} = \\begin{bmatrix} ad & ae\\\\ bd & be \\\\ cd & ce \\end{bmatrix}\n\\]\n\n\n\n\n2.4.7 Vector decompositions\n\n\n\n\n\n\nDefinitions\n\n\n\n\nVector decomposition:\n\nBreak up the matrix into multiple smaller pieces.\n\n\n\n\n\nUsed to reveal hidden information in a matrix, make it easier to work with, or to compress the data.\nCommon types of decomposition is the Gram-Schmidt procedure and QR decomposition.\nExamples of decomposition:\n\n\\(42.01 = 42 + 0.01\\). Can pull out the noise that we might think the \\(0.01\\) represents. Or it could be used to compress the data as the integer requires less memory than the floating point.\nCan also decompose 42 further into the product of the prime numbers 2, 3, and 7. This is called prime factorization.\n\nOften in data science it is used to break it into two vectors: a vector orthoganal to a reference vector and the other vector remains parallel to the reference vector.\n\n\n2.4.7.1 Orthogonal projection\n\nOften in data science it is used to break the reference vector, \\(r\\), into two vectors: a vector orthoganal to a target vector, \\(t_{\\bot r}\\), and the other vector remains parallel to the target vector, \\(t_{\\parallel r}\\).\n\nE.g., Used in ordinary least squares.\nThis means that we need to decompose the target vector into two vectors such that the two resulting vectors are the sum of the target vector and that one of them is parallel to the reference vector.\n\nGeometric way of doing this:\n\nSay that we have two vectors, \\(a\\) and \\(b\\). Now we want to find the point on \\(a\\) that is as close as possible to the head of \\(b\\). That is, project \\(b\\) on \\(a\\) so that the projection distance is minimized. This projection point on \\(a\\) will be \\(\\beta a\\). Now we need to find the scalar \\(\\beta\\).\n\nTo find the point on \\(a\\) that is closes to the head of \\(b\\) can be found by drawing a line from \\(b\\) that meets \\(a\\) at a right angle. In linear algebra terms, find the dot product between \\(a\\) and the decomposed part of \\(b\\) that is perpendicular as the dot product needs to equal zero. So what this would imply would be \\(a^T(b-\\beta a)=0\\).\nThen to find what \\(\\beta\\) is, we need to do a bit of algebra: \\[\n  \\begin{aligned}\n  a^T(b-\\beta a) = 0\\\\\n  \\beta a^Ta = a^Tb\\\\\n  \\beta = \\frac{a^Tb}{a^Ta}\\\\\n  \\end{aligned}\n  \\]\n\n\nLinear algebraic way:\n\nFirst will define the parallel component, \\(t_{\\parallel r}\\)\n\nIt can be any scaled version of \\(r\\) will be parallel to \\(r\\). \\[\n  t_{\\parallel r} = r \\frac{t^Tr}{r^Tr}\n  \\]\nWe do not want to just compute the scalar \\(\\beta\\), but rather the scaled vector \\(\\beta r\\)\n\nHow do we compute the perpendicular component?\n\nSince we already know that the two vector components need to sum to the original target fector, we can just do: \\[\n  \\begin{aligned}\n  t = t_{\\bot r} + t_{\\parallel r}\\\\\n  t_{\\bot r} = t - t_{\\parallel r}\\\\\n  \\end{aligned}\n  \\]\n\n\nExample:\n\n\n# Define the scaling parameters.\n\n# Define the vectors.\nt = [2,4]\nr = [1,2]\n\n# Compute the scaled vector of beta times b, parallel component.\nt_dot_r = LinearAlgebra.dot(t, r)\nr_dot_r = LinearAlgebra.dot(r, r)\nt_parallel_r = r * (t_dot_r / r_dot_r)\n\n# Compute the perpendicular component.\nt_perpendicular_r = t - t_parallel_r\n\n# Check that perpendicular is actually perpendicular.\nprintln(\"0 = t_perpendicular_r^Tr? $(0 == LinearAlgebra.dot(t_perpendicular_r, r))\")\n\n# Print the parallel component.\nprintln(\"Parallel component: $t_parallel_r\")\n\n# Print the perpendicular component.\nprintln(\"Perpendicular component: $t_perpendicular_r\")\n\n0 = t_perpendicular_r^Tr? true\nParallel component: [2.0, 4.0]\nPerpendicular component: [0.0, 0.0]",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Vectors, Part I</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vectors, Part I</span>"
     ]
   },
   {
     "objectID": "ch_3.html",
     "href": "ch_3.html",
-    "title": "3  Chapter 3, Vectors Part II",
+    "title": "3  Vectors Part II",
     "section": "",
     "text": "3.1 Key points\nThe material in this chapter is a bit abstract and I have a bit of a difficult time following the author’s attempts to explain the purpose of some of these concepts. So, I’ve tried to provide some analogies. But to tie it explicitly to how I would think of this in an abstract regression setting, this is what I could come up with:\nA vector space would be like the population. There are all these possible observations (row vectors) with all of these possible responses. These vector spaces should span all possible measures. A vector would be a particular, observed, vector.\nThe basis would be a set of independent variables that can be linearly combined to explain our outcome of interest. Now, there is also a basis vector space which reflects all of the possible vectors that I could use to come up with a linear weighted combination of those vectors to produce a given outcome vector. However, the task is to find the particular basis that is most likely to produce the outcome in a given basis vector space – Bayesian statistics calculates this probability directly (think first few chapters of McElreath’s book).",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Vectors Part II</span>"
     ]
   },
   {
     "objectID": "ch_3.html#vector-sets",
     "href": "ch_3.html#vector-sets",
-    "title": "3  Chapter 3, Vectors Part II",
+    "title": "3  Vectors Part II",
     "section": "3.2 Vector sets",
     "text": "3.2 Vector sets\n\nIs a collection of vectors.\nDenoted with capital italic letters.\n\nE.g., \\(S\\) or \\(V\\)",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Vectors Part II</span>"
     ]
   },
   {
     "objectID": "ch_3.html#linear-weighted-combinations",
     "href": "ch_3.html#linear-weighted-combinations",
-    "title": "3  Chapter 3, Vectors Part II",
+    "title": "3  Vectors Part II",
     "section": "3.3 Linear weighted combinations",
     "text": "3.3 Linear weighted combinations\n\nIt is a way of mixing information from multiple variables, vectors, with some vectors contributing more information than others.\nSometimes called linear mixture or weighted combination\nCoefficients are another term for the scalar that summarizes the weight for a particular vector in the weighted combination that they provide.\nTo perform a linear weighted combination:\n\nTake some finite set of vectors, do scalar-vector multiplication and add them. \\[\n  w = \\lambda_1v_2 + \\lambda_2v_2 + \\ldots + \\lambda_iv_i\n  \\]\n\nExample:\n\n\n# Define the vectors.\nv1 = [4,5,1]\nv2 = [-4,0,-4]\nv3 = [1,3,2]\n# Define the weights.\nl1 = 1\nl2 = 2\nl3 = -3\n# Calculate the linear weighted combination.\nw = l1 * v1 + l2 * v2 + l3 * v3\n# Print the result.\nprintln(\"w = $w\")\n\nw = [-7, -4, -13]",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Vectors Part II</span>"
     ]
   },
   {
     "objectID": "ch_3.html#linear-dependence",
     "href": "ch_3.html#linear-dependence",
-    "title": "3  Chapter 3, Vectors Part II",
+    "title": "3  Vectors Part II",
     "section": "3.4 Linear dependence",
     "text": "3.4 Linear dependence\nIf you can find some \\(\\lambda\\)s that make the following equation true, then the vectors in the given set, \\(V\\) are linarly dependent. \\[\n0 = \\lambda_1v_2 + \\lambda_2v_2 + \\ldots + \\lambda_iv_, \\space \\space \\lambda \\in \\mathbb{R}\n\\]\nThis excludes the trivial solution where \\(\\lambda = 0\\).",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Vectors Part II</span>"
     ]
   },
   {
     "objectID": "ch_3.html#subspace-and-span",
     "href": "ch_3.html#subspace-and-span",
-    "title": "3  Chapter 3, Vectors Part II",
+    "title": "3  Vectors Part II",
     "section": "3.5 Subspace and span",
     "text": "3.5 Subspace and span\n\n\n\n\n\n\nDefinitions\n\n\n\n\nVector Subspace:\n\nIf I have a set of vectors, the span is the set of all possible vectors I can obtain from adding them together and scaling them by any scalar.\n\nVector Span:\n\nThe verb of a vector subspace. The subspace a particular vector spans.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Vectors Part II</span>"
     ]
   },
   {
     "objectID": "ch_3.html#basis",
     "href": "ch_3.html#basis",
-    "title": "3  Chapter 3, Vectors Part II",
+    "title": "3  Vectors Part II",
     "section": "3.6 Basis",
     "text": "3.6 Basis\n\n\n\n\n\n\nDefinitions\n\n\n\n\nBasis:\n\nThe combination of span and vectors: a set of vectors can be a basis for sume subspace if it spans that subspace and is an independent set of vectors.\n\n\n\n\n\nWe can use a number of different ways to describe the unit of some quantified thing. For example 2000 miles versus ~3218 kilometers.\nCartesian axis:\n\nThe familiar XY plane.\nComprise vectors that are mutually orthogonal and unit length.\nExample with a 2D Cartesian graph: \\[\nS_2 = \\begin{Bmatrix}\\begin{bmatrix}1\\\\0\\end{bmatrix},\\begin{bmatrix}0\\\\1\\end{bmatrix}\\end{Bmatrix}\n\\]\nExample with a 3D Cartesian graph: \\[\nS_3 = \\begin{Bmatrix}\\begin{bmatrix}1\\\\0\\\\0\\end{bmatrix},\\begin{bmatrix}0\\\\1\\\\0\\end{bmatrix},\\begin{bmatrix}0\\\\0\\\\1\\end{bmatrix}\\end{Bmatrix}\n\\]\n\nOther Basis set for \\(\\mathbb{R}^2\\): \\[\nT = \\begin{Bmatrix}\\begin{bmatrix}3\\\\1\\end{bmatrix},\\begin{bmatrix}-3\\\\1\\end{bmatrix}\\end{Bmatrix}\n\\]\n\nBoth \\(S_2\\) and \\(T\\) span the same subspace (all of \\(\\mathbb{R}^2\\)). However, these are just different ways of describing the data.\n\n\n\n\n\n\nAttempting to make it less abstract\n\n\n\nNOTE: THIS IS FROM CHATGPT\nImagine you’re navigating through a city using a map. In this analogy:\n\nVector Space: The space you’re moving around in, which could represent the city streets and intersections. Each point in this space corresponds to a location in the city.\nVector: Your position or direction of movement at any given time. For example, if you’re at the intersection of Main Street and Elm Street and you’re moving north, your position can be represented as a vector.\n\nNow, let’s talk about the basis in this context:\nBasis:\nThink of the basis as a set of fundamental directions or movements that you can use to describe any position or movement within the city. These fundamental directions should be enough to reach any point in the city and should be independent of each other.\n\nLinear Independence: Each fundamental direction should be distinct and not redundant. For example, you might choose north, south, east, and west as your fundamental directions. Each direction is distinct and cannot be represented as a combination of the others.\nSpanning: Together, these fundamental directions should cover all possible movements within the city. You should be able to reach any location by combining these fundamental movements in the right proportions.\n\nExample:\nLet’s say you’ve chosen the following basis for navigating the city: north, south, east, and west. Each of these directions represents a unit vector in the corresponding direction.\nNow, if you want to describe a specific movement within the city, such as going from your current location to the nearest park, you can express this movement as a combination of the fundamental directions in your basis. For instance, you might need to move two blocks north and then three blocks west.\nIn this example, the basis vectors (north, south, east, and west) allow you to describe any movement or position within the city by combining them appropriately. They form the building blocks that enable you to navigate and understand spatial relationships within the city.\nSo, in this less abstract example, the concept of a vector basis is akin to choosing a set of fundamental directions or movements that allow you to describe any position or movement within a given space, such as navigating through a city using cardinal directions.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3, Vectors Part II</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Vectors Part II</span>"
     ]
   },
   {
     "objectID": "ch_4.html",
     "href": "ch_4.html",
-    "title": "4  Chapter 4, Vector Applications",
+    "title": "4  Vector Applications",
     "section": "",
     "text": "4.1 Key points",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Chapter 4, Vector Applications</span>"
-    ]
-  },
-  {
-    "objectID": "ch_4.html#correlation-and-cosine-similarity",
-    "href": "ch_4.html#correlation-and-cosine-similarity",
-    "title": "4  Chapter 4, Vector Applications",
-    "section": "4.2 Correlation and Cosine similarity",
-    "text": "4.2 Correlation and Cosine similarity\n\n\n\n\n\n\nDefinitions\n\n\n\n\nCorrelation coefficient:\n\nA scalar that uantifies the linear relationship between two variables.\n[-1, 1]\n\n\n\n\n\nDot product with some normalizations:\n\nMean centering: Subtracting the average value from each data value.\nDivide the dot product from the product of the vector norms. This allows one to cancel measurement units and scales.\n\nFamiliar way:\n\n\\[\nr = \\frac{\\sum^n_{i=1} (x_i - \\bar{x_i})(y_i - \\bar{y_i})}{\\sqrt{\\sum^n_{i=1} (x_i - \\bar{x_i})^2} \\sqrt{\\sum^n_{i=1} (y_i - \\bar{y_i})^2}}\n\\]\n\nLinear algebra way \\[\nr = \\frac{\\tilde{x}^T\\tilde{y}}{||\\tilde{x}|| ||\\tilde{y}||}\n\\]\n\nwhere \\(\\tilde{x}\\) and \\(\\tilde{y}\\) are mean-centered vectors.",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Chapter 4, Vector Applications</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Vector Applications</span>"
     ]
   },
   {
     "objectID": "ch_4.html#correlation",
     "href": "ch_4.html#correlation",
-    "title": "4  Chapter 4, Vector Applications",
+    "title": "4  Vector Applications",
     "section": "4.2 Correlation",
     "text": "4.2 Correlation\n\n\n\n\n\n\nDefinitions\n\n\n\n\nCorrelation coefficient:\n\nA scalar that uantifies the linear relationship between two variables.\n[-1, 1]\n\n\n\n\n\nDot product with some normalizations:\n\nMean centering: Subtracting the average value from each data value.\nDivide the dot product from the product of the vector norms. This allows one to cancel measurement units and scales.\n\nFamiliar way:\n\n\\[\nr = \\frac{\\sum^n_{i=1} (x_i - \\bar{x_i})(y_i - \\bar{y_i})}{\\sqrt{\\sum^n_{i=1} (x_i - \\bar{x_i})^2} \\sqrt{\\sum^n_{i=1} (y_i - \\bar{y_i})^2}}\n\\]\n\nLinear algebra way \\[\nr = \\frac{\\tilde{x}^T\\tilde{y}}{||\\tilde{x}|| ||\\tilde{y}||}\n\\]\n\nwhere \\(\\tilde{x}\\) and \\(\\tilde{y}\\) are mean-centered vectors.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Chapter 4, Vector Applications</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Vector Applications</span>"
     ]
   },
   {
     "objectID": "ch_4.html#cosine-similarity",
     "href": "ch_4.html#cosine-similarity",
-    "title": "4  Chapter 4, Vector Applications",
+    "title": "4  Vector Applications",
     "section": "4.3 Cosine similarity",
     "text": "4.3 Cosine similarity\n\nAlternative to way to assess similarity between vectors other than using correlation.\nDefined as the geometric formula for the dot product when solved for the cosine term.\n\n\\[\ncos(\\theta_{x,y}) = \\frac{x^Ty}{||x|| ||y||}\n\\]\n\nThe difference between this and correlation is that I am not first normalizing \\(x\\) and \\(y\\) by mean-centering them.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Chapter 4, Vector Applications</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Vector Applications</span>"
+    ]
+  },
+  {
+    "objectID": "ch_4.html#time-series-filtering-and-feature-variable-detection",
+    "href": "ch_4.html#time-series-filtering-and-feature-variable-detection",
+    "title": "4  Vector Applications",
+    "section": "4.4 Time series Filtering and Feature (Variable) detection",
+    "text": "4.4 Time series Filtering and Feature (Variable) detection\n\n\n\n\n\n\nDefinitions\n\n\n\n\nKernel\n\nRefers to a smooth “template” series that we can use to pull a real series to to smoothen it a bit as a feature-detection method.\n\n\n\n\n\nWe can use the dot product for time series filtering.\n\nWhere filtering is basically a feature-detection method. It essentially detects patterns and signals and pulls out noise from the time series. The effect of this is to “smoothen” the series.\n\nCan use it for convolution:\n\n\nThe dot product is computed for the kernel and the time series signal. - Often filtering requires local feature detection and the kernel is shorter than the whole series. - This means that we often compute the dot product between the kernel and a shorter chunk of the sereis that is the same length of the kernel.\nThis results in a time point of the filtered signal.\nWe then move one time period later and compute the dot product with a different and overlapping signal segment.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Vector Applications</span>"
+    ]
+  },
+  {
+    "objectID": "ch_4.html#k-means-clustering",
+    "href": "ch_4.html#k-means-clustering",
+    "title": "4  Vector Applications",
+    "section": "4.5 k-Means clustering",
+    "text": "4.5 k-Means clustering\n\n\n\n\n\n\nDefinitions\n\n\n\n\nk-Means clustering\n\nUnsupervised method of putting multivariate data into a relatively small number of groups or categories.\n\n\n\n\n\nWith concepts covered in the earlier chapters,this is how this procedure is done:\n\n\nDefine \\(k\\) centroids as random points in the vector space.\n\nEach centroid is a class, or category.\n\nCompute the Euclidean distance between each observation and each centroid.\nAssign each data observation to the group with the closest centroid (the smallest Euclidean distance).\nUpdate the centroid location by taking the average of all data observations assigned to the centroid.\nRepeat steps 2-4 until a convergence criteria is satisfied or N iterations have completed.\n\nOften these conditions are either until N iterations occur.\nMore sophisticated implementations are often to repeat these steps until centroid locations do not move much.\n\n\n\n# Try to write your own k-means clustering algorithm here.\n# Rather than writing double for-loop, can use broadcasting for efficiency.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Vector Applications</span>"
+    ]
+  },
+  {
+    "objectID": "ch_5.html",
+    "href": "ch_5.html",
+    "title": "5  Matrices, Part I",
+    "section": "",
+    "text": "5.1 Matrices\n# Define a 3x5 matrix.\nA = [[1,0,1] [3,2,4] [5,4,7] [7,6,8] [9,8,9]]\nprintln(\"A, a 3x5 Matrix:$A\")\n\n# Ensure that it is 3x5\nnum_rows = size(A, 1)\nnum_columns = size(A, 2)\nprintln(\"A has $num_rows rows.\")\nprintln(\"A has $num_columns columns.\")\n# Slicing\n#     - Slice the first row.\nfirst_row = A[1, :]\nprintln(\"A's first row is: $first_row\")\n#     - Slice the first column.\nfirst_column = A[:, 1]\nprintln(\"A's first column is: $first_column\")\n#    - Slice the last row.\n#           - Note that there are shortcuts.\nlast_row = A[end, :]\nprintln(\"A's last row is: $last_row\")\n#           - Slice the last column.\n#               - Note the shortcut.\nlast_column = A[:, end]\nprintln(\"A's last column is: $last_column\")\n\nA, a 3x5 Matrix:[1 3 5 7 9; 0 2 4 6 8; 1 4 7 8 9]\nA has 3 rows.\nA has 5 columns.\nA's first row is: [1, 3, 5, 7, 9]\nA's first column is: [1, 0, 1]\nA's last row is: [1, 4, 7, 8, 9]\nA's last column is: [9, 8, 9]",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_5.html#matrices",
+    "href": "ch_5.html#matrices",
+    "title": "5  Matrices, Part I",
+    "section": "",
+    "text": "Defintions\n\n\n\n\nMatrices:\n\nHighly versitile mathematical objects.\nIn DS, they are often conceptualized as a horizontally stacked set of column vectors.\n\nOften appear in the observations-by-feature format.\n\nRows are observations.\nColumns are features (variables).\n\nIndices are often denoted as Row \\(\\times\\) Column.\n\nDenoted with bold-faced capital letters.\n\nE.g., A or M\n\n\n\n\n\n\nExample of matrices:",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_5.html#types-of-matrices",
+    "href": "ch_5.html#types-of-matrices",
+    "title": "5  Matrices, Part I",
+    "section": "5.2 Types of matrices",
+    "text": "5.2 Types of matrices\n\nThere are an infinite number of matrices. However, there are certain classes that are relatively common.\n\n\n5.2.1 Random numbers matrix\n\nContains numbers drawn at random from some distribution.\nExample:\n\n\n# There are many packages available.\n\n# Create a 3x3 matrix randomly generated from Gaussian dist.\n#       - Create a Gaussian distribution with mean = 5 and std. dev = 2.\nmu = 5\nsigma_squared = 2\ndist = Distributions.Normal(mu, sigma_squared)\n#   - Generate the matrix pulling from the dist.\nnum_rows = 3\nnum_features = 4\nmatrix = Random.rand(dist, num_rows, num_features)\nmatrix\n\n3×4 Matrix{Float64}:\n 6.3592   3.61815  2.68209  3.80779\n 7.73537  5.25992  5.50092  3.50644\n 4.8147   5.20514  3.63537  5.56604\n\n\n\n\n5.2.2 Square and rectangular matrices\n\nThe Square matrix is \\(\\mathbb{R}^{N \\times N}\\)\n\nThe matrix has the same number of rows as columns.\n\nThe Rectangular matrix is \\(\\mathbb{R}^{M \\times N}\\) or \\(\\mathbb{R}^{N \\times M}\\) where \\(M &gt; N\\).\n\nTall rectangular matrices are the former (\\(M \\times N\\))\nWide rectangular matrices are the latter (\\(N \\times M\\))\n\nExample of square and rectangular matrices.\n\n\n# Define a Square matrix.\nsquare_matrix = Random.rand(3,3)\nprintln(\"Example of a Square Matrix:\")\nsquare_matrix\n\nExample of a Square Matrix:\n\n\n3×3 Matrix{Float64}:\n 0.570851  0.798623  0.240766\n 0.933675  0.832721  0.310331\n 0.586793  0.160646  0.523838\n\n\n\n# Define a Tall matrix.\ntall_matrix = Random.rand(4,3)\nprintln(\"Example of a Tall Matrix:\")\ntall_matrix\n\nExample of a Tall Matrix:\n\n\n4×3 Matrix{Float64}:\n 0.720362  0.33162   0.325086\n 0.68186   0.296971  0.515731\n 0.514356  0.415962  0.0568227\n 0.982175  0.747093  0.265896\n\n\n\n# Define a Wide matrix.\nwide_matrix = Random.rand(3, 4)\nprintln(\"Example of a Wide Matrix:\")\nwide_matrix\n\nExample of a Wide Matrix:\n\n\n3×4 Matrix{Float64}:\n 0.633416  0.508978  0.238866  0.6797\n 0.882501  0.62274   0.82069   0.925353\n 0.442554  0.829215  0.396217  0.302257\n\n\n\n\n5.2.3 Diagonal matrix\n\nA square matrix that has zeros on all of the off-diagonal elements.\nExample\n\n\n# Create a diagonal matrix.\n#       - Define the elements on the diagonal.\ndiag_ele = [1, 2, 3, 4]\n#       - Create the matrix.\nD = LinearAlgebra.Diagonal(diag_ele)\nprintln(\"Example of a Diagonal Matrix:\")\nD\n\nExample of a Diagonal Matrix:\n\n\n4×4 Diagonal{Int64, Vector{Int64}}:\n 1  ⋅  ⋅  ⋅\n ⋅  2  ⋅  ⋅\n ⋅  ⋅  3  ⋅\n ⋅  ⋅  ⋅  4\n\n\n\n\n5.2.4 Identity Matrix\n\nA special type of a square diagonal matrix where the elements on the diagonal are 1’s.\nUsually denoted as I.\nExample\n\n\n# Create a identity matrix.\n#       - Define the size of the matrix.\nn = 4\n#   - Create the matrix.\nI = LinearAlgebra.I(n)\nprintln(\"Example of a Identity Matrix:\")\nI\n\nExample of a Identity Matrix:\n\n\n4×4 Diagonal{Bool, Vector{Bool}}:\n 1  ⋅  ⋅  ⋅\n ⋅  1  ⋅  ⋅\n ⋅  ⋅  1  ⋅\n ⋅  ⋅  ⋅  1\n\n\n\n\n5.2.5 Triangular Matrix\n\nA matrix contains all zeros either above (Upper Triangular) or below (Lower Triangular) the diagonal.\n\n\n# Create a diagonal matrix.\ndiag_ele = [1, 2, 3, 4]\nD = LinearAlgebra.Diagonal(diag_ele)\nprintln(\"Diagonal Matrix:\")\nD\n#   The Upper Triangle.\nUT = LinearAlgebra.triu(D)\nprintln(\"Example of an Upper Triangle Matrix:\")\nUT\n# The Lower Triangle.\nLT = LinearAlgebra.tril(D)\nprintln(\"Example of a Lower Triangle Matrix:\")\nLT\n\nDiagonal Matrix:\nExample of an Upper Triangle Matrix:\nExample of a Lower Triangle Matrix:\n\n\n4×4 Diagonal{Int64, Vector{Int64}}:\n 1  ⋅  ⋅  ⋅\n ⋅  2  ⋅  ⋅\n ⋅  ⋅  3  ⋅\n ⋅  ⋅  ⋅  4\n\n\n\n\n5.2.6 Zeros matrix\n\nIt is a Matrix of all Zeros.\nUsually denoted as 0.\n\n\n# Create a 4x4 Zeros matrix.\nO = LinearAlgebra.zeros(4,4)\nprintln(\"Example of a 4x4 Zero's Matrix:\")\nO\n\nExample of a 4x4 Zero's Matrix:\n\n\n4×4 Matrix{Float64}:\n 0.0  0.0  0.0  0.0\n 0.0  0.0  0.0  0.0\n 0.0  0.0  0.0  0.0\n 0.0  0.0  0.0  0.0",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_5.html#matrix-addition",
+    "href": "ch_5.html#matrix-addition",
+    "title": "5  Matrices, Part I",
+    "section": "5.3 Matrix Addition",
+    "text": "5.3 Matrix Addition\n\nTo add two matrices, you add their corresponding elements. That is:\n\n\\[\nA+B = \\begin{bmatrix}(A11 + B11) & (A21 + B21)\\\\ (A12 + B12) & (A22 + B22)\\\\\\end{bmatrix}\n\\]\n\nAs usual, they must be of the same size.\nExample\n\n\n# Defining the matrices.\nA = [[1, 2] [3, 4]]\nB = [[5, 6] [7, 8]]\nprintln(\"Matrix A:\")\nA\n\nMatrix A:\n\n\n2×2 Matrix{Int64}:\n 1  3\n 2  4\n\n\n\nprintln(\"Matrix B:\")\nB\n\nMatrix B:\n\n\n2×2 Matrix{Int64}:\n 5  7\n 6  8\n\n\n\n# Add the matrices\nC = A + B\nprintln(\"Result of adding the two matrices:\")\nC\n\nResult of adding the two matrices:\n\n\n2×2 Matrix{Int64}:\n 6  10\n 8  12",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_5.html#shifting-a-matrix",
+    "href": "ch_5.html#shifting-a-matrix",
+    "title": "5  Matrices, Part I",
+    "section": "5.4 “Shifting” a matrix",
+    "text": "5.4 “Shifting” a matrix\n\nYou cannot formally add a scalar to a matrix as in \\(\\lambda + A\\)\nYou can broadcast a scalar to a square matrix. This is what is referred to as “Shifting” a matrix.\n\nTo do this, you take the scalar and multiply it to an identity matrix and then add the identity matrix to the resulting matrix. \\[\nA + \\lambda I\n\\]\n\nOnly the diagonal elements change. You don’t want to shift much of the matrix. How much you shift a matrix depends a lot and is somewhat relative.\nShifting has two really important applications: finding eigenvalues of a matrix and regularizing matrices when fitting models to data.\nHere’s a numerical example\n\n\\[\n\\begin{bmatrix}4 & 5 & 1\\\\ 0 & 1 & 11 \\\\ 4 & 9 & 7\\\\\\end{bmatrix} + 6 \\begin{bmatrix}1 & 0 & 0\\\\ 0 & 1 & 0\\\\ 0 & 0 & 1\\\\\\end{bmatrix} = \\begin{bmatrix}10 & 5 & 1\\\\ 0 & 7 & 11\\\\ 4 & 9 & 13\\\\\\end{bmatrix}\n\\]\n\nHere’s how to do it in Julia.\n\n\n# Define the matrix.\nA = [[1, 2, 3] [4, 5, 6] [7, 8, 9]]\nprintln(\"Matrix A:\")\nA\n# Define the scalar.\nlambda = 2\n\n# Shift A.\nB = A + (lambda * LinearAlgebra.I(size(A, 1)))\nprintln(\"Shifted version of A + 2I\")\nB\n\nMatrix A:\nShifted version of A + 2I\n\n\n3×3 Matrix{Int64}:\n 3  4   7\n 2  7   8\n 3  6  11",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_5.html#scalar-and-hadamard-multiplications",
+    "href": "ch_5.html#scalar-and-hadamard-multiplications",
+    "title": "5  Matrices, Part I",
+    "section": "5.5 Scalar and Hadamard multiplications",
+    "text": "5.5 Scalar and Hadamard multiplications\n\nBoth types of multiplication work element-wise.\nHadamard multiplication is identified with \\(A \\odot B\\).\nExample of scalar multiplication:\n\n\n# Define the matrix.\nA = [[1,2] [1,2]]\nprintln(\"A:$A\")\n# Define the scalar.\nlambda = 2\n# Print the result of the scalar-multiplied A.\nlambda * A\n\nA:[1 1; 2 2]\n\n\n2×2 Matrix{Int64}:\n 2  2\n 4  4\n\n\n\nExample of Hadamard multiplication:\n\n\n# Define the two matrices.\nA = [[1, 1] [1, 1]]\nB = [[1, 2] [1, 2]]\n# Multiply the matrices.\n#   - Use the .* to do element-wise multiplication.\nA .* B\n\n2×2 Matrix{Int64}:\n 1  1\n 2  2",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_5.html#matrix-multiplication",
+    "href": "ch_5.html#matrix-multiplication",
+    "title": "5  Matrices, Part I",
+    "section": "5.6 Matrix multiplication",
+    "text": "5.6 Matrix multiplication\n\nRecall the dot product between two vectors:\n\n\\[\na^Tb = \\sum^n_{i=1}a_ib_i\n\\]\n\nMatrix multiplication is essentially the collection of dot products between rows of one matrix and columns of the other matrix.\n\nSpecifically, the \\((i,j)\\)th element in the product matrix is the dot product between the \\(i\\)th row of the left matrix and the \\(j\\)th column in the right matrix.\n\nConditions:\n\nIf \\(A\\) is \\(\\mathbb{R}^{M \\times N}\\) then \\(B\\) must be \\(\\mathbb{R}^{N \\times K}\\).\n\nIn words, the inner dimensions must mactch\n\nThe result produces the outer dimensions, \\(AB\\) is \\(\\mathbb{R}^{M \\times K}\\).\nDoes not obey the commutative law. So \\(AB\\) may be valid but \\(BA\\) will not be valid as \\(K \\neq M\\).\n\nInterpreting it: The product matrix is one that stores all of the pairwise linear relationships between the rows of the left matrix and the columns of the right matrix. This is the basis for computing covariance and correlation matrices, GLM, and many other applications.\nNumerical example\n\n\\[\n\\begin{bmatrix}2&3\\\\4&5\\\\\\end{bmatrix}\\begin{bmatrix}a&b\\\\c&d\\\\\\end{bmatrix} = \\begin{bmatrix}(2a + 3c) & (2b + 3d)\\\\(4a + 5c) & (4b + 5d)\\\\\\end{bmatrix}\n\\]\n\nExample in julia\n\n\n# Define the matrices.\nA = [[2,4] [3,5]]\nB = [[2,4] [3,5]]\nprintln(\"A:$A\")\nprintln(\"B:$B\")\n# Multiply the matrices.\nA*B\n\nA:[2 3; 4 5]\nB:[2 3; 4 5]\n\n\n2×2 Matrix{Int64}:\n 16  21\n 28  37",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_5.html#matrix-vector-multiplication",
+    "href": "ch_5.html#matrix-vector-multiplication",
+    "title": "5  Matrices, Part I",
+    "section": "5.7 Matrix-vector multiplication",
+    "text": "5.7 Matrix-vector multiplication\n\nEssentially matrix multiplication where one matrix happens to be a vector.\nExtending the rules from matrix multiplication:\n\nA matrix can be right-multiplied by a column vector but not a row vector. \\(Av\\) and \\(v^TA\\) are valid but \\(Av^T\\) and \\(vA\\) are not valid.\nThe product is always a vector and the orientation of the vector depends on the orientation of the multiplicand vector: premultiplying a row vector produces a row vector and postmultiplying a matrix by a column vector produces a column vector.\n\nThis is often used when obtaining the model-predicted values by multiplying the design matrix by the regression coefficients, \\(X\\beta\\).",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_5.html#linear-weighted-combinations",
+    "href": "ch_5.html#linear-weighted-combinations",
+    "title": "5  Matrices, Part I",
+    "section": "5.8 Linear weighted combinations",
+    "text": "5.8 Linear weighted combinations\n\nIn the previous chapter we calculated these with separate scalars and vectors. Now we can do this in a more compact and scalable method: put the vectors in a matrix, put the weights into corresponding elements of a vector, then multiply.\nNumerical example:\n\n\\[\n4 \\begin{bmatrix}3\\\\0\\\\6\\\\\\end{bmatrix} + 3 \\begin{bmatrix}1\\\\2\\\\5\\\\\\end{bmatrix} \\implies \\begin{bmatrix}3&1\\\\0&2\\\\6&5\\\\\\end{bmatrix}\\begin{bmatrix}4\\\\3\\end{bmatrix}\\\\\n= \\begin{bmatrix}(12 + 3)\\\\(0 + 6)\\\\ (24 + 15)\\\\\\end{bmatrix}\n\\]\n\nNumerical example in Julia:\n\n\n# Define the matrices.\nA = [[3,0,6] [1,2,5]]\nb = [4,3]\n# Multiply them.\nprintln(\"A*b: \", A*b)\n\nA*b: [15, 6, 39]",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_5.html#transposing-matrices",
+    "href": "ch_5.html#transposing-matrices",
+    "title": "5  Matrices, Part I",
+    "section": "5.9 Transposing matrices",
+    "text": "5.9 Transposing matrices\n\nYou swap the row and column indices.\nDenoted with \\(A^T\\).\nNumerical example \\[\n\\begin{bmatrix}\n  3&0&4\\\\\n  9&8&3\\\\\n\\end{bmatrix}^T\n= \\begin{bmatrix}\n  3&9\\\\\n  0&8\\\\\n  4&3\\\\\n\\end{bmatrix}\n\\]\nExample in Julia\n\n\n# Define the matrix\nA = [[3,9] [0,8] [4,3]]\n# Transpose the matrix\nA'\n\n3×2 adjoint(::Matrix{Int64}) with eltype Int64:\n 3  9\n 0  8\n 4  3\n\n\n\nFor two column vectors of \\(M\\times 1\\), transposing the vector and not the second gives a \\(1 \\times M\\) matrix and a \\(M \\times 1\\) matrix. The inner dimensions match and the product is \\(1 \\times 1\\). This is why the dot product is denoted with \\(a^Tb\\).",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_5.html#order-of-operations-live-evil",
+    "href": "ch_5.html#order-of-operations-live-evil",
+    "title": "5  Matrices, Part I",
+    "section": "5.10 Order of operations: LIVE EVIL",
+    "text": "5.10 Order of operations: LIVE EVIL\n\nThe transose of multiplied matrices is the same as the individual matrices transposed and multiplied in rversed order. \\[\n(LIVE)^T = E^TV^TI^TL^T\n\\]",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
+    ]
+  },
+  {
+    "objectID": "ch_5.html#symmetric-matrices",
+    "href": "ch_5.html#symmetric-matrices",
+    "title": "5  Matrices, Part I",
+    "section": "5.11 Symmetric matrices",
+    "text": "5.11 Symmetric matrices\n\nThe corresponding rows and columns are equal. This means that when you swap rows and columns, nothing changes.\n\n\\(A^T = A\\)\n\nNeeds to be a square matrix.\nTo create a symmetric matrix, you need to multipy any matrix (including nonsquare and nonsymmetric) by its transpose will produce a square symmetric matrix.\n\n\\(A^TA\\) and \\(AA^T\\) are both square symmetric.\n\nThe proof:\n\nIf \\(A\\) is \\(\\mathbb{R}^{M \\times N}\\), then \\(A^T\\) is \\(\\mathbb{R}^{N \\times M}\\). \\(A^TA\\) must then be \\(\\mathbb{R}^{N \\times N}\\).",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
     ]
   }
 ]

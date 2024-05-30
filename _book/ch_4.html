@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes on Practical Linear Algebra for Data Science by Mike X Cohen - 4&nbsp; Chapter 4, Vector Applications</title>
+<title>Notes on Practical Linear Algebra for Data Science by Mike X Cohen - 4&nbsp; Vector Applications</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,6 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./ch_5.html" rel="next">
 <link href="./ch_3.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -109,7 +144,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4, Vector Applications</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Vector Applications</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -143,19 +178,25 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2: Vectors, Part I</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Vectors, Part I</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 3, Vectors Part II</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vectors Part II</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_4.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4, Vector Applications</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Vector Applications</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Matrices, Part I</span></span></a>
   </div>
 </li>
     </ul>
@@ -171,6 +212,8 @@ window.Quarto = {
   <li><a href="#key-points" id="toc-key-points" class="nav-link active" data-scroll-target="#key-points"><span class="header-section-number">4.1</span> Key points</a></li>
   <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation"><span class="header-section-number">4.2</span> Correlation</a></li>
   <li><a href="#cosine-similarity" id="toc-cosine-similarity" class="nav-link" data-scroll-target="#cosine-similarity"><span class="header-section-number">4.3</span> Cosine similarity</a></li>
+  <li><a href="#time-series-filtering-and-feature-variable-detection" id="toc-time-series-filtering-and-feature-variable-detection" class="nav-link" data-scroll-target="#time-series-filtering-and-feature-variable-detection"><span class="header-section-number">4.4</span> Time series Filtering and Feature (Variable) detection</a></li>
+  <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="header-section-number">4.5</span> k-Means clustering</a></li>
   </ul>
 </nav>
     </div>
@@ -179,7 +222,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4, Vector Applications</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Vector Applications</span></h1>
 </div>
 
 
@@ -250,6 +293,81 @@ cos(\theta_{x,y}) = \frac{x^Ty}{||x|| ||y||}
 <ul>
 <li>The difference between this and correlation is that I am not first normalizing <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> by mean-centering them.</li>
 </ul>
+</section>
+<section id="time-series-filtering-and-feature-variable-detection" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="time-series-filtering-and-feature-variable-detection"><span class="header-section-number">4.4</span> Time series Filtering and Feature (Variable) detection</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Definitions">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definitions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Kernel
+<ul>
+<li>Refers to a smooth “template” series that we can use to pull a real series to to smoothen it a bit as a feature-detection method.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<ul>
+<li>We can use the dot product for time series filtering.
+<ul>
+<li>Where filtering is basically a feature-detection method. It essentially detects patterns and signals and pulls out noise from the time series. The effect of this is to “smoothen” the series.</li>
+</ul></li>
+<li>Can use it for convolution:</li>
+</ul>
+<ol type="1">
+<li>The dot product is computed for the kernel and the time series signal. - Often filtering requires local feature detection and the kernel is shorter than the whole series. - This means that we often compute the dot product between the kernel and a shorter chunk of the sereis that is the same length of the kernel.</li>
+<li>This results in a time point of the filtered signal.</li>
+<li>We then move one time period later and compute the dot product with a different and overlapping signal segment.</li>
+</ol>
+</section>
+<section id="k-means-clustering" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="k-means-clustering"><span class="header-section-number">4.5</span> k-Means clustering</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Definitions">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definitions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>k-Means clustering
+<ul>
+<li>Unsupervised method of putting multivariate data into a relatively small number of groups or categories.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<ul>
+<li>With concepts covered in the earlier chapters,this is how this procedure is done:</li>
+</ul>
+<ol type="1">
+<li>Define <span class="math inline">\(k\)</span> centroids as random points in the vector space.
+<ul>
+<li>Each centroid is a class, or category.</li>
+</ul></li>
+<li>Compute the Euclidean distance between each observation and each centroid.</li>
+<li>Assign each data observation to the group with the closest centroid (the smallest Euclidean distance).</li>
+<li>Update the centroid location by taking the average of all data observations assigned to the centroid.</li>
+<li>Repeat steps 2-4 until a convergence criteria is satisfied or N iterations have completed.
+<ul>
+<li>Often these conditions are either until N iterations occur.</li>
+<li>More sophisticated implementations are often to repeat these steps until centroid locations do not move much.</li>
+</ul></li>
+</ol>
+<div id="kmeans-clustering" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try to write your own k-means clustering algorithm here.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Rather than writing double for-loop, can use broadcasting for efficiency.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
@@ -644,11 +762,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ch_3.html" class="pagination-link  aria-label=" &lt;span="" 3,="" vectors="" part="" ii&lt;="" span&gt;"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 3, Vectors Part II</span></span>
+      <a href="./ch_3.html" class="pagination-link  aria-label=" &lt;span="" part="" ii&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vectors Part II</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./ch_5.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>Matrices, Part I</span>">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Matrices, Part I</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
