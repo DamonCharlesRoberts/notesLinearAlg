@@ -1,0 +1,39 @@
+# Matrices, Part II
+
+## Key points
+
+## Matrix Norms
+
+::: {.callout-tip title="Recall"}
+- Euclidean distance:
+$$
+  ||v|| = \sqrt{\sum_{i=1}^N v_i^2}
+$$
+- Vector norms:
+  - A vector's Euclidean geometric length.
+:::
+
+- A matrix norm is not the same thing as a vector norm.
+- Denoted as $\parallel A \parallel$
+- Similar to vector norms in that each norm is a number that characterizes a matrix.
+- Two main families of matrix norms:
+  - Element-wise norms
+    - Computed based on the individual elements of the matrix.
+    - Reflect the magnitudes of the elements in the matrix.
+  - Induced norms
+    - One key function of a matrix is to encode transformations on a vector.
+    - Given this, the induced norm of a matrix measures how much that transformation scales (stretches or shrinks) the vector.
+## Euclidean norm (an example of a element-wise norm)
+- AKA Frobenius norm or the $\mathcal{L}$ norm (the regularized norm)
+$$
+  \paralell A \parallel_F = \sqrt{\sum_{i=1}^M \sum_{j=1}^N a_{i,j}^2}
+$$
+- In words, it is the square root of the sum of all matrix elements squared.
+- This norm in particular, but all norms, generally, are used quite a lot in machine learning and regularization.
+- Also used as a measure of distance from another matrix, "Matrix Distance":
+$$
+C = A - B
+$$
+  - Where if $B=A$ then $C=0$ because the numerical values in the matrices are similar but if $B \neq A$ then $C$ increases when the numerical values get increasingly dissimilar.
+
+### Matrix trace
