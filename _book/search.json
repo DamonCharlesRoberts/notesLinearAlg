@@ -298,5 +298,135 @@
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Matrices, Part I</span>"
     ]
+  },
+  {
+    "objectID": "ch_6.html",
+    "href": "ch_6.html",
+    "title": "6  Matrices, Part II",
+    "section": "",
+    "text": "6.1 Key points",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matrices, Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_6.html#key-points",
+    "href": "ch_6.html#key-points",
+    "title": "6  Matrices, Part II",
+    "section": "",
+    "text": "There are induced and elementwise matrix norms. The former reflects magnitudes of th elements and the latter reflects hte geometric-transformative effect of the matrix on vectors.\nThe most commonly used elementwise norm is the Euclidean, Frobenius, or \\(\\mathcal{L}\\) norm.\nThe trace is the sum of its diagonal elements\nThere are four matrix spaces (column, row, null, right-null) and they are the linear weighted combinations of different features of it.\nThe column space comprises all linear weighted combinations of the columns.\nOften we want to know if some vector, \\(b\\) is in th column space of a matrix where we can find a vector \\(x\\) such that \\(Ax=b\\)\nThe null space is the set of vectors that linearly combines the columns producing the zeros vector. It is important for finding eigenvectors.\nThe null space occurs when a set of vectors are linearly dependent and reflects a singular (rank-reduced) matrix.\nShifting a square matrix by adding a constant to the diagonal ensures full-rank.\nThe determinant is a number to describe square matrices. It is zero for all singular matrices and nonzero for full-rank matrices.\nThe characteristic polynomial transforms square matricesl, shifting it by \\(\\lambda\\), into an algebraic equation equal to the determinant so that we can solve by \\(\\lambda\\)",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matrices, Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_6.html#matrix-norms",
+    "href": "ch_6.html#matrix-norms",
+    "title": "6  Matrices, Part II",
+    "section": "6.2 Matrix Norms",
+    "text": "6.2 Matrix Norms\n\n\n\n\n\n\nRecall\n\n\n\n\nEuclidean distance: \\[\n||v|| = \\sqrt{\\sum_{i=1}^N v_i^2}\n\\]\nVector norms:\n\nA vector’s Euclidean geometric length.\n\n\n\n\n\nA matrix norm is not the same thing as a vector norm.\nDenoted as \\(\\parallel A \\parallel\\)\nSimilar to vector norms in that each norm is a number that characterizes a matrix.\nTwo main families of matrix norms:\n\nElement-wise norms\n\nComputed based on the individual elements of the matrix.\nReflect the magnitudes of the elements in the matrix.\n\nInduced norms\n\nOne key function of a matrix is to encode transformations on a vector.\nGiven this, the induced norm of a matrix measures how much that transformation scales (stretches or shrinks) the vector.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matrices, Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_6.html#euclidean-norm-an-example-of-a-element-wise-norm",
+    "href": "ch_6.html#euclidean-norm-an-example-of-a-element-wise-norm",
+    "title": "6  Matrices, Part II",
+    "section": "6.3 Euclidean norm (an example of a element-wise norm)",
+    "text": "6.3 Euclidean norm (an example of a element-wise norm)\n\nAKA Frobenius norm or the \\(\\mathcal{L}\\) norm (the regularized norm) \\[\n\\paralell A \\parallel_F = \\sqrt{\\sum_{i=1}^M \\sum_{j=1}^N a_{i,j}^2}\n\\]\nIn words, it is the square root of the sum of all matrix elements squared.\nThis norm in particular, but all norms, generally, are used quite a lot in machine learning and regularization.\nAlso used as a measure of distance from another matrix, “Matrix Distance”: \\[\nC = A - B\n\\]\n\nWhere if \\(B=A\\) then \\(C=0\\) because the numerical values in the matrices are similar but if \\(B \\neq A\\) then \\(C\\) increases when the numerical values get increasingly dissimilar.\n\nExample\n\n\n# Define a matrix.\nA = [[1,2] [3,4]]\nprintln(\"A:$A\")\n# Calculate the Frobenius norm.\nfro_norm = LinearAlgebra.norm(A)\nprintln(\"||A||=$fro_norm\")\n\nA:[1 3; 2 4]\n||A||=5.477225575051661\n\n\n\n6.3.1 Matrix trace\n\n\n\n\n\n\nDefinitions\n\n\n\n\nTrace\n\nthe sum of its diagonal elements.\ndenoted as \\(tr(A)\\).\n\n\n\n\n\nNumerical example:\n\nThe trace of the two following matrices is \\(14\\). \\[\n\\begin{bmatrix}\n4&5&6\\\\\n0&1&4\\\\\n9&9&9\\\\\n\\end{bmatrix}, \\begin{bmatrix}\n0&0&0\\\\\n0&8&0\\\\\n1&2&6\\\\\n\\end{bmatrix}\n\\]\n\nThe trace of a matrix equals the sum of it’s eigenvalues.\n\nA measure of the volume of its eigenspace.\n\nThe Frobenius norm can be calculated as the square root of the trace of t he matrix times its transpose. This happens because each diagonal element of the matrix \\(A^TA\\) is defined by the dot product of each row with itself: \\[\n\\parallel A \\parallel_F = \\sqrt{\\sum_{i=1}^M \\sum_{j=1}^N a_{i,j}^2} = \\sqrt{tr(A^T)}\n\\]\n\n\n# Define the matrix.\nA = [[4,0,9] [5,1,9] [6,4,9]]\nprintln(\"A:$A\")\n# Calculate the trace.\n#   - With the function.\ntrace_A = LinearAlgebra.tr(A)\n# Print trace.\nprintln(\"tr(A) = $trace_A\")\n\nA:[4 5 6; 0 1 4; 9 9 9]\ntr(A) = 14",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matrices, Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_6.html#matrix-spaces",
+    "href": "ch_6.html#matrix-spaces",
+    "title": "6  Matrices, Part II",
+    "section": "6.4 Matrix spaces",
+    "text": "6.4 Matrix spaces\n\n6.4.1 Colum space\n\nConceptualize the matrix as a set of column vectors.\nConsider the infinity of real-valued scalars instead of working with a specific set of scalars.\n\nAn infinite number of scalars gives an infinite number of ways to combine a set of vectors.\nThis resulting set of vectors that can be created from the weighted combination of the columns in the matrix is the column space.\n\nDenoted as \\(C(A)\\)\nNumerical examples: \\[\nC(\\begin{bmatrix}1\\\\3\\\\\\end{bmatrix}) = \\lambda\\begin{bmatrix}1\\\\3\\\\\\end{bmatrix}, \\lambda \\in \\mathbb{R}\n\\]\n\n\\(\\lambda\\), the scalar, can be any real number as there are any scalar can produce a vector produced by \\(A\\). \\[\nC(\\begin{bmatrix}1&1\\\\3&2\\\\\\end{bmatrix}) = \\lambda_1\\begin{bmatrix}1\\\\3\\\\\\end{bmatrix} + \\lambda_2\\begin{bmatrix}1\\\\2\\\\\\end{bmatrix}, \\lambda \\in \\mathbb{R}\n\\]\nWhat is the set of vectors that can be created with some linear combination of these two column vectors?\n\nAll vectors in $^2.\n\n\n\n\\[\nC(\\begin{bmatrix}1&2\\\\3&6\\\\\\end{bmatrix}) = \\lambda_1\\begin{bmatrix}1\\\\3\\\\\\end{bmatrix} + \\lambda_2\\begin{bmatrix}2\\\\6\\\\\\end{bmatrix}, \\lambda \\in \\mathbb{R}\n\\] - In this example, it is not possible to be in \\(\\mathbb{R}^2\\) as these columns are linearly dependent to each other – they are collinear. THis is because one is already a scaled version of the other. - This means that the column space of this matrix is just a 1D subspace. - The dimensionality of the column space equals the number of columns only if they form a linearly independent set.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matrices, Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_6.html#row-space",
+    "href": "ch_6.html#row-space",
+    "title": "6  Matrices, Part II",
+    "section": "6.5 Row space",
+    "text": "6.5 Row space\n\nThe same concept but we consider all possible weighted combinations of the rows instead of the columns.\nCan be \\(R(A)\\) or \\(C(A^T)\\).",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matrices, Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_6.html#null-spaces",
+    "href": "ch_6.html#null-spaces",
+    "title": "6  Matrices, Part II",
+    "section": "6.6 Null spaces",
+    "text": "6.6 Null spaces\n\nThe column space can be summarized as \\(Ax = b\\).\n\nIn words, “Can we find some set of coefficients in x such that the weighted combination of columns in A produce vector b”? If yes, then \\(b \\in C(A)\\).\n\nThe null space, however is summarized as \\(Ay = 0\\)\n\nIn words, “Can we find some set of coefficients in y such that the weighted combination of columns in A produces the zeros vector?”\n\nNumerical examples:\n\n\\[\n\\begin{align*}\n  A = \\begin{bmatrix}1&-1\\\\-2&2\\end{bmatrix} \\\\\n  Ay = 0\n  y = \\begin{bmatrix}-1\\\\1\\\\\\end{bmatrix} \\\\\n  N(A) = \\lambda\\begin{bmatrix}1\\\\1\\\\\\end{bmatrix}, \\lambda \\in \\mathbb{R}\n\\end{align*}\n\\] - There are an infinite number of vectors in y that satisfy \\(Ay=0\\) for \\(A\\). Thus we can express the null space matrix \\(N(A)\\) how we did above.\n\\[\n\\begin{align*}\n  \\begin{bmatrix}1&-1\\\\-2&3\\\\\\end{bmatrix} \\\\\n  Ay = 0 \\\\\n  y = \\begin{bmatrix}\\end{bmatrix} \\\\\n  N(A) = \\begin{bmatrix}\\end{bmatrix}\n\\end{align*}\n\\] - This matrix does not allow us to produce a null space matrix. - Important note: - Linear independent columns in a matrix produce a column space greater than 1 but no larger than the number of linearly independent columns whereas linear dependent columns produce a column space equal to 1, the unscaled vector. - Using terminology that is explained below: full-rank and full column-rank matrices have empty null spaces whereas reduced rank-matrices have nonempty null spaces.\n\n6.6.1 Unit vector\n\nThey are convenient and are numerically stable. So they are common as bases for subspaces.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matrices, Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_6.html#rank",
+    "href": "ch_6.html#rank",
+    "title": "6  Matrices, Part II",
+    "section": "6.7 Rank",
+    "text": "6.7 Rank\n\nRelated to the dimensionalities of matrix subspaces and is important for things like inverting matrices and determining the number of solutions to a system of equations.\nProperties of rank:\n\nRank is a nonnegative integer.\nEvery matrix has one unique rank.\nThe rank of a matrix is denoted with \\(r(A)\\)\nThe maximum possible rank of a matrix is equal to either the smaller of the row or column count, \\(min\\{M,N\\}\\)\nA matrix with a maximum rank, \\(r = min\\{M,N\\}\\), is called “full rank”\nA matrix with a rank smaller than the full rank, \\(r &lt; min\\{M,N\\}\\) is called reduced rank, rank deficient, or singular.\nScalar multiplication does not impact matrix rank\n\nInterpreting the rank of a matrix\n\nThe largest number of columns (or rows) that form a linearly independent set.\nOR The dimensionality of the column space.\nOR The number of dimensions containing information in the matrix.\nOR The number of nonzero singular values of the matrix.\n\nExample:\n\n\n# Define matrix.\nA = [[1,2] [3,4]]\n# Find the rank.\nrank_A = LinearAlgebra.rank(A)\n# Print the results.\nprintln(\"rank(A) = $rank_A\")\n\nrank(A) = 2\n\n\n\n6.7.1 Rank of special matrices\n\nVectors\n\nThey all have a rank of 1\n\nZeros matrices\n\nNo matter the size, it has a rank of 1.\n\nIdentity matrices \\[\nr(I_N) = N\n\\]\n\nThe rank equals the number of rows.\n\nDiagonal matrices\n\nThe rank equals the number of nonzero diagonal elements.\n\nTriangular matrices\n\nFull tank only if there are nonzero values in all diagonal elements. If it has at least one zero in the diagonal, it will be reduced rank.\n\nRandom matrices\n\nShould be full rank, but depends a lot. This is because the probability that any of the columns in the matrix are linearly dependent is low with certain distributions, but with others it could be high.’\n\nRank of added and multiplied matrices\n\nThe ranks of the two individual matrices provide the upper bounds for the maximum possible rank. \\[\nrank(A + B) \\leq rank(A) + rank(B) \\\\\nrank(AB) \\leq min \\{rank(A), rank(B)\\}\n\\]\n\nRank of shifted matrices\n\nThey are full rank. The reason is that this is a key goal of shifting a matrix is to increase the rank.\n\n\n\n\n\n\n\n\nNote\n\n\n\n\nSingular values\n\nEvery \\(M\\times N\\) matrix contains a set of $min{M,N} nonnegative singular values.\nThey encode the “importance” or “spaciousness” of different directions in the column and row spaces of a matrix.\nWhere thre is a singular value of 0, there is a null space.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matrices, Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_6.html#augmented-matrices",
+    "href": "ch_6.html#augmented-matrices",
+    "title": "6  Matrices, Part II",
+    "section": "6.8 Augmented matrices",
+    "text": "6.8 Augmented matrices\n\nAdd extra columns to the right-hand side of the matrix. You start with an \\(M \\times N\\) matrix and augment it with a \\(M \\times K\\) matrix. The augmented matrix will be \\(M \\times (N + K)\\)\nThey just need to have the same number of rows.\nNumerical example \\[\n\\begin{bmatrix}\n  4&5&6\\\\\n  0&1&2\\\\\n  9&9&4\\\\\n\\end{bmatrix} \\sqcup \\begin{bmatrix}\n  1\\\\\n  2\\\\\n  3\\\\\n\\end{bmatrix} = \\begin{bmatrix}\n  4&5&6&1\\\\\n  0&1&2&2\\\\\n  9&9&4&3\\\\\n\\end{bmatrix}\n\\]\n\n\n# Define the initial matrix.\nA = [[4,0,9] [5,1,9] [6,2,4]]\nprintln(\"A:$A\")\n# Define the matrix/vector to add.\nB = [1; 2; 3]\nprintln(\"B:$B\")\n# Augment the matrix.\nC = hcat(A, B)\nprintln(\"C:$C\")\n\nA:[4 5 6; 0 1 2; 9 9 4]\nB:[1, 2, 3]\nC:[4 5 6 1; 0 1 2 2; 9 9 4 3]\n\n\n\nYou can use augmented matrices in an algorithm to determine whether a particular vector is in the column space of a matrix.\n\n\nAugment the matrix with the given vector.\nCompute the ranks of the two matrices\nCompare the two ranks:\n\nIf the rank of the original matrix and the augmented matrix is the equal, then the vector is in the column space of the original matrix.\nIf the rank of the original matrix is less than the augmented matrix, then the vector is not in the column space of the original matrix.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matrices, Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_6.html#determinants",
+    "href": "ch_6.html#determinants",
+    "title": "6  Matrices, Part II",
+    "section": "6.9 Determinants",
+    "text": "6.9 Determinants\n\nThe determinant is the number associated with a square matrix.\n\nCan be very numerically unstable for large matrices.\n\nIt is extremely important to a lot of applications to linear algebra.\nTwo key properties:\n\nIt is defined only for square matrices\nIt is zero for singular (reduced-rank) matrices.\n\nDenoted with \\(det(A)\\) or \\(|A|\\).\nThe geometric interpretation: how much the matrix stretches vectors during matrix vector multiplication\n\nA negative determinant means that one axis is rotated during the transformation.\n\nIn linear algebra, it is used to find eigenvalues or invert a covariance matrix.\nComputing them:\n\nIt is essentially the product of the diagonal minus the product of the off-diagonal. This doesn’t really hold true when it is not \\(M=2;N=2\\).\nJust rely on your computer to do it because this strategy doesn’t work all the time; thus why it is “numerically unstable”. \\[\ndet(\\begin{bmatrix}\n  a&b\\\\\n  c&d\\\\\n\\end{bmatrix}) = \\begin{bmatrix}\n  a&b\\\\\n  c&d\\\\\n\\end{bmatrix} = ad-bc\n\\]\n\nDeterminants are zero for reduced-rank matrices\n\nThis is because any reduced-rank matrix has at least one column that is a linear combination of another. So the difference between the products of the different elements will be null.\n\nOne reason they are useful is that they create a algebraic equation that we can use to calculate unknown parameters, especially if we know the determinate:\n\nFor example, if you want to determine whether two columns are linearly dependent: \\[\ndet(\\begin{bmatrix}\n  a&\\lambda a\\\\\n  c&\\lambda c\\\\\n\\end{bmatrix}) = \\begin{bmatrix}\n  a&\\lambda a\\\\\n  c&\\lambda c\\\\\n\\end{bmatrix} = a\\lambda c-a\\lambda c\n\\]\nCharacteristic polynomial:\n\nThis is produced when we combine matrix shifting with the determinant. \\[\n  det(A-\\lambda I) = \\delta\n  \\]\nIts a polynomial because the shifted \\(M \\times M\\) matrix produces a \\(\\lambda^M\\) term and has \\(M\\) solutions.\nNumeric example with a \\(2 \\times 2\\) matrix: $$\n\\[\\begin{bmatrix}\n  a-\\lambda & b\\\\\n  c & d-\\lambda\\\\\n  \\end{bmatrix}\\]\n= 0 ^2 - (a+d)+ (ad - bc) = 0\nSolutions where \\(\\delta = 0\\) are used to evaluate the eigenvalues of a matrix.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matrices, Part II</span>"
+    ]
+  },
+  {
+    "objectID": "ch_7.html",
+    "href": "ch_7.html",
+    "title": "7  Matrix applications",
+    "section": "",
+    "text": "7.1 Covariance",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Matrix applications</span>"
+    ]
+  },
+  {
+    "objectID": "ch_7.html#covariance",
+    "href": "ch_7.html#covariance",
+    "title": "7  Matrix applications",
+    "section": "",
+    "text": "Covariance is the numerator of the correlation equation – it is the dot product between two mean-centered variables – but retains the scale of the data.\n\nPositive values indicate that they move together.\nNegative values indicate when they move apart.\n0 indicates that there is no linear relationship\n\nHow it works with linear algebra:\n\nCreate a matrix where each column corresponds to each variable. Let’s call a given column \\(X\\).\nTo find the covariance, we can do matrix multiplication to get the dot products between them. However, we cannot do \\(XX\\) as they won’t have the right dimensions.\nSo, we transpose \\(X\\) to get \\(X^T\\).\nNow, we do matrix multiplication to get \\(X^TX\\). This generates the dot product between each column (assuming we meancentered the columns).\nThen we can multiply by \\(\\frac{1}{n-1}\\) to get the covariance matrix.\n\nSummary of the steps. \\[\nC = X^TX\\frac{1}{n-1}\n\\]\nFeatures of \\(C\\):\n\nThe covariance matrix will be symmetric as any matrix multiplied by its transpose produces a symmetric matrix.\nThe diagonal elements of \\(C\\) are the covariances for each variable with itself. So, the variance.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Matrix applications</span>"
+    ]
+  },
+  {
+    "objectID": "ch_7.html#geometric-transformations-through-matrix-vector-multiplication",
+    "href": "ch_7.html#geometric-transformations-through-matrix-vector-multiplication",
+    "title": "7  Matrix applications",
+    "section": "7.2 Geometric transformations through matrix-vector multiplication",
+    "text": "7.2 Geometric transformations through matrix-vector multiplication\n\nPure rotation matrices\n\nRotates a vector but preserves its length \\[\n  T = \\begin{bmatrix}\n  cos(\\theta) & sin(\\theta)\\\\\n  -sin(\\theta) & cos(\\theta)\\\\\n  \\end{bmatrix}\n  \\]\nIt is a type of orthogonal matrix.\nHow?\n\nThe colums of \\(T\\) are orthogonal as their dot product is 0\n\nGiven that \\(cos^2(\\theta) + sin^2(\\theta) = 1\\), \\(cos(\\theta)sin(\\theta) - sin(\\theta)cos(\\theta) = 0\\)\n\n\nTo use the transofmration matrix, set \\(\\theta\\) to some angle for clockwise rotation and multiply matrix \\(T\\) by a \\(2 \\times N\\) matrix of geometric points where each column are \\((X, Y) corrdinates\\) ## Image feature detection\n\nIs an extension of time series filtering.\n\ndesign a Kernel and then create a time series of dot products between the kernel and the overlapping segments of the signal.\nHere we use 2D instead of 1D kernels and create a new image by computing the dot products between the kernel and overlapping windows of the image.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Matrix applications</span>"
+    ]
   }
 ]
