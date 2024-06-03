@@ -1,0 +1,44 @@
+# Matrix applications
+```{julia}
+#| label: setup
+# Load packages
+using LinearAlgebra
+```
+
+## Covariance
+- Covariance is the numerator of the correlation equation -- it is the dot product between two mean-centered variables -- but retains the scale of the data.
+    - Positive values indicate that they move together.
+    - Negative values indicate when they move apart.
+    - 0 indicates that there is no linear relationship
+- How it works with linear algebra:
+    1. Create a matrix where each column corresponds to each variable. Let's call a given column $X$.
+    2. To find the covariance, we can do matrix multiplication to get the dot products between them. However, we cannot do $XX$ as they won't have the right dimensions.
+    3. So, we transpose $X$ to get $X^T$.
+    4. Now, we do matrix multiplication to get $X^TX$. This generates the dot product between each column (assuming we meancentered the columns).
+    5. Then we can multiply by $\frac{1}{n-1}$ to get the covariance matrix.
+- Summary of the steps.
+$$
+C = X^TX\frac{1}{n-1}
+$$
+- Features of $C$:
+    - The covariance matrix will be symmetric as any matrix multiplied by its transpose produces a symmetric matrix.
+    - The diagonal elements of $C$ are the covariances for each variable with itself. So, the variance.
+
+## Geometric transformations through matrix-vector multiplication
+- Pure rotation matrices
+    - Rotates a vector but preserves its length
+    $$
+    T = \begin{bmatrix}
+        cos(\theta) & sin(\theta)\\
+        -sin(\theta) & cos(\theta)\\
+    \end{bmatrix}
+    $$
+    - It is a type of orthogonal matrix.
+    - How?
+        - The colums of $T$ are orthogonal as their dot product is 0
+            - Given that $cos^2(\theta) + sin^2(\theta) = 1$, $cos(\theta)sin(\theta) - sin(\theta)cos(\theta) = 0$
+    - To use the transofmration matrix, set $\theta$ to some angle for clockwise rotation and multiply matrix $T$ by a $2 \times N$ matrix of geometric points where each column are $(X, Y) corrdinates$
+## Image feature detection
+- Is an extension of time series filtering.
+    - design a Kernel and then create a time series of dot products between the kernel and the overlapping segments of the signal.
+    - Here we use 2D instead of 1D kernels and create a new image by computing the dot products between the kernel and overlapping windows of the image.

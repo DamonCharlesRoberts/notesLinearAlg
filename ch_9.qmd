@@ -1,0 +1,87 @@
+# Orthogonal matrices and QR decomposition.
+
+```{julia}
+#| label: setup
+# Load packages.
+using LinearAlgebra
+```
+
+## Orthogonal matrices
+- A type of matrix that is important to many applications of statistics.
+    - Used in QR decomposition, eigendecomposition, singular value decomposition, etc.
+- Denoted as $Q$
+- Posses two properties:
+    $$
+    \langle q_i, q_j \rangle = \begin{cases}
+        0\text{,}&\text{if }i\neq j\\
+        1\text{,}&\text{if }i = j\\
+    \end{cases}
+    $$
+    1. All columns are pair-wise orthogonal to each other (linearly independent).
+    2. The norm of each column is exactly 1.
+- A key feature of an orthogonal matrix is:
+$$
+Q^TQ = I
+$$
+    - This is the same as a matrix inverse. This means, that the inverse of an orthogonal matrix is its transpose. Since the inverse is unstable and tedius to compute, we can leverage the transpose of the orthogonal matrix to get around having to deal with matrix inverses. This means that we should be decomposing our matrices to find the orthogonal matrix of any matrix we have!
+- Examples of orthogonal matrices
+    - Identity matrix
+    - Pure rotation matrices
+    - Permutation matrices (notes on LU decomposition in next chapter)
+- To compute Orthogonal matrices from any nonorthogonal matrix, we can use QR decomposition, which is a type of the Gram-Schmidt procedure.
+
+## Gram-Schmidt procedure
+- A procedure that lets us transform nonorthogonal matrices into an orthogonal matrix.
+- It is not used very often in practice and has been expanded upon with methods like QR decomposition.
+    - This is because it requires a lot of dividing and multiplying matrices which can be numerically unstable.
+- Computing an orthogonal matrix with Gram-Schmidt from a non-orthogonal matrix, $V$ with $v_1$ through $v_n$ columns.
+    - For all $v_n$ in $V$, we use orthogonal vector decomposition. In otherwords, compute the component of $v_k$ that is perpendicular to $q_{k-1}, q_{k-2}$
+    - Normalize $v^*_k$ to unit length.
+
+## QR decomposition
+
+::: {.callout-note title="Definition}
+- Economy QR decomposition:
+    - We have a tall matrix and it produces a Tall Q.
+- Full QR decomposition
+    - We have have a tall matrix, but we can produce a  square Q.
+:::
+
+- Gram-Schmidt can be a bit unstable and can be really inefficient as we have to orthogonalize over all pairwise combinations of $v_n, v_{n+1}$.
+- This is an alternative way to transform a matrix into $Q$.
+$$
+A = QR
+$$
+- In the above equation, we can split $A$ into two pieces, $Q$ the orthogonal matrix and $R$. $Q$ of course loses information not related to the orthogonal part of $A$, but we want to keep that information somewhere and so we put it in $R$.
+- How do we get $R$?
+$$
+\begin{aligned}
+    A = QR\\
+    Q^TA = Q^TQR\\
+    Q^TA = IR \\
+    Q^TA = R\\
+\end{aligned}
+$$
+- This is really simple. We can use the nice property of $Q$ to find $R$ without needing to do any matrix inversion.
+- $Q$ will always be the maximum possible rank. The rank of $R$ is the same as the rank of $A$
+    - The difference in rank for $A$ and $Q$ is that the rank of $Q$ spans all of $\mathbb{R}^M$ even if the column space of $A$ is a subspace of $R^M$. A key idea to why SVD is useful.
+- One property of $R$ is that it is always upper triangular.
+    - $R$ comes from $Q^TA = R$
+    - The lower triangle of a product matrix are the dot products between later rows of the left matrix and earlier columns of the right matrix.
+    - The rows of $Q^T$ are the columns of $Q$.
+    - This means that the lower triangle of $R$ comes from pairs of vectors that are orthogonalized whereas earlier columns in $Q$ are not orthogonalized to later columns of $A$ so their dot products are not zero.
+- QR decomposition is not unique for all matrix sizes and ranks. You can get multiple $Q$'s and $R$'s depending on the size of $A$. We can make it unique if we have extra constraints like positive values on the diagonals of $R$.
+
+### QR and inverses
+- Way more stable way to compute a matrix inverse:
+    - Using LIVE EVIL:
+    $$
+    \begin{aligned}
+        A = QR \\
+        A^{-1} = (QR)^{-1} \\
+        A^{-1} = R^{-1}Q^{-1}\\
+        A^{-1} = R^{-1}Q^T\\
+    \end{aligned}
+    $$
+    - Q is stable due to the Householder reflection algo (the transposition of $Q$ is equal to its inverse)
+    - R is stable because inverting a right-triangle uses back substitution which is really stable numerically.
