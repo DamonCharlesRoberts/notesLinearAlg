@@ -5,3 +5,126 @@
 # Load packages
 using LinearAlgebra
 ```
+
+## Key points
+- Matrix inversion is a way to decompose a matrix or split a matrix into multiple components.
+- It is numerically unstable because the calculation requires a lot of moving parts and often requires the calculation of the determinant which produces floats that can cause deviation from the true solution due to floats.
+- The conditions required for full matrix inversion are often uncommon to the applications we are using and so the less ideal solutions are often needed. In many applications, the matrices that we have are not even fully invertable and require a pseudoinverse which produces a transformation matrix that approximate, but does not equate to, the identity matrix (what we often need).
+
+## Matrix inverse
+- Any matrix that has an inverse, that inverse is unique to that matrix.
+- Denoted as: $A^{-1}.
+- $A^{-1}A = I$
+    - The inverse matrix multiplied by itself produces the identity matrix.
+    - It allows you to "cancel" out a matrix.
+- We often want to do this so that we can solve common problems like:
+    - $Ax=b$ where we know $A$ and $b$ but want to find $x$
+    $$
+    \begin{aligned}
+        Ax = b \\
+        A^{-1}Ax = A^{-1}b \\
+        Ix = A^{-1}b \\
+        x = A^{-1}b
+    \end{aligned}
+    $$
+- It is really complicated to compute the inverrse of a matrix and it does not always work. Not all matrices can be inverted.
+
+## Types of inverses and their conditions
+- Full inverse
+    - $A^{-1}A = AA^{-1} = I$
+    - Conditions:
+        - $A$ needs to be square.
+        - $A$ needs to be full rank.
+- One-sided inverse
+    - Can transform a full-rank rectangular matrices into $I$.
+    - If $T$ is a tall-matrix, then you can do the ***left-inverse*** to produce I, $LT=I$, but $TL \neq I$
+    - If $W$ is a wide-matrix, then you can do the ***right-inverse*** to produce I, $WR=I$, but $RW \neq I$
+- Pseudoinverse
+    - Every matrix has one, does not require full-rank like the other inverses do.
+    - If a matrix is square full-rank, the pseudoinverse is equal to the full inverse.
+    - If it is a tall full-rank matrix, the pseudoinverse is equal to the left inverse.
+    - If it is a wide full-rank matrix, the pseudoinverse is equal to the right inverse.
+    - Singular matrices have a pseudoinverse but it only converts it into another matrix that approximates but does not equal the identity matrix.
+
+## Computing the inverse
+- To compute a scalar inverse we can:
+$$
+\begin{aligned}
+    \lambda = 3 \\
+    \lambda^{-1} = \frac{1}{3} \\
+    \lambda \lambda^{-1} = 3 \times \frac{1}{3} = 1
+\end{aligned}
+$$
+- With matrices, it isn't that easy.
+    - With a $2\times 2$ matrix:
+        - Swap diagonal elements, multiply off-diagonal elements by $-1$ and divide by the determinant.
+        $$
+        \begin{aligned}
+            A = \begin{bmatrix}
+                a&b\\
+                c&d\\
+            \end{bmatrix}\\
+            A^{-1} = \frac{1}{ad-bc}\begin{bmatrix}
+                d&-b\\
+                -c&a\\
+            \end{bmatrix}\\
+            AA^{-1} = \begin{bmatrix}
+                a&b\\
+                c&d\\
+            \end{bmatrix}\frac{1}{ad-bc}\begin{bmatrix}
+                d&-b\\
+                -c&a\\
+            \end{bmatrix}\\
+            = \frac{1}{ad-bc}\begin{bmatrix}
+                ad-bc&0\\
+                0&ad-bc\\
+            \end{bmatrix}\\
+            = \begin{bmatrix}
+                1&0\\
+                0&1\\
+            \end{bmatrix}
+        \end{aligned}
+        $$
+- Example in Julia:
+```{julia}
+#| label: matrix-inversion
+# Define a matrix.
+A = [[1,2] [4,7]]
+println("A = $A")
+# Invert A.
+A_inv = LinearAlgebra.inv(A)
+println("A^-1 = $A_inv")
+# Confirm A^1A equals I
+I = A_inv * A
+println("A^-1A = $I")
+```
+
+- To invert any square full-rank matrix, here is the algorithm:
+    - Requires four intermediate matrices
+        - **Minors**: comprises determinants of submatrices. Produced by taking the determinant of the submatrix when you exclude the $i$th row and $j$th column.
+        - **Grid matrix**: Computed as $g_{i,j} = -1^{i+j}$ and produces a checkerboard.
+        - **Cofactors matrix**: The Hadamard multiplication of the minors matrix with the grid matrix.
+        - **Adjugate matrix**: Transpose the cofactors matrix then scalar multiply it by the inverse of the determinant of the original matrix.
+
+## One-sided inverses
+- We need to find some matrix $L$ so that $LT=I$.
+- To do this, we can first make $T$ square by doing: $T^TT$. From there, we can invert that resulting square matrix which is now $L$. So, a left inverse is:
+$$
+(T^T)^{-1}(T^TT) = I \\
+L = (T^TT)^{-1}T
+$$
+
+## Moore-Penrose Pseudoinverses for singular matrices
+- Pseudoinverses produce transformation matrices.
+    - These transformation matrices are not $I$ as the other inverses produce. However, they get somewhat close to $I$.
+- Pseudoinverses are not unique solutions. You can have multiple transformation matrices for one singular matrix. This is why inverses can be unstable.
+- One type is the Moore-Penrose Pseudoinverse
+    - Extremely common.
+    - Denoted as $A^\dagger$
+- To compute them, you need to take the SVD (singular value decomposition, have notes on this later), invert the nonzero singular values and then reconstruct the matrix by multiplying $U\sum^TV^T$%
+
+## Other reasons inverses are numerically unstable
+- We do not always have full-rank matrices or matrices that are square. As we can have multiple solutions for pseudoinverses, this is one source of instability.
+- There are a lot of floating point operations, e.g., we have to calculate determinants. Because of this, there are a lot of places where rounding comes into play and this can create departures from the true results.
+    - The larger our matrix, the more determinants we have to calculate. So the larger our matrix gets, the larger the deviation can become.
+- Instead of inverting matrices, we can use matrix decomposition to decompose a matrix into the product of another one. Decomposition is much more numerically stable.
