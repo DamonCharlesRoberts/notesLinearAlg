@@ -628,5 +628,35 @@
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Row reduction and LU Decomposition</span>"
     ]
+  },
+  {
+    "objectID": "ch_11.html",
+    "href": "ch_11.html",
+    "title": "11  General Linear Models (GLM) and Least Squares",
+    "section": "",
+    "text": "11.1 GLMs\n\\[\n\\begin{aligned}\n    X\\beta = y\\\\\n    (X^TX)^{-1}X^TB = (X^TX)^{-1}X^Ty\\\\\n    \\beta = (X^TX)^{-1}X^Ty\\\\\n    \\text{OR}\\\\\n    X^T\\epsilon = 0\\\\\n    X^T(y-X\\beta) = 0\\\\\n    X^Ty - X^TX\\beta = 0\\\\\n    X^TX\\beta = X^Ty\\\\\n    \\beta = (X^TX)^{-1}X^Ty\n\\end{aligned}\n\\]",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>General Linear Models (GLM) and Least Squares</span>"
+    ]
+  },
+  {
+    "objectID": "ch_11.html#glms",
+    "href": "ch_11.html#glms",
+    "title": "11  General Linear Models (GLM) and Least Squares",
+    "section": "",
+    "text": "\\(\\beta\\) refers to a vector of coefficients.\n\\(X\\) refers to the matrix of predictors.\n\\(y\\) refers to the vector of outcome variable data.\nThis equation is exactly solvable when \\(y\\) is in the column space of the design matrix \\(X\\). This rarely happens, however, as we rarely have situations where the model accounts for 100% of the vairance in the outcome.\nThis means we need to modify the GLM equation: \\[\n\\begin{aligned}\n  X\\beta = y + \\epsilon \\\\\n  \\epsilon = X\\beta - y\\\\\n\\end{aligned}\n\\]\n\\(\\epsilon\\) is some residual vector that we add so that \\(y\\) fits within the column space of the design matrix.\n\\(\\hat{y}\\) is then \\(\\hat{y} = y + \\epsilon\\).",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>General Linear Models (GLM) and Least Squares</span>"
+    ]
+  },
+  {
+    "objectID": "ch_11.html#least-squares-with-qr",
+    "href": "ch_11.html#least-squares-with-qr",
+    "title": "11  General Linear Models (GLM) and Least Squares",
+    "section": "11.2 Least squares with QR",
+    "text": "11.2 Least squares with QR\n\nThe previous method uses the left-inverse method. It can have numerical instability, however, because it requires computing the matrix inverse.\n\\(X^TX\\) can introduce difficulties as it influences the norm and condition number (see chapter 14).\n\na high condition number can be numerically unstable and will only become less stable when squared.\n\nWith QR decomposition, we can solve this numerical instability issue: \\[\n\\begin{aligned}\n  X\\beta = y\\\\\n  QR\\beta = y\\\\\n  R\\beta = Q^Ty\\\\\n  \\beta = R^{-1}Q^Ty\n\\end{aligned}\n\\]\n\nNote some of the algebra above.\n\nWe can decompose \\(X\\) into the orthogonal, \\(Q\\), and the non-orthogonal matrix, \\(R\\).\nThen we can multiply both sides of the equation by the transpose of the orthogonal matrix, \\(Q^T\\). Since \\(Q^TQ = I\\), \\(Q\\) on the left-side cancels out.\nWe can then multiply \\(R^{-1}\\) to both sides and since \\(R^{-1}R = I\\) that cancels \\(R\\) out on the left-hand side.\n\nSome other things that happen below:\n\nWe can use row swap with permutation matrices to increase numerical stability and we do not even need to invert \\(R\\). So, we can get the solution with back substitution.\n\n\n\n\n# Define the data.\ndata = DataFrame(x = [1,2,3,4,5], y = [2,4,5,4,5])\nX = hcat(ones(length(data.x)), data.x)\ny = data.y\n# Do it the manual way.\nBeta = LinearAlgebra.inv(X'X) * X' * y\n# Do it with GLM package\nmodel = GLM.lm(@formula(y ~ x), data)\n# Compare results.\nprintln(\"Intercepts are approximately equal? $(Beta[1]) ≈ $(coef(model)[1])\")\nprintln(\"Coefficients are approximately equal? $(Beta[2]) ≈ $(coef(model)[2])\")\n\nIntercepts are approximately equal? 2.2000000000000006 ≈ 2.1999999999999993\nCoefficients are approximately equal? 0.6000000000000004 ≈ 0.6000000000000003",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>General Linear Models (GLM) and Least Squares</span>"
+    ]
   }
 ]

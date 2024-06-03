@@ -1,0 +1,75 @@
+# General Linear Models (GLM) and Least Squares
+
+```{julia}
+#| label: setup
+# Load packages.
+using LinearAlgebra
+using GLM
+using DataFrames
+```
+
+## GLMs
+
+$$
+\begin{aligned}
+    X\beta = y\\
+    (X^TX)^{-1}X^TB = (X^TX)^{-1}X^Ty\\
+    \beta = (X^TX)^{-1}X^Ty\\
+    \text{OR}\\
+    X^T\epsilon = 0\\
+    X^T(y-X\beta) = 0\\
+    X^Ty - X^TX\beta = 0\\
+    X^TX\beta = X^Ty\\
+    \beta = (X^TX)^{-1}X^Ty
+\end{aligned}
+$$
+
+- $\beta$ refers to a vector of coefficients.
+- $X$ refers to the matrix of predictors.
+- $y$ refers to the vector of outcome variable data.
+
+- This equation is exactly solvable when $y$ is in the column space of the design matrix $X$. This rarely happens, however, as  we rarely have situations where the model accounts for 100% of the vairance in the outcome.
+- This means we need to modify the GLM equation:
+$$
+\begin{aligned}
+    X\beta = y + \epsilon \\
+    \epsilon = X\beta - y\\
+\end{aligned}
+$$
+- $\epsilon$ is some residual vector that we add so that $y$ fits within the column space of the design matrix.
+- $\hat{y}$ is then $\hat{y} = y + \epsilon$.
+
+## Least squares with QR
+- The previous method uses the left-inverse method. It can have numerical instability, however, because it requires computing the matrix inverse.
+- $X^TX$ can introduce difficulties as it influences the norm and condition number (see chapter 14).
+    - a high condition number can be numerically unstable and will only become less stable when squared.
+- With QR decomposition, we can solve this numerical instability issue:
+$$
+\begin{aligned}
+    X\beta = y\\
+    QR\beta = y\\
+    R\beta = Q^Ty\\
+    \beta = R^{-1}Q^Ty
+\end{aligned}
+$$
+    - Note some of the algebra above.
+        1. We can decompose $X$ into the orthogonal, $Q$, and the non-orthogonal matrix, $R$.
+        2. Then we can multiply both sides of the equation by the transpose of the orthogonal matrix, $Q^T$. Since $Q^TQ = I$, $Q$ on the left-side cancels out.
+        3. We can then multiply $R^{-1}$ to both sides and since $R^{-1}R = I$ that cancels $R$ out on the left-hand side.
+    - Some other things that happen below:
+        - We can use row swap with permutation matrices to increase numerical stability and we do not even need to invert $R$. So, we can get the solution with back substitution.
+
+```{julia}
+#| label: ols
+# Define the data.
+data = DataFrame(x = [1,2,3,4,5], y = [2,4,5,4,5])
+X = hcat(ones(length(data.x)), data.x)
+y = data.y
+# Do it the manual way.
+Beta = LinearAlgebra.inv(X'X) * X' * y
+# Do it with GLM package
+model = GLM.lm(@formula(y ~ x), data)
+# Compare results.
+println("Intercepts are approximately equal? $(Beta[1]) ≈ $(coef(model)[1])")
+println("Coefficients are approximately equal? $(Beta[2]) ≈ $(coef(model)[2])")
+```
