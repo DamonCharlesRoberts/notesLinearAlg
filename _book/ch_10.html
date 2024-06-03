@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes on Practical Linear Algebra for Data Science by Mike X Cohen - 7&nbsp; Matrix applications</title>
+<title>Notes on Practical Linear Algebra for Data Science by Mike X Cohen - 10&nbsp; Row reduction and LU Decomposition</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ch_8.html" rel="next">
-<link href="./ch_6.html" rel="prev">
+<link href="./ch_9.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -144,7 +143,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_7.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Matrix applications</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_10.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Row reduction and LU Decomposition</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -207,7 +206,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_7.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch_7.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Matrix applications</span></span></a>
   </div>
 </li>
@@ -225,7 +224,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_10.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_10.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Row reduction and LU Decomposition</span></span></a>
   </div>
 </li>
@@ -239,8 +238,17 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#covariance" id="toc-covariance" class="nav-link active" data-scroll-target="#covariance"><span class="header-section-number">7.1</span> Covariance</a></li>
-  <li><a href="#geometric-transformations-through-matrix-vector-multiplication" id="toc-geometric-transformations-through-matrix-vector-multiplication" class="nav-link" data-scroll-target="#geometric-transformations-through-matrix-vector-multiplication"><span class="header-section-number">7.2</span> Geometric transformations through matrix-vector multiplication</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link active" data-scroll-target="#key-points"><span class="header-section-number">10.1</span> Key points</a></li>
+  <li><a href="#systems-of-equations" id="toc-systems-of-equations" class="nav-link" data-scroll-target="#systems-of-equations"><span class="header-section-number">10.2</span> Systems of equations</a></li>
+  <li><a href="#matrices-as-systems" id="toc-matrices-as-systems" class="nav-link" data-scroll-target="#matrices-as-systems"><span class="header-section-number">10.3</span> Matrices as systems</a>
+  <ul class="collapse">
+  <li><a href="#working-withsolving-matrices-as-systems" id="toc-working-withsolving-matrices-as-systems" class="nav-link" data-scroll-target="#working-withsolving-matrices-as-systems"><span class="header-section-number">10.3.1</span> Working with/solving matrices as systems</a></li>
+  <li><a href="#row-reduction" id="toc-row-reduction" class="nav-link" data-scroll-target="#row-reduction"><span class="header-section-number">10.3.2</span> Row reduction</a></li>
+  </ul></li>
+  <li><a href="#gaussian-elimination" id="toc-gaussian-elimination" class="nav-link" data-scroll-target="#gaussian-elimination"><span class="header-section-number">10.4</span> Gaussian Elimination</a></li>
+  <li><a href="#gauss-jordan-elimination" id="toc-gauss-jordan-elimination" class="nav-link" data-scroll-target="#gauss-jordan-elimination"><span class="header-section-number">10.5</span> Gauss-Jordan Elimination</a></li>
+  <li><a href="#lu-decomposition" id="toc-lu-decomposition" class="nav-link" data-scroll-target="#lu-decomposition"><span class="header-section-number">10.6</span> LU Decomposition</a></li>
+  <li><a href="#row-swapping-with-permutation-matrices" id="toc-row-swapping-with-permutation-matrices" class="nav-link" data-scroll-target="#row-swapping-with-permutation-matrices"><span class="header-section-number">10.7</span> Row swapping with Permutation matrices</a></li>
   </ul>
 </nav>
     </div>
@@ -249,7 +257,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Matrix applications</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Row reduction and LU Decomposition</span></h1>
 </div>
 
 
@@ -267,62 +275,333 @@ window.Quarto = {
 
 
 <div id="setup" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="covariance" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="covariance"><span class="header-section-number">7.1</span> Covariance</h2>
+<section id="key-points" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">10.1</span> Key points</h2>
 <ul>
-<li>Covariance is the numerator of the correlation equation – it is the dot product between two mean-centered variables – but retains the scale of the data.
+<li>When working with a system of matrices, we need to apply manipulations to both sides and in the same order – they are noncommunicative.</li>
+<li>Row reduction allows us to take the rows of matrix <span class="math inline">\(A\)</span> and scalar multiply then add them until we have an upper-triangular matrix, <span class="math inline">\(U\)</span>. The linear transformations can be recorded in our transformation matrix,, <span class="math inline">\(L\)</span>, which left multiplies <span class="math inline">\(A\)</span>. That is <span class="math inline">\(L^{-1}A = U\)</span></li>
+<li>We use row reduction in LU decomposition. The result is unique so long as there is a square and full rank matrix.</li>
+</ul>
+</section>
+<section id="systems-of-equations" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="systems-of-equations"><span class="header-section-number">10.2</span> Systems of equations</h2>
 <ul>
-<li>Positive values indicate that they move together.</li>
-<li>Negative values indicate when they move apart.</li>
-<li>0 indicates that there is no linear relationship</li>
-</ul></li>
-<li>How it works with linear algebra:
-<ol type="1">
-<li>Create a matrix where each column corresponds to each variable. Let’s call a given column <span class="math inline">\(X\)</span>.</li>
-<li>To find the covariance, we can do matrix multiplication to get the dot products between them. However, we cannot do <span class="math inline">\(XX\)</span> as they won’t have the right dimensions.</li>
-<li>So, we transpose <span class="math inline">\(X\)</span> to get <span class="math inline">\(X^T\)</span>.</li>
-<li>Now, we do matrix multiplication to get <span class="math inline">\(X^TX\)</span>. This generates the dot product between each column (assuming we meancentered the columns).</li>
-<li>Then we can multiply by <span class="math inline">\(\frac{1}{n-1}\)</span> to get the covariance matrix.</li>
-</ol></li>
-<li>Summary of the steps. <span class="math display">\[
-C = X^TX\frac{1}{n-1}
+<li>LU decomposition is essentially solving a series of systems of equations. Here’s some examples of how to algebraically solve them.</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+    x = 4-y\\
+    y = \frac{x}{2} + 2\\
+    \\
+    x = 4 - (\frac{1}{2}x + 2) \\
+    \frac{3}{2}x = 4 - 2\\
+    x = \frac{4}{3}\\
+    y = \frac{4}{3}^{-2} + 2 \\
+    y = \frac{2}{3} + \frac{6}{3} = \frac{8}{3}
+\end{aligned}
+\]</span></p>
+</section>
+<section id="matrices-as-systems" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="matrices-as-systems"><span class="header-section-number">10.3</span> Matrices as systems</h2>
+<ul>
+<li>Take the following system: <span class="math display">\[
+\begin{aligned}
+  x + y = 4 \\
+  -\frac{x}{2} + y = 4\\
+\end{aligned}
+\]</span>
+<ul>
+<li>In matrix form, it would be re-expressed as: <span class="math display">\[
+\begin{bmatrix}
+  1&amp;1\\
+  -\frac{1}{2}&amp;1
+\end{bmatrix}\begin{bmatrix}
+  x\\
+  y
+\end{bmatrix} = \begin{bmatrix}
+  4\\
+  2
+\end{bmatrix}
 \]</span></li>
-<li>Features of <span class="math inline">\(C\)</span>:
+</ul></li>
+<li>You essentially create a matrix of scalars, then a column vector of variables which is equivalent to the vector of scalars.</li>
+<li>This is what is represented when we have <span class="math inline">\(Ax = b\)</span>.
 <ul>
-<li>The covariance matrix will be symmetric as any matrix multiplied by its transpose produces a symmetric matrix.</li>
-<li>The diagonal elements of <span class="math inline">\(C\)</span> are the covariances for each variable with itself. So, the variance.</li>
+<li><span class="math inline">\(A\)</span> is our matrix of scalars called our coefficients.</li>
+<li><span class="math inline">\(x\)</span> is our vector of variables.</li>
+<li><span class="math inline">\(b\)</span> is our vector of constants.</li>
+</ul></li>
+</ul>
+<section id="working-withsolving-matrices-as-systems" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="working-withsolving-matrices-as-systems"><span class="header-section-number">10.3.1</span> Working with/solving matrices as systems</h3>
+<ul>
+<li>What you do to one-side, you must do to the other.</li>
+<li>The order matters. If you pre-multiply a matrix/vector on one-side you have to do it on the other.
+<ul>
+<li>E.g.
+<ul>
+<li>The following is valid. <span class="math display">\[
+  \begin{aligned}
+  AX = B\\
+  CAX = CB\\
+  \end{aligned}
+  \]</span></li>
+<li>The following is invalid. <span class="math display">\[
+  \begin{aligned}
+  AX = B\\
+  AXC = CB\\
+  \end{aligned}
+  \]</span></li>
+</ul></li>
 </ul></li>
 </ul>
 </section>
-<section id="geometric-transformations-through-matrix-vector-multiplication" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="geometric-transformations-through-matrix-vector-multiplication"><span class="header-section-number">7.2</span> Geometric transformations through matrix-vector multiplication</h2>
+<section id="row-reduction" class="level3" data-number="10.3.2">
+<h3 data-number="10.3.2" class="anchored" data-anchor-id="row-reduction"><span class="header-section-number">10.3.2</span> Row reduction</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Definitions">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definitions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Echelon form matrix - The resulting upper triangular matrix from row reduction - The leftmost nonzero number in a row (called the pivote) is to the right of the pivote of the rows above. - Any rows of all zerios are below rows containing nonzeros.</p>
+</div>
+</div>
 <ul>
-<li>Pure rotation matrices
+<li>The building block for LU decomposition.</li>
+<li>It is the way to solve systems of equations by hand and is very well-known in linear algebra. However, you often do not actually do it by hand. It is useful to know about as it leads to LU decomposition.</li>
+<li>Row reduction
 <ul>
-<li>Rotates a vector but preserves its length <span class="math display">\[
-  T = \begin{bmatrix}
-  cos(\theta) &amp; sin(\theta)\\
-  -sin(\theta) &amp; cos(\theta)\\
+<li>You iteratively apply two operations to rows of a matrix:
+<ol type="1">
+<li>scalar multiplication</li>
+<li>scalar addition</li>
+</ol></li>
+<li>It is the matrix system way of adding equations to other equations within a system (solving a system with substitution).</li>
+<li>The goal of row reduction: transform a dense matrix into a upper-triangular matrix via row manipulations that we implement by premultiplying a transformation matrix.</li>
+</ul></li>
+<li>Example: <span class="math display">\[
+  \begin{bmatrix}
+      2&amp;3\\
+      -2&amp;2\\
+  \end{bmatrix} \xrightarrow{R_1 + R2} \begin{bmatrix}
+      2&amp;3\\
+      0&amp;5\\
   \end{bmatrix}
-  \]</span></li>
-<li>It is a type of orthogonal matrix.</li>
+  \]</span>
+<ul>
+<li>We get this upper triangular matrix by adding the first row to the second row.</li>
+<li>This upper triangular matrix is called the <strong>echelon form</strong> of the matrix</li>
+</ul></li>
+<li>Though the echelon form is different than the original matrix, it is connected to the original matrix through a linear combination. We can represent this as: <span class="math display">\[
+\begin{bmatrix}
+  1&amp;0\\
+  1&amp;1\\
+\end{bmatrix}\begin{bmatrix}
+  2&amp;3\\
+  -2&amp;2\\
+\end{bmatrix} = \begin{bmatrix}
+  2&amp;3\\
+  0&amp;5\\
+\end{bmatrix}
+\]</span>
+<ul>
+<li>This is often represented as <span class="math inline">\(L^{-1}A = U\)</span> where <span class="math inline">\(L^{-1}\)</span> represents the linear transformations that we have implemented as a way to keep track of what manipulations we have done with row reduction.</li>
+</ul></li>
+<li>The problem with row reduction is that it is tedius and that the echelon form of a matrix is not unique.</li>
+</ul>
+</section>
+</section>
+<section id="gaussian-elimination" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="gaussian-elimination"><span class="header-section-number">10.4</span> Gaussian Elimination</h2>
+<ul>
+<li>You do not have to do matrix inversion to solve a matrix equation.</li>
+<li>We can use Gaussian Elimination.</li>
 <li>How?
 <ul>
-<li>The colums of <span class="math inline">\(T\)</span> are orthogonal as their dot product is 0
+<li>Augment the matrix of coefficeints by the vector of constants, row reduce to echelon form, then use back substitution to solve for each variable.</li>
+</ul></li>
+<li>Example:</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+    x = 4-y\\
+    y = \frac{x}{2} + 2\\
+    \text{Put in matrix form:}\\
+    \begin{bmatrix}
+        1&amp;1\\
+        -\frac{1}{2}&amp;1\\
+    \end{bmatrix}\begin{bmatrix}
+        x\\
+        y\\
+    \end{bmatrix} = \begin{bmatrix}
+        4\\
+        2\\
+    \end{bmatrix}\\
+    \begin{bmatrix}
+        1&amp;1\\
+        -\frac{1}{2}&amp;1\\
+    \end{bmatrix} \sqcup \begin{bmatrix}
+        4\\
+        2\\
+    \end{bmatrix} = \begin{bmatrix}
+        1&amp;1&amp;4\\
+        -\frac{1}{2}&amp;1&amp;2\\
+    \end{bmatrix}\\
+    \text{Row reduce:}\\
+    \begin{bmatrix}
+        1&amp;1&amp;4\\
+        -\frac{1}{2}&amp;1&amp;2\\
+    \end{bmatrix} \xrightarrow{\frac{1}{2}R_1 + R_2} \begin{bmatrix}
+        1&amp;1&amp;4\\
+        0&amp;\frac{3}{2}&amp;4\\
+    \end{bmatrix}\\
+    \text{Back substitute:}\\
+    x + y = 4\\
+    \frac{3}{2}y = 4 \Rightarrow y =  \frac{8}{3} \\
+    x + \frac{8}{3} = 4 \Rightarrow x = \frac{4}{3} \\
+\end{aligned}
+\]</span></p>
+</section>
+<section id="gauss-jordan-elimination" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="gauss-jordan-elimination"><span class="header-section-number">10.5</span> Gauss-Jordan Elimination</h2>
 <ul>
-<li>Given that <span class="math inline">\(cos^2(\theta) + sin^2(\theta) = 1\)</span>, <span class="math inline">\(cos(\theta)sin(\theta) - sin(\theta)cos(\theta) = 0\)</span></li>
-</ul></li>
-</ul></li>
-<li>To use the transofmration matrix, set <span class="math inline">\(\theta\)</span> to some angle for clockwise rotation and multiply matrix <span class="math inline">\(T\)</span> by a <span class="math inline">\(2 \times N\)</span> matrix of geometric points where each column are <span class="math inline">\((X, Y) corrdinates\)</span> ## Image feature detection</li>
-</ul></li>
-<li>Is an extension of time series filtering.
+<li>We need to keep reducing so that the left-most nonzero elements in the matrix, our pivots, are 1s.</li>
+<li>An alternate to back substitution is that we can divide each row by it’s pivot. So, for example, we had been here: <span class="math display">\[
+\begin{bmatrix}
+  1&amp;1&amp;4\\
+  0&amp;1&amp;\frac{8}{3}
+\end{bmatrix}
+\]</span></li>
+<li>We can use Gauss-Jordan elimination as a trick to continue row reducing upward to get rid of elements abov each pivot. <span class="math display">\[
+\begin{bmatrix}
+  1&amp;1&amp;4\\
+  0&amp;1&amp;\frac{8}{3}
+\end{bmatrix} \xrightarrow{-R_2 + R_1} \begin{bmatrix}
+  (-0+1)&amp;(-1+1)&amp;(-\frac{8}{3}+\frac{12}{3})\\
+  0&amp;1&amp;\frac{8}{3}\\
+\end{bmatrix}=\begin{bmatrix}
+  1&amp;0&amp;\frac{4}{3}\\
+  0&amp;1&amp;\frac{8}{3}\\
+\end{bmatrix}
+\]</span></li>
+<li>Like back substitution, this produces a reduced row echelon form, RREF.</li>
+<li>Remember Gauss-Jordan Elimination is just the shortcut that we can use to solve a matrix system rather than having to go back to solving a system of equations. ## Matrix inverse via Gauss-Jordan Eliminations:</li>
+<li>Say that we have this: <span class="math display">\[
+\begin{bmatrix}
+  a&amp;b\\
+  c&amp;d\\
+\end{bmatrix}\begin{bmatrix}
+  x_1\\
+  y_1\\
+\end{bmatrix} = \begin{bmatrix}
+  1\\
+  0
+\end{bmatrix}
+\]</span></li>
+<li>The constants vector is the first column vector for a <span class="math inline">\(2\times 2\)</span> <span class="math inline">\(I\)</span>.</li>
+<li>What this implies is that applying RREF to a square full-rank matrix augmented by the first column of the identity matrix will show the linear transformation that generates the matrix into the first column of the identity matrix. This then means that the vector <span class="math inline">\([x_1 y_1]^T\)</span> is the first column of the matrix inverse. We can then repeat this process but for the second column of the inverse.</li>
+<li>Basically, this is a mechanism to find the matrix inverse without computing determinants. The draw back is that row redeuction involves a lot of division which can lead to error from lack of precision. Though it is more numerically stable than the inverse. A matrix that is close to singular or one that has a high condition number will be difficult to inverse no matter what!</li>
+</ul>
+</section>
+<section id="lu-decomposition" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="lu-decomposition"><span class="header-section-number">10.6</span> LU Decomposition</h2>
 <ul>
-<li>design a Kernel and then create a time series of dot products between the kernel and the overlapping segments of the signal.</li>
-<li>Here we use 2D instead of 1D kernels and create a new image by computing the dot products between the kernel and overlapping windows of the image.</li>
+<li>Builds on row reduction by adding constraints. Doing this allows us to identify a unique echelon form, unlike what we get with row reduction alone. This is the RREF and <span class="math inline">\(U\)</span>.</li>
+<li>The goal with this procedure is to decompose a given matrix into the product of two triangular matrices.</li>
+<li>It relies upon row reduction.</li>
+<li>The echelon form is not necessarily unique with LU decomposition.
+<ul>
+<li>However, by requiring that the diagonals of <span class="math inline">\(L\)</span> are 1, this makes sure that the LU decomposition is unique for a full-rank square matrix. <span class="math display">\[
+A = LU
+\]</span></li>
 </ul></li>
+<li>A numerical example:
+<ul>
+<li>We have the following matrix: <span class="math display">\[
+\begin{bmatrix}
+  2&amp;2&amp;4\\
+  1&amp;0&amp;3\\
+  2&amp;1&amp;2\\
+\end{bmatrix}
+\]</span></li>
+<li>We can do <span class="math inline">\(L^{-1}A=U\)</span> with row reduction like before to get the transformation matrix that transforms <span class="math inline">\(A\)</span> into the echelon form, <span class="math inline">\(U\)</span> (which is an upper-triangle).</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[
+\begin{bmatrix}
+    2&amp;2&amp;4\\
+    1&amp;0&amp;3\\
+    2&amp;1&amp;2\\
+\end{bmatrix} = \begin{bmatrix}
+    1&amp;0&amp;0\\
+    \frac{1}{2}&amp;1&amp;0\\
+    1&amp;1&amp;1\\
+\end{bmatrix}\begin{bmatrix}
+    2&amp;2&amp;4\\
+    0&amp;-1&amp;1\\
+    0&amp;0&amp;-3\\
+\end{bmatrix}
+\]</span></p>
+<div id="lu-decomp" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define matrix.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [[<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span>] [<span class="fl">2</span>,<span class="fl">0</span>,<span class="fl">1</span>] [<span class="fl">4</span>,<span class="fl">3</span>,<span class="fl">2</span>]]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"A = </span><span class="sc">$</span>A<span class="st">"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform LU decomposition.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>A_LU_all <span class="op">=</span> <span class="bu">LinearAlgebra</span>.<span class="fu">lu</span>(A)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> A_LU_all.L</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> A_LU_all.U</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"L = </span><span class="sc">$</span>L<span class="st">"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"U = </span><span class="sc">$</span>U<span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A = [2 2 4; 1 0 3; 2 1 2]
+L = [1.0 0.0 0.0; 0.5 1.0 0.0; 1.0 1.0 1.0]
+U = [2.0 2.0 4.0; 0.0 -1.0 1.0; 0.0 0.0 -3.0]</code></pre>
+</div>
+</div>
+</section>
+<section id="row-swapping-with-permutation-matrices" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="row-swapping-with-permutation-matrices"><span class="header-section-number">10.7</span> Row swapping with Permutation matrices</h2>
+<ul>
+<li>Some matrices are hard to transform into upper-triangular form.</li>
+<li>We can swap rows to help put it in echelon form and then perform row reduction from there. This is done with a permutation matrix.</li>
+<li>Numerical example:
+<ul>
+<li>Original matrix <span class="math display">\[
+  \begin{bmatrix}
+  3&amp;2&amp;1\\
+  0&amp;5&amp;5\\
+  0&amp;7&amp;2\\
+  \end{bmatrix}
+  \]</span></li>
+<li>Row swapping with the permutation matrix, <span class="math inline">\(P\)</span>: <span class="math display">\[
+  \begin{bmatrix}
+  1&amp;0&amp;0\\
+  0&amp;1&amp;1\\
+  0&amp;1&amp;0\\
+  \end{bmatrix}\begin{bmatrix}
+  3&amp;2&amp;1\\
+  0&amp;5&amp;5\\
+  0&amp;7&amp;2\\
+  \end{bmatrix} = \begin{bmatrix}
+  3&amp;2&amp;1\\
+  0&amp;7&amp;2\\
+  0&amp;0&amp;5\\
+  \end{bmatrix}
+  \]</span></li>
+</ul></li>
+<li>Often this is required with LU decomposition. So technically, LU decomposition is denoted as: <span class="math display">\[
+PA = LU\\
+A = P^TLU
+\]</span></li>
+<li>Permutation matrices are orthogonal. Which means <span class="math inline">\(P^{-1} = P^T\)</span> and <span class="math inline">\(P^TP = I\)</span>.</li>
 </ul>
 
 
@@ -718,14 +997,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ch_6.html" class="pagination-link  aria-label=" &lt;span="" part="" ii&lt;="" span&gt;"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Matrices, Part II</span></span>
+      <a href="./ch_9.html" class="pagination-link  aria-label=" &lt;span="" matrices="" and="" qr="" decomposition.&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Orthogonal matrices and QR decomposition.</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ch_8.html" class="pagination-link" aria-label="<span class='chapter-number'>8</span>&nbsp; <span class='chapter-title'>Matrix Inverse</span>">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Matrix Inverse</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
