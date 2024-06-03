@@ -13,6 +13,7 @@ book:
     - ch_7.qmd
     - ch_8.qmd
     - ch_9.qmd
+    - ch_10.qmd
   output-file: notes
 format:
   html:
