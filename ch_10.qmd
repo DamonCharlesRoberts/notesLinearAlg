@@ -164,12 +164,16 @@ $$
     x + y = 4\\
     \frac{3}{2}y = 4 \Rightarrow y =  \frac{8}{3} \\
     x + \frac{8}{3} = 4 \Rightarrow x = \frac{4}{3} \\
+    \Rightarrow \begin{bmatrix}
+        1&1&4\\
+        0&1&\frac{8}{3}\\
+    \end{bmatrix}
 \end{aligned}
 $$
 
 ## Gauss-Jordan Elimination
 - We need to keep reducing so that the left-most nonzero elements in the matrix, our pivots, are 1s.
-- An alternate to back substitution is that we can divide each row by it's pivot. So, for example, we had been here:
+- After back substitution, to find the constant for X we can use a shortcut by dividing each row by it's pivot. So, for example, we had been here:
 $$
 \begin{bmatrix}
     1&1&4\\
