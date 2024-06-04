@@ -664,9 +664,119 @@
     "href": "ch_12.html",
     "title": "12  Least Squares applications",
     "section": "",
-    "text": "Multicollinearity occurs when the design matrix is singular. We cannot have a left-inverse of the design matrix when it is singular.\nRegularization is essentially just a way to improve numerical stability, transform singular matrices to full rank or improving the generalizability by reducing overfitting.\n\nThere are several types of regularization such as Ridge (L2), Lasso (L1), Tikhonov and shrinkage.\nMost work by shifting the design matrix by some amount.\n\n\\(A + \\lambdaI\\)\n\nWith L2, we shift it by the Frobenius norm.\n\n$= (X^TX + _F2I){-1}X^Ty\n\n\nPolynomial regression\n\nIt is the same as regular regression but we raise the values of the independent variables to higher powers.\nWe can still use the left-inverse of the design matrix (or more numerically stable decompositions). We just change the design matrix.\n\nGrid search for model parameters\n\nThe left-inverse in least squares allows us to fit a model to data. This only works for linear model fitting, however.\nGrid search samples the parameter space, computing the model fit to the data with each parameter value and then selects the parameter value that provides the best model fit.",
+    "text": "Multicollinearity occurs when the design matrix is singular. We cannot have a left-inverse of the design matrix when it is singular.\nRegularization is essentially just a way to improve numerical stability, transform singular matrices to full rank or improving the generalizability by reducing overfitting.\n\nThere are several types of regularization such as Ridge (L2), Lasso (L1), Tikhonov and shrinkage.\nMost work by shifting the design matrix by some amount.\n\n\\(A + \\lambda I\\)\n\nWith L2, we shift it by the Frobenius norm.\n\n\\(\\beta = (X^TX + \\lambda \\parallel X\\parallel_F^2I)^{-1}X^Ty\\)\n\n\nPolynomial regression\n\nIt is the same as regular regression but we raise the values of the independent variables to higher powers.\nWe can still use the left-inverse of the design matrix (or more numerically stable decompositions). We just change the design matrix.\n\nGrid search for model parameters\n\nThe left-inverse in least squares allows us to fit a model to data. This only works for linear model fitting, however.\nGrid search samples the parameter space, computing the model fit to the data with each parameter value and then selects the parameter value that provides the best model fit.",
     "crumbs": [
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Least Squares applications</span>"
+    ]
+  },
+  {
+    "objectID": "ch_13.html",
+    "href": "ch_13.html",
+    "title": "13  Eigendecomposition",
+    "section": "",
+    "text": "13.1 Key points",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Eigendecomposition</span>"
+    ]
+  },
+  {
+    "objectID": "ch_13.html#key-points",
+    "href": "ch_13.html#key-points",
+    "title": "13  Eigendecomposition",
+    "section": "",
+    "text": "Identifies M scalar/vector pairs of a square, \\(M\\times M\\) matrix.\nThese pairs of eigenvalues/eigenvector reflect the directions in the matrix.\nTo find eigenvalues, you assume the matrix is shifted by some unknown scalar, \\(\\lambda\\), assuming the matrix is singular, and setting the determinant to zero (the characteristic polynomial), then solving for all \\(\\lambda\\)s.\nTo find the eigenvector, you find the basis vector for the null space of the \\(\\lambda\\)-shifted matrix\nTo diagonalize a matrix, you are representing it as \\(V^{-1}\\Lambda V\\), where \\(V\\) is a matrix of eigenvectors in the columns and \\(\\Lambda\\) is a diagonal matrix with eiigenvalues in the diagonal elements.\nSymmetric matrices are really helpful and have nice properties in eigendecomposition: all eigenvectors are pair-wise orthogonal. Meaning the matrix of eigenvectors is an orthogonal matrix which allows us to invert it by transposing it.\nThe definiteness of a matrix indicates the signs of the eigenvalues.\nWhen we multiply a matrix by its transpose, it is always positive semidefinite.",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Eigendecomposition</span>"
+    ]
+  },
+  {
+    "objectID": "ch_13.html#what-is-eigendecomposition",
+    "href": "ch_13.html#what-is-eigendecomposition",
+    "title": "13  Eigendecomposition",
+    "section": "13.2 What is eigendecomposition?",
+    "text": "13.2 What is eigendecomposition?\n\nEigendecomposition tells us how much a combination of individuals covary.\n\nOne way to think about it: in a bivariate regression, we can see how an individual variable explains the system. However, when we have multiple variables, we can see their individual contributions, but not necessarily how they operate in the global system.\n\nIt is only defined for square matrices.\n\nFor nonsquare matrices, you would use SVD.\n\nApplications\n\nIt is commonly used in PCA and other feature detection applications.\nAlso used in noise reduction. You identify the eigenvalues and eigenvectors. Assuming that random variance is a small component of a data space, you would ignore the small eigenvalues of the eigenvector and then “project out” by reconstructing the dataset after setting those small eigenvalues to zero.\n\nTo perform eigendecomposition, we need to find the eigenvalues and the resulting eigenvector that produce the nullspace of a given matrix.",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Eigendecomposition</span>"
+    ]
+  },
+  {
+    "objectID": "ch_13.html#finding-eigenvalues",
+    "href": "ch_13.html#finding-eigenvalues",
+    "title": "13  Eigendecomposition",
+    "section": "13.3 Finding eigenvalues",
+    "text": "13.3 Finding eigenvalues\n\nThe equation to find an eigenvalue. \\[\nAv = \\lambda v\n\\]\n\\(A\\) = a square matrix.\n\\(v\\) = a vector of eigen values (called the eigenvector)\n\\(\\lambda\\) = a scalar\nWhat this equation implies is that the effect of the matrix on the vector as the same as the effect of the scalar on the same vector.\nNow we do some algebra to identify particular eigenvalues.\n\n\\[\n\\begin{aligned}\n    Av = \\lambda v\\\\\n    Av-\\lambda v = 0\\\\\n    (A-\\lambda I)v = 0\\\\\n\\end{aligned}\n\\] - This implies that the eigenvector is in the null space of the matrix when it is shifted by its eigenvalue. This means that the matrix shifted b y its eigenvalue is singular because it has a null space. - This also means that the determinant is zero as it is a singular matrix. \\[\n|A - \\lambda I| = 0\n\\] - With this, we can then solve for \\(\\lambda\\) \\[\n\\begin{aligned}\n        \\left\\vert \\begin{bmatrix}\n            a&b\\\\\n            c&d\\\\\n        \\end{bmatrix} - \\lambda \\begin{bmatrix}\n            1&0\\\\\n            0&1\\\\\n        \\end{bmatrix} \\right\\vert = 0 \\\\\n        \\begin{vmatrix}\n            a-\\lambda & b\\\\\n            c&d-\\lambda\\\\\n        \\end{vmatrix} = 0 \\\\\n        (a-\\lambda)(d-\\lambda) - bc = 0 \\\\\n        \\lambda^2 - (a+d)\\lambda + (ad-bc) = 0\n\\end{aligned}\n\\]",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Eigendecomposition</span>"
+    ]
+  },
+  {
+    "objectID": "ch_13.html#finding-eigenvectors",
+    "href": "ch_13.html#finding-eigenvectors",
+    "title": "13  Eigendecomposition",
+    "section": "13.4 Finding eigenvectors",
+    "text": "13.4 Finding eigenvectors\n\nOnce you have found the eigenvalues, you will want to find the vector \\(v\\) that is in the null space of the matrix shifted by \\(\\lambda\\)\nNumerical example:\n\n\\[\n\\begin{aligned}\n    \\text{Find the eigenvalues:}\n    \\begin{bmatrix}\n        1&2\\\\\n        2&1\\\\\n    \\end{bmatrix} \\Rightarrow \\lambda_1 = 3, \\lambda_2 = -1 \\\\\n    \\text{Find the eigenvector:}\n    \\begin{bmatrix}\n        1-3&2\\\\\n        2&1-3\\\\\n    \\end{bmatrix} = \\begin{bmatrix}\n        -2&2\\\\\n        2&-2\\\\\n    \\end{bmatrix} \\Rightarrow \\begin{bmatrix}\n        -2&2\\\\\n        2&-2\\\\\n    \\end{bmatrix}\\begin{bmatrix}\n        1\\\\\n        1\\\\\n    \\end{bmatrix} = \\begin{bmatrix}\n        0\\\\\n        0\n    \\end{bmatrix}\n\\end{aligned}\n\\] - We can find these null space vectors using Gauss-Jordan where the coefficients matrix is the \\(\\lambda\\)-shifted matrix and the constants vector is the zeros vector. Often QR decomposition is used instead as it is more stable.",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Eigendecomposition</span>"
+    ]
+  },
+  {
+    "objectID": "ch_13.html#sign-and-scale-indeterminacy",
+    "href": "ch_13.html#sign-and-scale-indeterminacy",
+    "title": "13  Eigendecomposition",
+    "section": "13.5 Sign and scale indeterminacy",
+    "text": "13.5 Sign and scale indeterminacy\n\nIf \\(v\\) is an eigenvector of a matrix, then so is \\(\\alpha v\\) for any real-valued \\(\\alpha\\) except when \\(\\alpha = 0\\).\nEigenvectors are used because of their direction rather than their magnitude. So, \\(\\alpha\\) does not really influence the determinacy of the eigenvector.",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Eigendecomposition</span>"
+    ]
+  },
+  {
+    "objectID": "ch_13.html#special-features-of-symmetric-matrices",
+    "href": "ch_13.html#special-features-of-symmetric-matrices",
+    "title": "13  Eigendecomposition",
+    "section": "13.6 Special features of symmetric matrices",
+    "text": "13.6 Special features of symmetric matrices\n\n13.6.1 Orthogonal eigenvectors.\n\nSymmetric matrices produce orthogonal eigenvectors.\n\nThis is significant as all eigenvectors of a matrix are pair-wise orthogonal. Meaning, the dot product between any pair of eigenvectors is zero while the dot product of an eigenvector with itself is nonzero. This makes an eigenvector matrix extremely easy to invert as we can just transpose it.\n\nWe do not constrain eigenvectors to be orthogonal for nonsymmetric vectors however. They will be linearly independent for each distinct eigenvalue.\n\n\n\n13.6.2 Real-valued eigenvalues\n\nSymmetric matrices have real-valued eigenvalues and real-valued eigenvectors.",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Eigendecomposition</span>"
+    ]
+  },
+  {
+    "objectID": "ch_13.html#eigendecomposition-of-singular-matrices",
+    "href": "ch_13.html#eigendecomposition-of-singular-matrices",
+    "title": "13  Eigendecomposition",
+    "section": "13.7 Eigendecomposition of singular matrices",
+    "text": "13.7 Eigendecomposition of singular matrices\n\nWe CAN eigendecompose a singular matrix.",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Eigendecomposition</span>"
+    ]
+  },
+  {
+    "objectID": "ch_13.html#quadratic-form-definiteness-and-eigenvalues",
+    "href": "ch_13.html#quadratic-form-definiteness-and-eigenvalues",
+    "title": "13  Eigendecomposition",
+    "section": "13.8 Quadratic form, definiteness, and eigenvalues",
+    "text": "13.8 Quadratic form, definiteness, and eigenvalues\n\n13.8.1 Quadratic form of a matrix\n\nNotice when we were using the determinant above to compute the eigenvector, we ended up with polynomial \\(\\lambda\\) terms. One feature of matrices is that: \\[\nw^TAw = \\alpha\n\\]\nIf we pre-andpostmultiply a square matrix by the same vector \\(w\\), we get a scalar.\nExample: \\[\n\\begin{bmatrix}\n  x&y\\\\\n\\end{bmatrix}\\begin{bmatrix}\n  2&4\\\\\n  0&3\\\\\n\\end{bmatrix}\\begin{bmatrix}\n  x\\\\\n  y\\\\\n\\end{bmatrix} = 2x^2 + (0+4)xy + 3y^2\n\\]\nWhether that scalar is positive or negative will influence definiteness.",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Eigendecomposition</span>"
+    ]
+  },
+  {
+    "objectID": "ch_13.html#definiteness",
+    "href": "ch_13.html#definiteness",
+    "title": "13  Eigendecomposition",
+    "section": "13.9 Definiteness",
+    "text": "13.9 Definiteness\n\nA characteristic of a square matrix\nDefined by the signs of the eigenvalues of a matrix (equivalent to the signs of the quadratic form results)\nIt influences the invertibility of a matrix as well as whether we can use generalized eigendecomposition.\n\n\n\n\n\n\n\n\n\n\nCategory\nQuadratic form\nEigenvalues\nInvertible\n\n\n\n\nPositive definite\nPositive\n+\nYes\n\n\nPositive semidefinite\nNonnegative\n+ and 0\nNo\n\n\nIndefinite\nPositive and negative\n+ and -\nDepends\n\n\nNegative semidefinite\nNonpositive\n- and 0\nNo\n\n\nNegative definite\nNegative\n-\nYes\n\n\n\n\nAll eigenvalues are positive when the data matrix is full rank\nThere will be at least one zero-valued eigenvalue if a matrix is singular.\n\n\n13.9.1 A^TA is Positive semidefinite\n\nThis is because covariance matrices are semipositive definite. They will have non-negative eigenvalues.",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Eigendecomposition</span>"
+    ]
+  },
+  {
+    "objectID": "ch_13.html#generalized-eigendecomposition",
+    "href": "ch_13.html#generalized-eigendecomposition",
+    "title": "13  Eigendecomposition",
+    "section": "13.10 Generalized eigendecomposition",
+    "text": "13.10 Generalized eigendecomposition\n\nAlso referred to as simultaneious diagonalization of two matrices\nIt involves replacing the identity matrix with another matrix besides the identity or zeros matrix. \\[\nAv = \\lambdaBv\n\\]",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Eigendecomposition</span>"
     ]
   }
 ]

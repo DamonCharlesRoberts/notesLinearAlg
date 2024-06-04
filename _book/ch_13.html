@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes on Practical Linear Algebra for Data Science by Mike X Cohen - 3&nbsp; Vectors Part II</title>
+<title>Notes on Practical Linear Algebra for Data Science by Mike X Cohen - 13&nbsp; Eigendecomposition</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ch_4.html" rel="next">
-<link href="./ch_2.html" rel="prev">
+<link href="./ch_12.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -144,7 +143,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_3.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vectors Part II</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_13.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Eigendecomposition</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -183,7 +182,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_3.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch_3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vectors Part II</span></span></a>
   </div>
 </li>
@@ -243,7 +242,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_13.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_13.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Eigendecomposition</span></span></a>
   </div>
 </li>
@@ -257,12 +256,26 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#key-points" id="toc-key-points" class="nav-link active" data-scroll-target="#key-points"><span class="header-section-number">3.1</span> Key points</a></li>
-  <li><a href="#vector-sets" id="toc-vector-sets" class="nav-link" data-scroll-target="#vector-sets"><span class="header-section-number">3.2</span> Vector sets</a></li>
-  <li><a href="#linear-weighted-combinations" id="toc-linear-weighted-combinations" class="nav-link" data-scroll-target="#linear-weighted-combinations"><span class="header-section-number">3.3</span> Linear weighted combinations</a></li>
-  <li><a href="#linear-dependence" id="toc-linear-dependence" class="nav-link" data-scroll-target="#linear-dependence"><span class="header-section-number">3.4</span> Linear dependence</a></li>
-  <li><a href="#subspace-and-span" id="toc-subspace-and-span" class="nav-link" data-scroll-target="#subspace-and-span"><span class="header-section-number">3.5</span> Subspace and span</a></li>
-  <li><a href="#basis" id="toc-basis" class="nav-link" data-scroll-target="#basis"><span class="header-section-number">3.6</span> Basis</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link active" data-scroll-target="#key-points"><span class="header-section-number">13.1</span> Key points</a></li>
+  <li><a href="#what-is-eigendecomposition" id="toc-what-is-eigendecomposition" class="nav-link" data-scroll-target="#what-is-eigendecomposition"><span class="header-section-number">13.2</span> What is eigendecomposition?</a></li>
+  <li><a href="#finding-eigenvalues" id="toc-finding-eigenvalues" class="nav-link" data-scroll-target="#finding-eigenvalues"><span class="header-section-number">13.3</span> Finding eigenvalues</a></li>
+  <li><a href="#finding-eigenvectors" id="toc-finding-eigenvectors" class="nav-link" data-scroll-target="#finding-eigenvectors"><span class="header-section-number">13.4</span> Finding eigenvectors</a></li>
+  <li><a href="#sign-and-scale-indeterminacy" id="toc-sign-and-scale-indeterminacy" class="nav-link" data-scroll-target="#sign-and-scale-indeterminacy"><span class="header-section-number">13.5</span> Sign and scale indeterminacy</a></li>
+  <li><a href="#special-features-of-symmetric-matrices" id="toc-special-features-of-symmetric-matrices" class="nav-link" data-scroll-target="#special-features-of-symmetric-matrices"><span class="header-section-number">13.6</span> Special features of symmetric matrices</a>
+  <ul class="collapse">
+  <li><a href="#orthogonal-eigenvectors." id="toc-orthogonal-eigenvectors." class="nav-link" data-scroll-target="#orthogonal-eigenvectors."><span class="header-section-number">13.6.1</span> Orthogonal eigenvectors.</a></li>
+  <li><a href="#real-valued-eigenvalues" id="toc-real-valued-eigenvalues" class="nav-link" data-scroll-target="#real-valued-eigenvalues"><span class="header-section-number">13.6.2</span> Real-valued eigenvalues</a></li>
+  </ul></li>
+  <li><a href="#eigendecomposition-of-singular-matrices" id="toc-eigendecomposition-of-singular-matrices" class="nav-link" data-scroll-target="#eigendecomposition-of-singular-matrices"><span class="header-section-number">13.7</span> Eigendecomposition of singular matrices</a></li>
+  <li><a href="#quadratic-form-definiteness-and-eigenvalues" id="toc-quadratic-form-definiteness-and-eigenvalues" class="nav-link" data-scroll-target="#quadratic-form-definiteness-and-eigenvalues"><span class="header-section-number">13.8</span> Quadratic form, definiteness, and eigenvalues</a>
+  <ul class="collapse">
+  <li><a href="#quadratic-form-of-a-matrix" id="toc-quadratic-form-of-a-matrix" class="nav-link" data-scroll-target="#quadratic-form-of-a-matrix"><span class="header-section-number">13.8.1</span> Quadratic form of a matrix</a></li>
+  </ul></li>
+  <li><a href="#definiteness" id="toc-definiteness" class="nav-link" data-scroll-target="#definiteness"><span class="header-section-number">13.9</span> Definiteness</a>
+  <ul class="collapse">
+  <li><a href="#ata-is-positive-semidefinite" id="toc-ata-is-positive-semidefinite" class="nav-link" data-scroll-target="#ata-is-positive-semidefinite"><span class="header-section-number">13.9.1</span> A^TA is Positive semidefinite</a></li>
+  </ul></li>
+  <li><a href="#generalized-eigendecomposition" id="toc-generalized-eigendecomposition" class="nav-link" data-scroll-target="#generalized-eigendecomposition"><span class="header-section-number">13.10</span> Generalized eigendecomposition</a></li>
   </ul>
 </nav>
     </div>
@@ -271,7 +284,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vectors Part II</span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Eigendecomposition</span></h1>
 </div>
 
 
@@ -288,158 +301,243 @@ window.Quarto = {
 </header>
 
 
-<div id="setup-packages" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
+<div id="setup" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="key-points" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">3.1</span> Key points</h2>
-<p>The material in this chapter is a bit abstract and I have a bit of a difficult time following the author’s attempts to explain the purpose of some of these concepts. So, I’ve tried to provide some analogies. But to tie it explicitly to how I would think of this in an abstract regression setting, this is what I could come up with:</p>
-<p>A vector space would be like the population. There are all these possible observations (row vectors) with all of these possible responses. These vector spaces should span all possible measures. A vector would be a particular, observed, vector.</p>
-<p>The basis would be a set of independent variables that can be linearly combined to explain our outcome of interest. Now, there is also a basis vector space which reflects all of the possible vectors that I could use to come up with a linear weighted combination of those vectors to produce a given outcome vector. However, the task is to find the particular basis that is most likely to produce the outcome in a given basis vector space – Bayesian statistics calculates this probability directly (think first few chapters of McElreath’s book).</p>
-</section>
-<section id="vector-sets" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="vector-sets"><span class="header-section-number">3.2</span> Vector sets</h2>
+<section id="key-points" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">13.1</span> Key points</h2>
 <ul>
-<li>Is a collection of vectors.</li>
-<li>Denoted with capital italic letters.
-<ul>
-<li>E.g., <span class="math inline">\(S\)</span> or <span class="math inline">\(V\)</span></li>
-</ul></li>
+<li>Identifies M scalar/vector pairs of a square, <span class="math inline">\(M\times M\)</span> matrix.</li>
+<li>These pairs of eigenvalues/eigenvector reflect the directions in the matrix.</li>
+<li>To find eigenvalues, you assume the matrix is shifted by some unknown scalar, <span class="math inline">\(\lambda\)</span>, assuming the matrix is singular, and setting the determinant to zero (the characteristic polynomial), then solving for all <span class="math inline">\(\lambda\)</span>s.</li>
+<li>To find the eigenvector, you find the basis vector for the null space of the <span class="math inline">\(\lambda\)</span>-shifted matrix</li>
+<li>To diagonalize a matrix, you are representing it as <span class="math inline">\(V^{-1}\Lambda V\)</span>, where <span class="math inline">\(V\)</span> is a matrix of eigenvectors in the columns and <span class="math inline">\(\Lambda\)</span> is a diagonal matrix with eiigenvalues in the diagonal elements.</li>
+<li>Symmetric matrices are really helpful and have nice properties in eigendecomposition: all eigenvectors are pair-wise orthogonal. Meaning the matrix of eigenvectors is an orthogonal matrix which allows us to invert it by transposing it.</li>
+<li>The definiteness of a matrix indicates the signs of the eigenvalues.</li>
+<li>When we multiply a matrix by its transpose, it is always positive semidefinite.</li>
 </ul>
 </section>
-<section id="linear-weighted-combinations" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="linear-weighted-combinations"><span class="header-section-number">3.3</span> Linear weighted combinations</h2>
+<section id="what-is-eigendecomposition" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="what-is-eigendecomposition"><span class="header-section-number">13.2</span> What is eigendecomposition?</h2>
 <ul>
-<li>It is a way of mixing information from multiple variables, vectors, with some vectors contributing more information than others.</li>
-<li>Sometimes called linear mixture or weighted combination</li>
-<li>Coefficients are another term for the scalar that summarizes the weight for a particular vector in the weighted combination that they provide.</li>
-<li>To perform a linear weighted combination:
+<li>Eigendecomposition tells us how much a combination of individuals covary.
 <ul>
-<li>Take some finite set of vectors, do scalar-vector multiplication and add them. <span class="math display">\[
-  w = \lambda_1v_2 + \lambda_2v_2 + \ldots + \lambda_iv_i
-  \]</span></li>
+<li>One way to think about it: in a bivariate regression, we can see how an individual variable explains the system. However, when we have multiple variables, we can see their individual contributions, but not necessarily how they operate in the global system.</li>
 </ul></li>
-<li>Example:</li>
+<li>It is only defined for square matrices.
+<ul>
+<li>For nonsquare matrices, you would use SVD.</li>
+</ul></li>
+<li>Applications
+<ul>
+<li>It is commonly used in PCA and other feature detection applications.</li>
+<li>Also used in noise reduction. You identify the eigenvalues and eigenvectors. Assuming that random variance is a small component of a data space, you would ignore the small eigenvalues of the eigenvector and then “project out” by reconstructing the dataset after setting those small eigenvalues to zero.</li>
+</ul></li>
+<li>To perform eigendecomposition, we need to find the eigenvalues and the resulting eigenvector that produce the nullspace of a given matrix.</li>
 </ul>
-<div id="weighted-combinations" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the vectors.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>v1 <span class="op">=</span> [<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">1</span>]</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>v2 <span class="op">=</span> [<span class="op">-</span><span class="fl">4</span>,<span class="fl">0</span>,<span class="op">-</span><span class="fl">4</span>]</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>v3 <span class="op">=</span> [<span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">2</span>]</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the weights.</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>l1 <span class="op">=</span> <span class="fl">1</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>l2 <span class="op">=</span> <span class="fl">2</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>l3 <span class="op">=</span> <span class="op">-</span><span class="fl">3</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the linear weighted combination.</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> l1 <span class="op">*</span> v1 <span class="op">+</span> l2 <span class="op">*</span> v2 <span class="op">+</span> l3 <span class="op">*</span> v3</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result.</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"w = </span><span class="sc">$</span>w<span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>w = [-7, -4, -13]</code></pre>
-</div>
-</div>
 </section>
-<section id="linear-dependence" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="linear-dependence"><span class="header-section-number">3.4</span> Linear dependence</h2>
-<p>If you can find some <span class="math inline">\(\lambda\)</span>s that make the following equation true, then the vectors in the given set, <span class="math inline">\(V\)</span> are linarly dependent. <span class="math display">\[
-0 = \lambda_1v_2 + \lambda_2v_2 + \ldots + \lambda_iv_, \space \space \lambda \in \mathbb{R}
+<section id="finding-eigenvalues" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="finding-eigenvalues"><span class="header-section-number">13.3</span> Finding eigenvalues</h2>
+<ul>
+<li>The equation to find an eigenvalue. <span class="math display">\[
+Av = \lambda v
+\]</span></li>
+<li><span class="math inline">\(A\)</span> = a square matrix.</li>
+<li><span class="math inline">\(v\)</span> = a vector of eigen values (called the eigenvector)</li>
+<li><span class="math inline">\(\lambda\)</span> = a scalar</li>
+<li>What this equation implies is that the effect of the matrix on the vector as the same as the effect of the scalar on the same vector.</li>
+<li>Now we do some algebra to identify particular eigenvalues.</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+    Av = \lambda v\\
+    Av-\lambda v = 0\\
+    (A-\lambda I)v = 0\\
+\end{aligned}
+\]</span> - This implies that the eigenvector is in the null space of the matrix when it is shifted by its eigenvalue. This means that the matrix shifted b y its eigenvalue is singular because it has a null space. - This also means that the determinant is zero as it is a singular matrix. <span class="math display">\[
+|A - \lambda I| = 0
+\]</span> - With this, we can then solve for <span class="math inline">\(\lambda\)</span> <span class="math display">\[
+\begin{aligned}
+        \left\vert \begin{bmatrix}
+            a&amp;b\\
+            c&amp;d\\
+        \end{bmatrix} - \lambda \begin{bmatrix}
+            1&amp;0\\
+            0&amp;1\\
+        \end{bmatrix} \right\vert = 0 \\
+        \begin{vmatrix}
+            a-\lambda &amp; b\\
+            c&amp;d-\lambda\\
+        \end{vmatrix} = 0 \\
+        (a-\lambda)(d-\lambda) - bc = 0 \\
+        \lambda^2 - (a+d)\lambda + (ad-bc) = 0
+\end{aligned}
 \]</span></p>
-<p>This excludes the trivial solution where <span class="math inline">\(\lambda = 0\)</span>.</p>
 </section>
-<section id="subspace-and-span" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="subspace-and-span"><span class="header-section-number">3.5</span> Subspace and span</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Definitions">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Definitions
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<section id="finding-eigenvectors" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="finding-eigenvectors"><span class="header-section-number">13.4</span> Finding eigenvectors</h2>
 <ul>
-<li>Vector Subspace:
-<ul>
-<li>If I have a set of vectors, the span is the set of all possible vectors I can obtain from adding them together and scaling them by any scalar.</li>
-</ul></li>
-<li>Vector Span:
-<ul>
-<li>The verb of a vector subspace. The subspace a particular vector spans.</li>
-</ul></li>
+<li><p>Once you have found the eigenvalues, you will want to find the vector <span class="math inline">\(v\)</span> that is in the null space of the matrix shifted by <span class="math inline">\(\lambda\)</span></p></li>
+<li><p>Numerical example:</p></li>
 </ul>
-</div>
-</div>
+<p><span class="math display">\[
+\begin{aligned}
+    \text{Find the eigenvalues:}
+    \begin{bmatrix}
+        1&amp;2\\
+        2&amp;1\\
+    \end{bmatrix} \Rightarrow \lambda_1 = 3, \lambda_2 = -1 \\
+    \text{Find the eigenvector:}
+    \begin{bmatrix}
+        1-3&amp;2\\
+        2&amp;1-3\\
+    \end{bmatrix} = \begin{bmatrix}
+        -2&amp;2\\
+        2&amp;-2\\
+    \end{bmatrix} \Rightarrow \begin{bmatrix}
+        -2&amp;2\\
+        2&amp;-2\\
+    \end{bmatrix}\begin{bmatrix}
+        1\\
+        1\\
+    \end{bmatrix} = \begin{bmatrix}
+        0\\
+        0
+    \end{bmatrix}
+\end{aligned}
+\]</span> - We can find these null space vectors using Gauss-Jordan where the coefficients matrix is the <span class="math inline">\(\lambda\)</span>-shifted matrix and the constants vector is the zeros vector. Often QR decomposition is used instead as it is more stable.</p>
 </section>
-<section id="basis" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="basis"><span class="header-section-number">3.6</span> Basis</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Definitions">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Definitions
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<section id="sign-and-scale-indeterminacy" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="sign-and-scale-indeterminacy"><span class="header-section-number">13.5</span> Sign and scale indeterminacy</h2>
 <ul>
-<li>Basis:
-<ul>
-<li>The combination of span and vectors: a set of vectors can be a basis for sume subspace if it spans that subspace and is an independent set of vectors.</li>
-</ul></li>
+<li>If <span class="math inline">\(v\)</span> is an eigenvector of a matrix, then so is <span class="math inline">\(\alpha v\)</span> for any real-valued <span class="math inline">\(\alpha\)</span> except when <span class="math inline">\(\alpha = 0\)</span>.</li>
+<li>Eigenvectors are used because of their direction rather than their magnitude. So, <span class="math inline">\(\alpha\)</span> does not really influence the determinacy of the eigenvector.</li>
 </ul>
-</div>
-</div>
+</section>
+<section id="special-features-of-symmetric-matrices" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="special-features-of-symmetric-matrices"><span class="header-section-number">13.6</span> Special features of symmetric matrices</h2>
+<section id="orthogonal-eigenvectors." class="level3" data-number="13.6.1">
+<h3 data-number="13.6.1" class="anchored" data-anchor-id="orthogonal-eigenvectors."><span class="header-section-number">13.6.1</span> Orthogonal eigenvectors.</h3>
 <ul>
-<li>We can use a number of different ways to describe the unit of some quantified thing. For example 2000 miles versus ~3218 kilometers.</li>
-<li>Cartesian axis:
+<li>Symmetric matrices produce orthogonal eigenvectors.
 <ul>
-<li>The familiar XY plane.</li>
-<li>Comprise vectors that are mutually orthogonal and unit length.</li>
-<li>Example with a 2D Cartesian graph: <span class="math display">\[
-S_2 = \begin{Bmatrix}\begin{bmatrix}1\\0\end{bmatrix},\begin{bmatrix}0\\1\end{bmatrix}\end{Bmatrix}
-\]</span></li>
-<li>Example with a 3D Cartesian graph: <span class="math display">\[
-S_3 = \begin{Bmatrix}\begin{bmatrix}1\\0\\0\end{bmatrix},\begin{bmatrix}0\\1\\0\end{bmatrix},\begin{bmatrix}0\\0\\1\end{bmatrix}\end{Bmatrix}
-\]</span></li>
+<li>This is significant as all eigenvectors of a matrix are pair-wise orthogonal. Meaning, the dot product between any pair of eigenvectors is zero while the dot product of an eigenvector with itself is nonzero. This makes an eigenvector matrix extremely easy to invert as we can just transpose it.</li>
 </ul></li>
-<li>Other Basis set for <span class="math inline">\(\mathbb{R}^2\)</span>: <span class="math display">\[
-T = \begin{Bmatrix}\begin{bmatrix}3\\1\end{bmatrix},\begin{bmatrix}-3\\1\end{bmatrix}\end{Bmatrix}
+<li>We do not constrain eigenvectors to be orthogonal for nonsymmetric vectors however. They will be linearly independent for each distinct eigenvalue.</li>
+</ul>
+</section>
+<section id="real-valued-eigenvalues" class="level3" data-number="13.6.2">
+<h3 data-number="13.6.2" class="anchored" data-anchor-id="real-valued-eigenvalues"><span class="header-section-number">13.6.2</span> Real-valued eigenvalues</h3>
+<ul>
+<li>Symmetric matrices have real-valued eigenvalues and real-valued eigenvectors.</li>
+</ul>
+</section>
+</section>
+<section id="eigendecomposition-of-singular-matrices" class="level2" data-number="13.7">
+<h2 data-number="13.7" class="anchored" data-anchor-id="eigendecomposition-of-singular-matrices"><span class="header-section-number">13.7</span> Eigendecomposition of singular matrices</h2>
+<ul>
+<li>We <strong><em>CAN</em></strong> eigendecompose a singular matrix.</li>
+</ul>
+</section>
+<section id="quadratic-form-definiteness-and-eigenvalues" class="level2" data-number="13.8">
+<h2 data-number="13.8" class="anchored" data-anchor-id="quadratic-form-definiteness-and-eigenvalues"><span class="header-section-number">13.8</span> Quadratic form, definiteness, and eigenvalues</h2>
+<section id="quadratic-form-of-a-matrix" class="level3" data-number="13.8.1">
+<h3 data-number="13.8.1" class="anchored" data-anchor-id="quadratic-form-of-a-matrix"><span class="header-section-number">13.8.1</span> Quadratic form of a matrix</h3>
+<ul>
+<li><p>Notice when we were using the determinant above to compute the eigenvector, we ended up with polynomial <span class="math inline">\(\lambda\)</span> terms. One feature of matrices is that: <span class="math display">\[
+w^TAw = \alpha
+\]</span></p></li>
+<li><p>If we pre-andpostmultiply a square matrix by the same vector <span class="math inline">\(w\)</span>, we get a scalar.</p></li>
+<li><p>Example: <span class="math display">\[
+\begin{bmatrix}
+  x&amp;y\\
+\end{bmatrix}\begin{bmatrix}
+  2&amp;4\\
+  0&amp;3\\
+\end{bmatrix}\begin{bmatrix}
+  x\\
+  y\\
+\end{bmatrix} = 2x^2 + (0+4)xy + 3y^2
+\]</span></p></li>
+<li><p>Whether that scalar is positive or negative will influence definiteness.</p></li>
+</ul>
+</section>
+</section>
+<section id="definiteness" class="level2" data-number="13.9">
+<h2 data-number="13.9" class="anchored" data-anchor-id="definiteness"><span class="header-section-number">13.9</span> Definiteness</h2>
+<ul>
+<li>A characteristic of a square matrix</li>
+<li>Defined by the signs of the eigenvalues of a matrix (equivalent to the signs of the quadratic form results)</li>
+<li>It influences the invertibility of a matrix as well as whether we can use generalized eigendecomposition.</li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 32%">
+<col style="width: 19%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Quadratic form</th>
+<th>Eigenvalues</th>
+<th>Invertible</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive definite</td>
+<td>Positive</td>
+<td>+</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Positive semidefinite</td>
+<td>Nonnegative</td>
+<td>+ and 0</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>Indefinite</td>
+<td>Positive and negative</td>
+<td>+ and -</td>
+<td>Depends</td>
+</tr>
+<tr class="even">
+<td>Negative semidefinite</td>
+<td>Nonpositive</td>
+<td>- and 0</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>Negative definite</td>
+<td>Negative</td>
+<td>-</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>All eigenvalues are positive when the data matrix is full rank</li>
+<li>There will be at least one zero-valued eigenvalue if a matrix is singular.</li>
+</ul>
+<section id="ata-is-positive-semidefinite" class="level3" data-number="13.9.1">
+<h3 data-number="13.9.1" class="anchored" data-anchor-id="ata-is-positive-semidefinite"><span class="header-section-number">13.9.1</span> A^TA is Positive semidefinite</h3>
+<ul>
+<li>This is because covariance matrices are semipositive definite. They will have non-negative eigenvalues.</li>
+</ul>
+</section>
+</section>
+<section id="generalized-eigendecomposition" class="level2" data-number="13.10">
+<h2 data-number="13.10" class="anchored" data-anchor-id="generalized-eigendecomposition"><span class="header-section-number">13.10</span> Generalized eigendecomposition</h2>
+<ul>
+<li>Also referred to as simultaneious diagonalization of two matrices</li>
+<li>It involves replacing the identity matrix with another matrix besides the identity or zeros matrix. <span class="math display">\[
+Av = \lambdaBv
 \]</span></li>
 </ul>
-<p>Both <span class="math inline">\(S_2\)</span> and <span class="math inline">\(T\)</span> span the same subspace (all of <span class="math inline">\(\mathbb{R}^2\)</span>). However, these are just different ways of describing the data.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Attempting to make it less abstract">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Attempting to make it less abstract
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>NOTE: THIS IS FROM CHATGPT</p>
-<p>Imagine you’re navigating through a city using a map. In this analogy:</p>
-<ol type="1">
-<li><p><strong>Vector Space</strong>: The space you’re moving around in, which could represent the city streets and intersections. Each point in this space corresponds to a location in the city.</p></li>
-<li><p><strong>Vector</strong>: Your position or direction of movement at any given time. For example, if you’re at the intersection of Main Street and Elm Street and you’re moving north, your position can be represented as a vector.</p></li>
-</ol>
-<p>Now, let’s talk about the basis in this context:</p>
-<p><strong>Basis</strong>:</p>
-<p>Think of the basis as a set of fundamental directions or movements that you can use to describe any position or movement within the city. These fundamental directions should be enough to reach any point in the city and should be independent of each other.</p>
-<ol type="1">
-<li><p><strong>Linear Independence</strong>: Each fundamental direction should be distinct and not redundant. For example, you might choose north, south, east, and west as your fundamental directions. Each direction is distinct and cannot be represented as a combination of the others.</p></li>
-<li><p><strong>Spanning</strong>: Together, these fundamental directions should cover all possible movements within the city. You should be able to reach any location by combining these fundamental movements in the right proportions.</p></li>
-</ol>
-<p><strong>Example</strong>:</p>
-<p>Let’s say you’ve chosen the following basis for navigating the city: north, south, east, and west. Each of these directions represents a unit vector in the corresponding direction.</p>
-<p>Now, if you want to describe a specific movement within the city, such as going from your current location to the nearest park, you can express this movement as a combination of the fundamental directions in your basis. For instance, you might need to move two blocks north and then three blocks west.</p>
-<p>In this example, the basis vectors (north, south, east, and west) allow you to describe any movement or position within the city by combining them appropriately. They form the building blocks that enable you to navigate and understand spatial relationships within the city.</p>
-<p>So, in this less abstract example, the concept of a vector basis is akin to choosing a set of fundamental directions or movements that allow you to describe any position or movement within a given space, such as navigating through a city using cardinal directions.</p>
-</div>
-</div>
 
 
 </section>
@@ -834,14 +932,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ch_2.html" class="pagination-link  aria-label=" &lt;span="" part="" i&lt;="" span&gt;"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Vectors, Part I</span></span>
+      <a href="./ch_12.html" class="pagination-link  aria-label=" &lt;span="" squares="" applications&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Least Squares applications</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ch_4.html" class="pagination-link" aria-label="<span class='chapter-number'>4</span>&nbsp; <span class='chapter-title'>Vector Applications</span>">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Vector Applications</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
