@@ -15,9 +15,9 @@ using LinearAlgebra
 - The definiteness of a matrix indicates the signs of the eigenvalues.
 - When we multiply a matrix by its transpose, it is always positive semidefinite.
 - In stats, here is how we can think of the value of eigenvalues and eigenvectors:
-    - **Eigenvectors**: directions in the dataspace where the covariance between variables is maximized.
-    - **Eigenvalues**: scalars that measure how much variance there is in the data along the eigenvectors.
-    - This means that eigendecomposition is essentially a way to decompose a covariance matrix into a vector of the direction of the variance (eigenvectors) and a vector of the magnitude of the variance (eigenvalues) in the data.
+    - **Eigenvectors**: Reflect the direction of the variance in the data matrix.
+    - **Eigenvalues**: Reflect the magnidue of the variance for their corresponding eigenvectors. It tells us how much variance is captured in the direction of each eigenvector.
+    - This means that eigendecomposition is essentially a way to decompose a covariance matrix into a vector of the direction of the variance (eigenvectors) and a vector of the magnitude of the variance (eigenvalues) in the data (as a whole, not in a particular variable; in PCA, a given eigenvector would be a component).
 
 ## What is eigendecomposition?
 - Eigendecomposition tells us how much a combination of individuals covary.
