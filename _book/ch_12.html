@@ -30,6 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./ch_13.html" rel="next">
 <link href="./ch_11.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -206,6 +207,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Least Squares applications</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Eigendecomposition</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -243,11 +250,11 @@ window.Quarto = {
 <li>There are several types of regularization such as Ridge (L2), Lasso (L1), Tikhonov and shrinkage.</li>
 <li>Most work by shifting the design matrix by some amount.
 <ul>
-<li><span class="math inline">\(A + \lambdaI\)</span></li>
+<li><span class="math inline">\(A + \lambda I\)</span></li>
 </ul></li>
 <li>With L2, we shift it by the Frobenius norm.
 <ul>
-<li>$= (X^TX + _F<sup>2I)</sup>{-1}X^Ty</li>
+<li><span class="math inline">\(\beta = (X^TX + \lambda \parallel X\parallel_F^2I)^{-1}X^Ty\)</span></li>
 </ul></li>
 </ul></li>
 <li>Polynomial regression
@@ -659,6 +666,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./ch_13.html" class="pagination-link" aria-label="<span class='chapter-number'>13</span>&nbsp; <span class='chapter-title'>Eigendecomposition</span>">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Eigendecomposition</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

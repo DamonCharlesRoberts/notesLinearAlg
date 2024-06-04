@@ -4,9 +4,9 @@
 - Regularization is essentially just a way to improve numerical stability, transform singular matrices to full rank or improving the generalizability by reducing overfitting.
     - There are several types of regularization such as Ridge (L2), Lasso (L1), Tikhonov and shrinkage.
     - Most work by shifting the design matrix by some amount.
-        - $A + \lambdaI$
+        - $A + \lambda I$
     - With L2, we shift it by the Frobenius norm.
-        - $\beta = (X^TX + \lambda \parallelX\parallel_F^2I)^{-1}X^Ty
+        - $\beta = (X^TX + \lambda \parallel X\parallel_F^2I)^{-1}X^Ty$
 - Polynomial regression
     - It is the same as regular regression but we raise the values of the independent variables to higher powers.
     - We can still use the left-inverse of the design matrix (or more numerically stable decompositions). We just change the design matrix.

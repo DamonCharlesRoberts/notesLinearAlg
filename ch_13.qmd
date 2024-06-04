@@ -1,0 +1,168 @@
+# Eigendecomposition
+
+```{julia}
+#| label: setup
+# Load packages.
+using LinearAlgebra
+```
+## Key points
+- Identifies M scalar/vector pairs of a square, $M\times M$ matrix.
+- These pairs of eigenvalues/eigenvector reflect the directions in the matrix.
+- To find eigenvalues, you assume the matrix is shifted by some unknown scalar, $\lambda$, assuming the matrix is singular, and setting the determinant to zero (the characteristic polynomial), then solving for all $\lambda$s.
+- To find the eigenvector, you find the basis vector for the null space of the $\lambda$-shifted matrix
+- To diagonalize a matrix, you are representing it as $V^{-1}\Lambda V$, where $V$ is a matrix of eigenvectors in the columns and $\Lambda$ is a diagonal matrix with eiigenvalues in the diagonal elements.
+- Symmetric matrices are really helpful and have nice properties in eigendecomposition: all eigenvectors are pair-wise orthogonal. Meaning the matrix of eigenvectors is an orthogonal matrix which allows us to invert it by transposing it.
+- The definiteness of a matrix indicates the signs of the eigenvalues.
+- When we multiply a matrix by its transpose, it is always positive semidefinite.
+
+## What is eigendecomposition?
+- Eigendecomposition tells us how much a combination of individuals covary.
+    - One way to think about it: in a bivariate regression, we can see how an individual variable explains the system. However, when we have multiple variables, we can see their individual contributions, but not necessarily how they operate in the global system.
+- It is only defined for square matrices.
+    - For nonsquare matrices, you would use SVD.
+- Applications
+    - It is commonly used in PCA and other feature detection applications.
+    - Also used in noise reduction. You identify the eigenvalues and eigenvectors. Assuming that random variance is a small component of a data space, you would ignore the small eigenvalues of the eigenvector and then "project out" by reconstructing the dataset after setting those small eigenvalues to zero.
+- To perform eigendecomposition, we need to find the eigenvalues and the resulting eigenvector that produce the nullspace of a given matrix.
+
+## Finding eigenvalues
+- The equation to find an eigenvalue.
+$$
+Av = \lambda v
+$$
+- $A$ = a square matrix.
+- $v$ = a vector of eigen values (called the eigenvector)
+- $\lambda$ = a scalar
+- What this equation implies is that the effect of the matrix on the vector as the same as the effect of the scalar on the same vector.
+- Now we do some algebra to identify particular eigenvalues.
+
+$$
+\begin{aligned}
+    Av = \lambda v\\
+    Av-\lambda v = 0\\
+    (A-\lambda I)v = 0\\
+\end{aligned}
+$$
+- This implies that the eigenvector is in the null space of the matrix when it is shifted by its eigenvalue. This means that the matrix shifted b y its eigenvalue is singular because it has a null space.
+- This also means that the determinant is zero as it is a singular matrix.
+$$
+|A - \lambda I| = 0
+$$
+- With this, we can then solve for $\lambda$
+$$
+\begin{aligned}
+        \left\vert \begin{bmatrix}
+            a&b\\
+            c&d\\
+        \end{bmatrix} - \lambda \begin{bmatrix}
+            1&0\\
+            0&1\\
+        \end{bmatrix} \right\vert = 0 \\
+        \begin{vmatrix}
+            a-\lambda & b\\
+            c&d-\lambda\\
+        \end{vmatrix} = 0 \\
+        (a-\lambda)(d-\lambda) - bc = 0 \\
+        \lambda^2 - (a+d)\lambda + (ad-bc) = 0
+\end{aligned}
+$$
+
+## Finding eigenvectors
+- Once you have found the eigenvalues, you will want to find the vector $v$ that is in the null space of the matrix shifted by $\lambda$
+
+- Numerical example:
+
+$$
+\begin{aligned}
+    \text{Find the eigenvalues:}
+    \begin{bmatrix}
+        1&2\\
+        2&1\\
+    \end{bmatrix} \Rightarrow \lambda_1 = 3, \lambda_2 = -1 \\
+    \text{Find the eigenvector:}
+    \begin{bmatrix}
+        1-3&2\\
+        2&1-3\\
+    \end{bmatrix} = \begin{bmatrix}
+        -2&2\\
+        2&-2\\
+    \end{bmatrix} \Rightarrow \begin{bmatrix}
+        -2&2\\
+        2&-2\\
+    \end{bmatrix}\begin{bmatrix}
+        1\\
+        1\\
+    \end{bmatrix} = \begin{bmatrix}
+        0\\
+        0
+    \end{bmatrix}
+\end{aligned}
+$$
+- We can find these null space vectors using Gauss-Jordan where the coefficients matrix is the $\lambda$-shifted matrix and the constants vector is the zeros vector. Often QR decomposition is used instead as it is more stable.
+
+## Sign and scale indeterminacy
+
+- If $v$ is an eigenvector of a matrix, then so is $\alpha v$ for any real-valued $\alpha$ except when $\alpha = 0$.
+- Eigenvectors are used because of their direction rather than their magnitude. So, $\alpha$ does not really influence the determinacy of the eigenvector.
+
+## Special features of symmetric matrices
+
+### Orthogonal eigenvectors.
+- Symmetric matrices produce orthogonal eigenvectors.
+    - This is significant as all eigenvectors of a matrix are pair-wise orthogonal. Meaning, the dot product between any pair of eigenvectors is zero while the dot product of an eigenvector with itself is nonzero. This makes an eigenvector matrix extremely easy to invert as we can just transpose it.
+- We do not constrain eigenvectors to be orthogonal for nonsymmetric vectors however. They will be linearly independent for each distinct eigenvalue.
+
+### Real-valued eigenvalues
+- Symmetric matrices have real-valued eigenvalues and real-valued eigenvectors.
+
+## Eigendecomposition of singular matrices
+- We ***CAN*** eigendecompose a singular matrix.
+
+## Quadratic form, definiteness, and eigenvalues
+
+### Quadratic form of a matrix
+- Notice when we were using the determinant above to compute the eigenvector, we ended up with polynomial $\lambda$ terms. One feature of matrices is that:
+$$
+w^TAw = \alpha
+$$
+- If we pre-andpostmultiply a square matrix by the same vector $w$, we get a scalar.
+- Example:
+$$
+\begin{bmatrix}
+    x&y\\
+\end{bmatrix}\begin{bmatrix}
+    2&4\\
+    0&3\\
+\end{bmatrix}\begin{bmatrix}
+    x\\
+    y\\
+\end{bmatrix} = 2x^2 + (0+4)xy + 3y^2
+$$
+
+- Whether that scalar is positive or negative will influence definiteness.
+
+## Definiteness
+- A characteristic of a square matrix
+- Defined by the signs of the eigenvalues of a matrix (equivalent to the signs of the quadratic form results)
+- It influences the invertibility of a matrix as well as whether we can use generalized eigendecomposition.
+
+|  Category             | Quadratic form         | Eigenvalues  | Invertible |
+|-----------------------|------------------------|--------------|------------|
+| Positive definite     | Positive               | +            | Yes        |
+| Positive semidefinite | Nonnegative            | + and 0      | No         |
+| Indefinite            | Positive and negative  | + and -      | Depends    |
+| Negative semidefinite | Nonpositive            | - and 0      | No         |
+| Negative definite     | Negative               | -            | Yes        |
+
+- All eigenvalues are positive when the data matrix is full rank
+- There will be at least one zero-valued eigenvalue if a matrix is singular.
+
+### A^TA is Positive semidefinite
+- This is because covariance matrices are semipositive definite. They will have non-negative eigenvalues.
+
+## Generalized eigendecomposition
+- Also referred to as simultaneious diagonalization of two matrices
+- It involves replacing the identity matrix with another matrix besides the identity or zeros matrix.
+$$
+Av = \lambdaBv
+$$
