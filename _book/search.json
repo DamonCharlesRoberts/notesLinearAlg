@@ -658,5 +658,15 @@
     "crumbs": [
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>General Linear Models (GLM) and Least Squares</span>"
     ]
+  },
+  {
+    "objectID": "ch_12.html",
+    "href": "ch_12.html",
+    "title": "12  Least Squares applications",
+    "section": "",
+    "text": "Multicollinearity occurs when the design matrix is singular. We cannot have a left-inverse of the design matrix when it is singular.\nRegularization is essentially just a way to improve numerical stability, transform singular matrices to full rank or improving the generalizability by reducing overfitting.\n\nThere are several types of regularization such as Ridge (L2), Lasso (L1), Tikhonov and shrinkage.\nMost work by shifting the design matrix by some amount.\n\n\\(A + \\lambdaI\\)\n\nWith L2, we shift it by the Frobenius norm.\n\n$= (X^TX + _F2I){-1}X^Ty\n\n\nPolynomial regression\n\nIt is the same as regular regression but we raise the values of the independent variables to higher powers.\nWe can still use the left-inverse of the design matrix (or more numerically stable decompositions). We just change the design matrix.\n\nGrid search for model parameters\n\nThe left-inverse in least squares allows us to fit a model to data. This only works for linear model fitting, however.\nGrid search samples the parameter space, computing the model fit to the data with each parameter value and then selects the parameter value that provides the best model fit.",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Least Squares applications</span>"
+    ]
   }
 ]

@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Damon C. Roberts">
 
-<title>Notes on Practical Linear Algebra for Data Science by Mike X Cohen</title>
+<title>Notes on Practical Linear Algebra for Data Science by Mike X Cohen - 12&nbsp; Least Squares applications</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ch_2.html" rel="next">
+<link href="./ch_11.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -81,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What this is</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_12.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Least Squares applications</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -108,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What this is</span></span></a>
   </div>
 </li>
@@ -174,7 +202,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_12.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_12.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Least Squares applications</span></span></a>
   </div>
 </li>
@@ -184,35 +212,20 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#what-this-is" id="toc-what-this-is" class="nav-link active" data-scroll-target="#what-this-is"><span class="header-section-number">1</span> What this is</a>
-  <ul class="collapse">
-  <li><a href="#notes-on-the-code" id="toc-notes-on-the-code" class="nav-link" data-scroll-target="#notes-on-the-code"><span class="header-section-number">1.1</span> Notes on the code</a></li>
-  </ul></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Notes on <em>Practical Linear Algebra for Data Science</em> by Mike X Cohen</h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Least Squares applications</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Damon C. Roberts </p>
-          </div>
-  </div>
     
   
     
@@ -223,26 +236,33 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="what-this-is" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> What this is</h1>
-<p>These are my personal notes on <em>Practical Linear Algebra for Data Science</em> by Mike X. Cohen. There is an additional goal in which I seek to accomplish: learn Julia. So while the book uses code examples with Python, here I translate (to the best of my ability) the code examples using <code>Julia</code>.</p>
-<section id="notes-on-the-code" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="notes-on-the-code"><span class="header-section-number">1.1</span> Notes on the code</h2>
 <ul>
-<li>Need to have <code>Julia</code> installed.
+<li>Multicollinearity occurs when the design matrix is singular. We cannot have a left-inverse of the design matrix when it is singular.</li>
+<li>Regularization is essentially just a way to improve numerical stability, transform singular matrices to full rank or improving the generalizability by reducing overfitting.
 <ul>
-<li>Relies on the <code>LinearAlgebra</code> pkg.</li>
+<li>There are several types of regularization such as Ridge (L2), Lasso (L1), Tikhonov and shrinkage.</li>
+<li>Most work by shifting the design matrix by some amount.
+<ul>
+<li><span class="math inline">\(A + \lambdaI\)</span></li>
 </ul></li>
-<li>Uses <code>Juypter</code> to execute the <code>julia</code> code. So, I have a <code>poetry</code> virtual environment that contains those details. Requirements of note:
+<li>With L2, we shift it by the Frobenius norm.
 <ul>
-<li><code>jupyter</code></li>
-<li><code>jupyter-cache</code></li>
+<li>$= (X^TX + _F<sup>2I)</sup>{-1}X^Ty</li>
+</ul></li>
+</ul></li>
+<li>Polynomial regression
+<ul>
+<li>It is the same as regular regression but we raise the values of the independent variables to higher powers.</li>
+<li>We can still use the left-inverse of the design matrix (or more numerically stable decompositions). We just change the design matrix.</li>
+</ul></li>
+<li>Grid search for model parameters
+<ul>
+<li>The left-inverse in least squares allows us to fit a model to data. This only works for linear model fitting, however.</li>
+<li>Grid search samples the parameter space, computing the model fit to the data with each parameter value and then selects the parameter value that provides the best model fit.</li>
 </ul></li>
 </ul>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -634,11 +654,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./ch_11.html" class="pagination-link  aria-label=" &lt;span="" linear="" models="" (glm)="" and="" least="" squares&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">General Linear Models (GLM) and Least Squares</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ch_2.html" class="pagination-link" aria-label="<span class='chapter-number'>2</span>&nbsp; <span class='chapter-title'>Vectors, Part I</span>">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Vectors, Part I</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
