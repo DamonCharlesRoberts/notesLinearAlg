@@ -14,6 +14,10 @@ using LinearAlgebra
 - Symmetric matrices are really helpful and have nice properties in eigendecomposition: all eigenvectors are pair-wise orthogonal. Meaning the matrix of eigenvectors is an orthogonal matrix which allows us to invert it by transposing it.
 - The definiteness of a matrix indicates the signs of the eigenvalues.
 - When we multiply a matrix by its transpose, it is always positive semidefinite.
+- In stats, here is how we can think of the value of eigenvalues and eigenvectors:
+    - **Eigenvectors**: directions in the dataspace where the covariance between variables is maximized.
+    - **Eigenvalues**: scalars that measure how much variance there is in the data along the eigenvectors.
+    - This means that eigendecomposition is essentially a way to decompose a covariance matrix into a vector of the direction of the variance (eigenvectors) and a vector of the magnitude of the variance (eigenvalues) in the data.
 
 ## What is eigendecomposition?
 - Eigendecomposition tells us how much a combination of individuals covary.
