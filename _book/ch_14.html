@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes on Practical Linear Algebra for Data Science by Mike X Cohen - 4&nbsp; Vector Applications</title>
+<title>Notes on Practical Linear Algebra for Data Science by Mike X Cohen - 14&nbsp; Singular Value Decomposition (SVD)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ch_5.html" rel="next">
-<link href="./ch_3.html" rel="prev">
+<link href="./ch_13.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -144,7 +143,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Vector Applications</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_14.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Singular Value Decomposition (SVD)</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -189,7 +188,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_4.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch_4.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Vector Applications</span></span></a>
   </div>
 </li>
@@ -249,7 +248,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_14.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_14.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Singular Value Decomposition (SVD)</span></span></a>
   </div>
 </li>
@@ -263,11 +262,12 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#key-points" id="toc-key-points" class="nav-link active" data-scroll-target="#key-points"><span class="header-section-number">4.1</span> Key points</a></li>
-  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation"><span class="header-section-number">4.2</span> Correlation</a></li>
-  <li><a href="#cosine-similarity" id="toc-cosine-similarity" class="nav-link" data-scroll-target="#cosine-similarity"><span class="header-section-number">4.3</span> Cosine similarity</a></li>
-  <li><a href="#time-series-filtering-and-feature-variable-detection" id="toc-time-series-filtering-and-feature-variable-detection" class="nav-link" data-scroll-target="#time-series-filtering-and-feature-variable-detection"><span class="header-section-number">4.4</span> Time series Filtering and Feature (Variable) detection</a></li>
-  <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="header-section-number">4.5</span> k-Means clustering</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link active" data-scroll-target="#key-points"><span class="header-section-number">14.1</span> Key points</a></li>
+  <li><a href="#how-it-works" id="toc-how-it-works" class="nav-link" data-scroll-target="#how-it-works"><span class="header-section-number">14.2</span> How it works</a></li>
+  <li><a href="#important-features-of-svd." id="toc-important-features-of-svd." class="nav-link" data-scroll-target="#important-features-of-svd."><span class="header-section-number">14.3</span> Important features of SVD.</a></li>
+  <li><a href="#singular-values-uses" id="toc-singular-values-uses" class="nav-link" data-scroll-target="#singular-values-uses"><span class="header-section-number">14.4</span> Singular values uses</a></li>
+  <li><a href="#condition-number" id="toc-condition-number" class="nav-link" data-scroll-target="#condition-number"><span class="header-section-number">14.5</span> Condition number</a></li>
+  <li><a href="#svd-and-the-mp-pseudoinverse" id="toc-svd-and-the-mp-pseudoinverse" class="nav-link" data-scroll-target="#svd-and-the-mp-pseudoinverse"><span class="header-section-number">14.6</span> SVD and the MP Pseudoinverse</a></li>
   </ul>
 </nav>
     </div>
@@ -276,7 +276,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Vector Applications</span></h1>
+<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Singular Value Decomposition (SVD)</span></h1>
 </div>
 
 
@@ -293,135 +293,79 @@ window.Quarto = {
 </header>
 
 
-<section id="key-points" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">4.1</span> Key points</h2>
+<div id="setup" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="key-points" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">14.1</span> Key points</h2>
+<ul>
+<li>SVD is a generalized form of Eigendecomposition. Unlike Eigendecomposition, we can decompose non-square matrices.</li>
+<li>It produces three matrices: left singular vectors, singular values, and right singular vectors. The first and last are square and the middle is a diagonal matrix.</li>
+<li>The Singular vectors communicate the direction of the variance in the data and the singular values communicate the magnitude.</li>
+<li>If you sum the diagonals of the singular values matrix (where the singular values are encoded), then we get the total variance in the data.</li>
+<li>We can use the singular values to give us various measures of how much the singular vectors explain the data.</li>
+<li>The condition number is also very useful. It is the ratio between the largest singular value and the smallest singular value. It can be used to tell us the stability of a given matrix. Diferent interpretations of it that are common are whether it is a well-conditioned matrix and is invertible, whether it is sensitive to pertubrations of noise, and how much it would add noise to a solution given a certain amount of additional noise.</li>
+</ul>
 </section>
-<section id="correlation" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="correlation"><span class="header-section-number">4.2</span> Correlation</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Definitions">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Definitions
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<section id="how-it-works" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="how-it-works"><span class="header-section-number">14.2</span> How it works</h2>
 <ul>
-<li>Correlation coefficient:
+<li>The goal is to decompose a given matrix, <span class="math inline">\(A\)</span>, into three matrices: left singular vectors (<span class="math inline">\(U\)</span>), singular values (<span class="math inline">\(\Sigma\)</span>), and the right singular vectors (<span class="math inline">\(V\)</span>). <span class="math display">\[
+A = U\Sigma V^T
+\]</span></li>
+<li>It is a generalization of Eigendecomposition that allows nonsquare matrices.</li>
+</ul>
+</section>
+<section id="important-features-of-svd." class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="important-features-of-svd."><span class="header-section-number">14.3</span> Important features of SVD.</h2>
 <ul>
-<li>A scalar that uantifies the linear relationship between two variables.</li>
-<li>[-1, 1]</li>
+<li>Both <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are square matrices, does not require <span class="math inline">\(A\)</span> to be square.</li>
+<li>The matrices of singular vectors are orthogonal: <span class="math inline">\(U^TU = I\)</span> and <span class="math inline">\(V^TV = I\)</span>.</li>
+<li>The first <span class="math inline">\(r\)</span> columns of <span class="math inline">\(U\)</span> provide the orthogonal basis vectors for the column space of the matrix <span class="math inline">\(A\)</span> while the rest of the columns provide orthogonal basis vectors for the left-null space.</li>
+<li>The first <span class="math inline">\(r\)</span> rows of <span class="math inline">\(V^T\)</span> provide orthogonal basis vectors for the row space and the rest of the rows provide orthogonal basis vectors for the null space.</li>
+<li>The singular values matrix is diagonal. It is also the same size as <span class="math inline">\(A\)</span>.</li>
+<li>All singular values are nonnegative and have real values.</li>
+<li>The number of nonzero singular values is equivalent to the matrix rank.</li>
+<li>It reveals all four subspaces of a matrix: column space, left-null space, row space, right-null space.</li>
+</ul>
+</section>
+<section id="singular-values-uses" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="singular-values-uses"><span class="header-section-number">14.4</span> Singular values uses</h2>
+<ul>
+<li>The sum of the signular values is the total amount of variance in a matrix.</li>
+<li>The singular vectors point and the singular values say how far. Meaning the variance is all contained in the singular values because singular vectors are normalized to unit magnitude, meaning they do not provide any information about magnitude.</li>
+<li>It is often useful to convert singular values to the percent of total variance explained (PTVE): <span class="math display">\[
+\tilde{\sigma_i} = \frac{100\sigma_i}{\Sigma\sigma}
+\]</span>
+<ul>
+<li>This is often used in PCA to determine how much of the variance the components explain.</li>
 </ul></li>
 </ul>
-</div>
-</div>
+</section>
+<section id="condition-number" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="condition-number"><span class="header-section-number">14.5</span> Condition number</h2>
 <ul>
-<li>Dot product with some normalizations:
-<ol type="1">
-<li>Mean centering: Subtracting the average value from each data value.</li>
-<li>Divide the dot product from the product of the vector norms. This allows one to cancel measurement units and scales.</li>
-</ol></li>
-<li>Familiar way:</li>
+<li>It is the ratio of the largest to the smallest singular value</li>
+<li>Denoted as <span class="math inline">\(\kappa\)</span> <span class="math display">\[
+\kappa = \frac{\sigma_{max}}{\sigma_{min}}
+\]</span></li>
+<li>It is often used as a measure of the stability of a matrix when computing the inverse and when using it to solve systems of equations. When we have a noninvertable matrix, the condition number is undetermined as the minimum singular value will be zero.</li>
+<li>It can also be interpreted as an amplification factor for noise. If we have a large condition number, then it tells us how large the noise would impact the solution to a least squares problem.</li>
+<li>It also can tell us the sensitivity of a solution to any perturbations in the data matrix. If we have a well-conditioned matrix then we can add more noise and it will have a minimum change to the solution. However, adding a small amount of noise to a ill-conditioned atrix will lead to massively different solutions.</li>
 </ul>
-<p><span class="math display">\[
-r = \frac{\sum^n_{i=1} (x_i - \bar{x_i})(y_i - \bar{y_i})}{\sqrt{\sum^n_{i=1} (x_i - \bar{x_i})^2} \sqrt{\sum^n_{i=1} (y_i - \bar{y_i})^2}}
-\]</span></p>
+</section>
+<section id="svd-and-the-mp-pseudoinverse" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="svd-and-the-mp-pseudoinverse"><span class="header-section-number">14.6</span> SVD and the MP Pseudoinverse</h2>
 <ul>
-<li>Linear algebra way <span class="math display">\[
-r = \frac{\tilde{x}^T\tilde{y}}{||\tilde{x}|| ||\tilde{y}||}
+<li>We can use the SVD of a matrix to perform the MP pseudoinverse. If we have a square matrix that is invertable, then we can invert <span class="math inline">\(\Sigma\)</span>. <span class="math display">\[
+\begin{aligned}
+  A^{-1} = (U\Sigma V^T)^{-1} \\
+         = V\Sigma^{-1}U^{-1} \\
+         = V\Sigma^{-1}U^T\\
+\end{aligned}
 \]</span></li>
 </ul>
-<p>where <span class="math inline">\(\tilde{x}\)</span> and <span class="math inline">\(\tilde{y}\)</span> are mean-centered vectors.</p>
-</section>
-<section id="cosine-similarity" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="cosine-similarity"><span class="header-section-number">4.3</span> Cosine similarity</h2>
-<ul>
-<li>Alternative to way to assess similarity between vectors other than using correlation.</li>
-<li>Defined as the geometric formula for the dot product when solved for the cosine term.</li>
-</ul>
-<p><span class="math display">\[
-cos(\theta_{x,y}) = \frac{x^Ty}{||x|| ||y||}
-\]</span></p>
-<ul>
-<li>The difference between this and correlation is that I am not first normalizing <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> by mean-centering them.</li>
-</ul>
-</section>
-<section id="time-series-filtering-and-feature-variable-detection" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="time-series-filtering-and-feature-variable-detection"><span class="header-section-number">4.4</span> Time series Filtering and Feature (Variable) detection</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Definitions">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Definitions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Kernel
-<ul>
-<li>Refers to a smooth “template” series that we can use to pull a real series to to smoothen it a bit as a feature-detection method.</li>
-</ul></li>
-</ul>
-</div>
-</div>
-<ul>
-<li>We can use the dot product for time series filtering.
-<ul>
-<li>Where filtering is basically a feature-detection method. It essentially detects patterns and signals and pulls out noise from the time series. The effect of this is to “smoothen” the series.</li>
-</ul></li>
-<li>Can use it for convolution:</li>
-</ul>
-<ol type="1">
-<li>The dot product is computed for the kernel and the time series signal. - Often filtering requires local feature detection and the kernel is shorter than the whole series. - This means that we often compute the dot product between the kernel and a shorter chunk of the sereis that is the same length of the kernel.</li>
-<li>This results in a time point of the filtered signal.</li>
-<li>We then move one time period later and compute the dot product with a different and overlapping signal segment.</li>
-</ol>
-</section>
-<section id="k-means-clustering" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="k-means-clustering"><span class="header-section-number">4.5</span> k-Means clustering</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Definitions">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Definitions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>k-Means clustering
-<ul>
-<li>Unsupervised method of putting multivariate data into a relatively small number of groups or categories.</li>
-</ul></li>
-</ul>
-</div>
-</div>
-<ul>
-<li>With concepts covered in the earlier chapters,this is how this procedure is done:</li>
-</ul>
-<ol type="1">
-<li>Define <span class="math inline">\(k\)</span> centroids as random points in the vector space.
-<ul>
-<li>Each centroid is a class, or category.</li>
-</ul></li>
-<li>Compute the Euclidean distance between each observation and each centroid.</li>
-<li>Assign each data observation to the group with the closest centroid (the smallest Euclidean distance).</li>
-<li>Update the centroid location by taking the average of all data observations assigned to the centroid.</li>
-<li>Repeat steps 2-4 until a convergence criteria is satisfied or N iterations have completed.
-<ul>
-<li>Often these conditions are either until N iterations occur.</li>
-<li>More sophisticated implementations are often to repeat these steps until centroid locations do not move much.</li>
-</ul></li>
-</ol>
-<div id="kmeans-clustering" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try to write your own k-means clustering algorithm here.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Rather than writing double for-loop, can use broadcasting for efficiency.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
 
 </section>
@@ -816,14 +760,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ch_3.html" class="pagination-link  aria-label=" &lt;span="" part="" ii&lt;="" span&gt;"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vectors Part II</span></span>
+      <a href="./ch_13.html" class="pagination-link  aria-label=" &lt;span="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Eigendecomposition</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ch_5.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>Matrices, Part I</span>">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Matrices, Part I</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

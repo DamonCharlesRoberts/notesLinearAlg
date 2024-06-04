@@ -1,0 +1,61 @@
+# Singular Value Decomposition (SVD)
+
+```{julia}
+#| label: setup
+# Load packages.
+using LinearAlgebra
+```
+
+## Key points
+- SVD is a generalized form of Eigendecomposition. Unlike Eigendecomposition, we can decompose non-square matrices.
+- It produces three matrices: left singular vectors, singular values, and right singular vectors. The first and last are square and the middle is a diagonal matrix.
+- The Singular vectors communicate the direction of the variance in the data and the singular values communicate the magnitude.
+- If you sum the diagonals of the singular values matrix (where the singular values are encoded), then we get the total variance in the data.
+- We can use the singular values to give us various measures of how much the singular vectors explain the data.
+- The condition number is also very useful. It is the ratio between the largest singular value and the smallest singular value. It can be used to tell us the stability of a given matrix. Diferent interpretations of it that are common are whether it is a well-conditioned matrix and is invertible, whether it is sensitive to pertubrations of noise, and how much it would add noise to a solution given a certain amount of additional noise.
+
+## How it works
+- The goal is to decompose a given matrix, $A$, into three matrices: left singular vectors ($U$), singular values ($\Sigma$), and the right singular vectors ($V$).
+$$
+A = U\Sigma V^T
+$$
+- It is a generalization of Eigendecomposition that allows nonsquare matrices.
+
+## Important features of SVD.
+- Both $U$ and $V$ are square matrices, does not require $A$ to be square.
+- The matrices of singular vectors are orthogonal: $U^TU = I$ and $V^TV = I$.
+- The first $r$ columns of $U$ provide the orthogonal basis vectors for the column space of the matrix $A$ while the rest of the columns provide orthogonal basis vectors for the left-null space.
+- The first $r$ rows of $V^T$ provide orthogonal basis vectors for the row space and the rest of the rows provide orthogonal basis vectors for the null space.
+- The singular values matrix is diagonal. It is also the same size as $A$.
+- All singular values are nonnegative and have real values.
+- The number of nonzero singular values is equivalent to the matrix rank.
+- It reveals all four subspaces of a matrix: column space, left-null space, row space, right-null space.
+
+## Singular values uses
+- The sum of the signular values is the total amount of variance in a matrix.
+- The singular vectors point and the singular values say how far. Meaning the variance is all contained in the singular values because singular vectors are normalized to unit magnitude, meaning they do not provide any information about magnitude.
+- It is often useful to convert singular values to the percent of total variance explained (PTVE):
+$$
+\tilde{\sigma_i} = \frac{100\sigma_i}{\Sigma\sigma}
+$$
+    - This is often used in PCA to determine how much of the variance the components explain.
+
+## Condition number
+- It is the ratio of the largest to the smallest singular value
+- Denoted as $\kappa$
+$$
+\kappa = \frac{\sigma_{max}}{\sigma_{min}}
+$$
+- It is often used as a measure of the stability of a matrix when computing the inverse and when using it to solve systems of equations. When we have a noninvertable matrix, the condition number is undetermined as the minimum singular value will be zero.
+- It can also be interpreted as an amplification factor for noise. If we have a large condition number, then it tells us how large the noise would impact the solution to a least squares problem.
+- It also can tell us the sensitivity of a solution to any perturbations in the data matrix. If we have a well-conditioned matrix then we can add more noise and it will have a minimum change to the solution. However, adding a small amount of noise to a ill-conditioned atrix will lead to massively different solutions.
+
+## SVD and the MP Pseudoinverse
+- We can use the SVD of a matrix to perform the MP pseudoinverse. If we have a square matrix that is invertable, then we can invert $\Sigma$.
+$$
+\begin{aligned}
+    A^{-1} = (U\Sigma V^T)^{-1} \\
+           = V\Sigma^{-1}U^{-1} \\
+           = V\Sigma^{-1}U^T\\
+\end{aligned}
+$$

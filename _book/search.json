@@ -778,5 +778,75 @@
     "crumbs": [
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Eigendecomposition</span>"
     ]
+  },
+  {
+    "objectID": "ch_14.html",
+    "href": "ch_14.html",
+    "title": "14  Singular Value Decomposition (SVD)",
+    "section": "",
+    "text": "14.1 Key points",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Singular Value Decomposition (SVD)</span>"
+    ]
+  },
+  {
+    "objectID": "ch_14.html#key-points",
+    "href": "ch_14.html#key-points",
+    "title": "14  Singular Value Decomposition (SVD)",
+    "section": "",
+    "text": "SVD is a generalized form of Eigendecomposition. Unlike Eigendecomposition, we can decompose non-square matrices.\nIt produces three matrices: left singular vectors, singular values, and right singular vectors. The first and last are square and the middle is a diagonal matrix.\nThe Singular vectors communicate the direction of the variance in the data and the singular values communicate the magnitude.\nIf you sum the diagonals of the singular values matrix (where the singular values are encoded), then we get the total variance in the data.\nWe can use the singular values to give us various measures of how much the singular vectors explain the data.\nThe condition number is also very useful. It is the ratio between the largest singular value and the smallest singular value. It can be used to tell us the stability of a given matrix. Diferent interpretations of it that are common are whether it is a well-conditioned matrix and is invertible, whether it is sensitive to pertubrations of noise, and how much it would add noise to a solution given a certain amount of additional noise.",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Singular Value Decomposition (SVD)</span>"
+    ]
+  },
+  {
+    "objectID": "ch_14.html#how-it-works",
+    "href": "ch_14.html#how-it-works",
+    "title": "14  Singular Value Decomposition (SVD)",
+    "section": "14.2 How it works",
+    "text": "14.2 How it works\n\nThe goal is to decompose a given matrix, \\(A\\), into three matrices: left singular vectors (\\(U\\)), singular values (\\(\\Sigma\\)), and the right singular vectors (\\(V\\)). \\[\nA = U\\Sigma V^T\n\\]\nIt is a generalization of Eigendecomposition that allows nonsquare matrices.",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Singular Value Decomposition (SVD)</span>"
+    ]
+  },
+  {
+    "objectID": "ch_14.html#important-features-of-svd.",
+    "href": "ch_14.html#important-features-of-svd.",
+    "title": "14  Singular Value Decomposition (SVD)",
+    "section": "14.3 Important features of SVD.",
+    "text": "14.3 Important features of SVD.\n\nBoth \\(U\\) and \\(V\\) are square matrices, does not require \\(A\\) to be square.\nThe matrices of singular vectors are orthogonal: \\(U^TU = I\\) and \\(V^TV = I\\).\nThe first \\(r\\) columns of \\(U\\) provide the orthogonal basis vectors for the column space of the matrix \\(A\\) while the rest of the columns provide orthogonal basis vectors for the left-null space.\nThe first \\(r\\) rows of \\(V^T\\) provide orthogonal basis vectors for the row space and the rest of the rows provide orthogonal basis vectors for the null space.\nThe singular values matrix is diagonal. It is also the same size as \\(A\\).\nAll singular values are nonnegative and have real values.\nThe number of nonzero singular values is equivalent to the matrix rank.\nIt reveals all four subspaces of a matrix: column space, left-null space, row space, right-null space.",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Singular Value Decomposition (SVD)</span>"
+    ]
+  },
+  {
+    "objectID": "ch_14.html#singular-values-uses",
+    "href": "ch_14.html#singular-values-uses",
+    "title": "14  Singular Value Decomposition (SVD)",
+    "section": "14.4 Singular values uses",
+    "text": "14.4 Singular values uses\n\nThe sum of the signular values is the total amount of variance in a matrix.\nThe singular vectors point and the singular values say how far. Meaning the variance is all contained in the singular values because singular vectors are normalized to unit magnitude, meaning they do not provide any information about magnitude.\nIt is often useful to convert singular values to the percent of total variance explained (PTVE): \\[\n\\tilde{\\sigma_i} = \\frac{100\\sigma_i}{\\Sigma\\sigma}\n\\]\n\nThis is often used in PCA to determine how much of the variance the components explain.",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Singular Value Decomposition (SVD)</span>"
+    ]
+  },
+  {
+    "objectID": "ch_14.html#condition-number",
+    "href": "ch_14.html#condition-number",
+    "title": "14  Singular Value Decomposition (SVD)",
+    "section": "14.5 Condition number",
+    "text": "14.5 Condition number\n\nIt is the ratio of the largest to the smallest singular value\nDenoted as \\(\\kappa\\) \\[\n\\kappa = \\frac{\\sigma_{max}}{\\sigma_{min}}\n\\]\nIt is often used as a measure of the stability of a matrix when computing the inverse and when using it to solve systems of equations. When we have a noninvertable matrix, the condition number is undetermined as the minimum singular value will be zero.\nIt can also be interpreted as an amplification factor for noise. If we have a large condition number, then it tells us how large the noise would impact the solution to a least squares problem.\nIt also can tell us the sensitivity of a solution to any perturbations in the data matrix. If we have a well-conditioned matrix then we can add more noise and it will have a minimum change to the solution. However, adding a small amount of noise to a ill-conditioned atrix will lead to massively different solutions.",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Singular Value Decomposition (SVD)</span>"
+    ]
+  },
+  {
+    "objectID": "ch_14.html#svd-and-the-mp-pseudoinverse",
+    "href": "ch_14.html#svd-and-the-mp-pseudoinverse",
+    "title": "14  Singular Value Decomposition (SVD)",
+    "section": "14.6 SVD and the MP Pseudoinverse",
+    "text": "14.6 SVD and the MP Pseudoinverse\n\nWe can use the SVD of a matrix to perform the MP pseudoinverse. If we have a square matrix that is invertable, then we can invert \\(\\Sigma\\). \\[\n\\begin{aligned}\n  A^{-1} = (U\\Sigma V^T)^{-1} \\\\\n         = V\\Sigma^{-1}U^{-1} \\\\\n         = V\\Sigma^{-1}U^T\\\\\n\\end{aligned}\n\\]",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Singular Value Decomposition (SVD)</span>"
+    ]
   }
 ]
