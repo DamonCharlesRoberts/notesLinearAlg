@@ -26,11 +26,11 @@ using LinearAlgebra
     - How do we find $w$ that maximize $\lambda$? We can't just consider a single vector of weights, we need to consider all the possible vectors of weights so we need to consider $W$ rather than just $w$.
     $$
     \begin{aligned}
-        \Epsilon = (W^TW)^{-1}W^TX^TXW\\
-        \Epsilon = W^{-1}W^{-T}W^TX^TXW\\
-        \Epsilon = W^{-1}X^TXW\\
-        W\Epsilon = W^{-1}X^TXW\\
-        W^\Epsilon = X^TXW\\
+        \Lambda = (W^TW)^{-1}W^TX^TXW\\
+        \Lambda = W^{-1}W^{-T}W^TX^TXW\\
+        \Lambda = W^{-1}X^TXW\\
+        W\Lambda = W^{-1}X^TXW\\
+        W^\Lambda = X^TXW\\
     \end{aligned}
     $$
     - So, we can just perform Eigendecomposition. The eigenvectors are the weights for the data variables and the eigenvalues are the variances of the data along each direction (each column of $W$).
@@ -61,10 +61,10 @@ using LinearAlgebra
     \begin{aligned}
         C_W = X_W^TX_W\\
         C_B = X_B^TX_B\\
-        \Epsilon = (W^TC_WW)^{-1}W^TC_BW\\
-        \Epsilon = W^{-1}C^{-1}_WW^{-T}W^TC_BW\\
-        W\Epsilon = C^{-1}_WC_BW\\
-        C_WW\Epsilon = C_BW\\
+        \Lambda = (W^TC_WW)^{-1}W^TC_BW\\
+        \Lambda = W^{-1}C^{-1}_WW^{-T}W^TC_BW\\
+        W\Lambda = C^{-1}_WC_BW\\
+        C_WW\Lambda = C_BW\\
     \end{aligned}
     $$
     - Here we just do generalized eigendecomposition on two covariance matrices. The eigenvectors provide the weights and the generalized eigenvalues are the variance ratios of each ocmponent.
