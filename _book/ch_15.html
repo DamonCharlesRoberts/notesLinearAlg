@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes on Practical Linear Algebra for Data Science by Mike X Cohen - 14&nbsp; Singular Value Decomposition (SVD)</title>
+<title>Notes on Practical Linear Algebra for Data Science by Mike X Cohen - 15&nbsp; Applications of Eigendecomposition and SVD</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ch_15.html" rel="next">
-<link href="./ch_13.html" rel="prev">
+<link href="./ch_14.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -144,7 +143,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_14.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Singular Value Decomposition (SVD)</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_15.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Applications of Eigendecomposition and SVD</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -249,13 +248,13 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_14.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch_14.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Singular Value Decomposition (SVD)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_15.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_15.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Applications of Eigendecomposition and SVD</span></span></a>
   </div>
 </li>
@@ -269,12 +268,13 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#key-points" id="toc-key-points" class="nav-link active" data-scroll-target="#key-points"><span class="header-section-number">14.1</span> Key points</a></li>
-  <li><a href="#how-it-works" id="toc-how-it-works" class="nav-link" data-scroll-target="#how-it-works"><span class="header-section-number">14.2</span> How it works</a></li>
-  <li><a href="#important-features-of-svd." id="toc-important-features-of-svd." class="nav-link" data-scroll-target="#important-features-of-svd."><span class="header-section-number">14.3</span> Important features of SVD.</a></li>
-  <li><a href="#singular-values-uses" id="toc-singular-values-uses" class="nav-link" data-scroll-target="#singular-values-uses"><span class="header-section-number">14.4</span> Singular values uses</a></li>
-  <li><a href="#condition-number" id="toc-condition-number" class="nav-link" data-scroll-target="#condition-number"><span class="header-section-number">14.5</span> Condition number</a></li>
-  <li><a href="#svd-and-the-mp-pseudoinverse" id="toc-svd-and-the-mp-pseudoinverse" class="nav-link" data-scroll-target="#svd-and-the-mp-pseudoinverse"><span class="header-section-number">14.6</span> SVD and the MP Pseudoinverse</a></li>
+  <li><a href="#pca" id="toc-pca" class="nav-link active" data-scroll-target="#pca"><span class="header-section-number">15.1</span> PCA</a>
+  <ul class="collapse">
+  <li><a href="#the-steps-to-pca" id="toc-the-steps-to-pca" class="nav-link" data-scroll-target="#the-steps-to-pca"><span class="header-section-number">15.1.1</span> The steps to PCA</a></li>
+  <li><a href="#pca-with-svd" id="toc-pca-with-svd" class="nav-link" data-scroll-target="#pca-with-svd"><span class="header-section-number">15.1.2</span> PCA with SVD</a></li>
+  </ul></li>
+  <li><a href="#linear-discriminant-analysis-lda" id="toc-linear-discriminant-analysis-lda" class="nav-link" data-scroll-target="#linear-discriminant-analysis-lda"><span class="header-section-number">15.2</span> Linear Discriminant Analysis (LDA)</a></li>
+  <li><a href="#low-rank-appoximations-with-svd" id="toc-low-rank-appoximations-with-svd" class="nav-link" data-scroll-target="#low-rank-appoximations-with-svd"><span class="header-section-number">15.3</span> Low-rank appoximations with SVD</a></li>
   </ul>
 </nav>
     </div>
@@ -283,7 +283,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Singular Value Decomposition (SVD)</span></h1>
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Applications of Eigendecomposition and SVD</span></h1>
 </div>
 
 
@@ -300,78 +300,91 @@ window.Quarto = {
 </header>
 
 
-<div id="setup" class="cell" data-execution_count="1">
+<div id="d9bb0c14" class="cell" data-labels="setup" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="key-points" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">14.1</span> Key points</h2>
+<section id="pca" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="pca"><span class="header-section-number">15.1</span> PCA</h2>
 <ul>
-<li>SVD is a generalized form of Eigendecomposition. Unlike Eigendecomposition, we can decompose non-square matrices.</li>
-<li>It produces three matrices: left singular vectors, singular values, and right singular vectors. The first and last are square and the middle is a diagonal matrix.</li>
-<li>The Singular vectors communicate the direction of the variance in the data and the singular values communicate the magnitude.</li>
-<li>If you sum the diagonals of the singular values matrix (where the singular values are encoded), then we get the total variance in the data.</li>
-<li>We can use the singular values to give us various measures of how much the singular vectors explain the data.</li>
-<li>The condition number is also very useful. It is the ratio between the largest singular value and the smallest singular value. It can be used to tell us the stability of a given matrix. Diferent interpretations of it that are common are whether it is a well-conditioned matrix and is invertible, whether it is sensitive to pertubrations of noise, and how much it would add noise to a solution given a certain amount of additional noise.</li>
+<li>Is used for finding the component (set of variables) that maximally explain the amount of variance in a given matrix.</li>
+<li>Because of this, PCA wants to find the maximal amount of variance and find the weighted linear combination of variables that maximize it.</li>
+<li>Say that <span class="math inline">\(X\)</span> is our matrix. We want to find the weighted linear combination of column vectors in <span class="math inline">\(X\)</span> that maximize the variance explained. So, we would have a vector of weights, <span class="math inline">\(w\)</span>, that provide all of the weights used to linearly combine the variables.
+<ul>
+<li>With PCA, we will want to find the set of weights in <span class="math inline">\(w\)</span> so that <span class="math inline">\(Xw\)</span> provides the maximal variance, <span class="math inline">\(\lambda\)</span>. <span class="math display">\[
+  \lambda = \parallel Xw \parallel^2
+  \]</span></li>
+<li>Note: the squared vector norm is the same thing as variance when the data is mean centered.</li>
+<li>The problem with the existing formulation is that we can specify really large values of <span class="math inline">\(w\)</span> as it will increase the variance by generating larger weights. So, we need to scale the norm of the weighted combination by the norm of the weights so it is fair. <span class="math display">\[
+  \lambda = \frac{\parallel Xw \parallel^2}{\parallel w \parallel^2}
+  \]</span></li>
+<li>This gives us the ratio of two vector norms. Which we can expand to be represented as dotproducts to make it clearer. <span class="math display">\[
+  \lambda = \frac{w^TX^TXw}{w^Tw}
+  \]</span></li>
+<li>How do we find <span class="math inline">\(w\)</span> that maximize <span class="math inline">\(\lambda\)</span>? We can’t just consider a single vector of weights, we need to consider all the possible vectors of weights so we need to consider <span class="math inline">\(W\)</span> rather than just <span class="math inline">\(w\)</span>. <span class="math display">\[
+  \begin{aligned}
+  \Lambda = (W^TW)^{-1}W^TX^TXW\\
+  \Lambda = W^{-1}W^{-T}W^TX^TXW\\
+  \Lambda = W^{-1}X^TXW\\
+  W\Lambda = W^{-1}X^TXW\\
+  W^\Lambda = X^TXW\\
+  \end{aligned}
+  \]</span></li>
+<li>So, we can just perform Eigendecomposition. The eigenvectors are the weights for the data variables and the eigenvalues are the variances of the data along each direction (each column of <span class="math inline">\(W\)</span>).</li>
+<li>Since covariance matrices are symmetric, the eigenvectors - the principal components - are orthogonal.</li>
+</ul></li>
+</ul>
+<section id="the-steps-to-pca" class="level3" data-number="15.1.1">
+<h3 data-number="15.1.1" class="anchored" data-anchor-id="the-steps-to-pca"><span class="header-section-number">15.1.1</span> The steps to PCA</h3>
+<ol type="1">
+<li>Compute the covariance matrix of the data. Each feature needs to be mean-centered before computing the covariance.</li>
+<li>Take the eigendecomposition of the covariance matrix.</li>
+<li>Sort the eigenvalues so that the largest are at the top. The eigenvectors should also be sorted.</li>
+<li>Compute the component scores as the weighted combination of all of the variables where the eigenvector provides the weights. The eigenvector with the largest eigenvalue is the most important component.</li>
+<li>Convert the eigenvalues to percent variance explained to help with interpreation.</li>
+</ol>
+</section>
+<section id="pca-with-svd" class="level3" data-number="15.1.2">
+<h3 data-number="15.1.2" class="anchored" data-anchor-id="pca-with-svd"><span class="header-section-number">15.1.2</span> PCA with SVD</h3>
+<ul>
+<li>Two options.
+<ol type="1">
+<li>Take the SVD of the covariance matrix. It is identical to PCA with Eigendecomposition as SVD is just a way to do it with a nonsquare matrix.</li>
+<li>Take the SVD of the data matrix. The right singular vectors will be the eigenvectors of the covariance matrix. The data needs to be meancentered before doing the SVD. The square root of your singular values will be the eigenvalues of the covariance matrix.</li>
+</ol></li>
 </ul>
 </section>
-<section id="how-it-works" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="how-it-works"><span class="header-section-number">14.2</span> How it works</h2>
-<ul>
-<li>The goal is to decompose a given matrix, <span class="math inline">\(A\)</span>, into three matrices: left singular vectors (<span class="math inline">\(U\)</span>), singular values (<span class="math inline">\(\Sigma\)</span>), and the right singular vectors (<span class="math inline">\(V\)</span>). <span class="math display">\[
-A = U\Sigma V^T
-\]</span></li>
-<li>It is a generalization of Eigendecomposition that allows nonsquare matrices.</li>
-</ul>
 </section>
-<section id="important-features-of-svd." class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="important-features-of-svd."><span class="header-section-number">14.3</span> Important features of SVD.</h2>
+<section id="linear-discriminant-analysis-lda" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="linear-discriminant-analysis-lda"><span class="header-section-number">15.2</span> Linear Discriminant Analysis (LDA)</h2>
 <ul>
-<li>Both <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are square matrices, does not require <span class="math inline">\(A\)</span> to be square.</li>
-<li>The matrices of singular vectors are orthogonal: <span class="math inline">\(U^TU = I\)</span> and <span class="math inline">\(V^TV = I\)</span>.</li>
-<li>The first <span class="math inline">\(r\)</span> columns of <span class="math inline">\(U\)</span> provide the orthogonal basis vectors for the column space of the matrix <span class="math inline">\(A\)</span> while the rest of the columns provide orthogonal basis vectors for the left-null space.</li>
-<li>The first <span class="math inline">\(r\)</span> rows of <span class="math inline">\(V^T\)</span> provide orthogonal basis vectors for the row space and the rest of the rows provide orthogonal basis vectors for the null space.</li>
-<li>The singular values matrix is diagonal. It is also the same size as <span class="math inline">\(A\)</span>.</li>
-<li>All singular values are nonnegative and have real values.</li>
-<li>The number of nonzero singular values is equivalent to the matrix rank.</li>
-<li>It reveals all four subspaces of a matrix: column space, left-null space, row space, right-null space.</li>
-</ul>
-</section>
-<section id="singular-values-uses" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="singular-values-uses"><span class="header-section-number">14.4</span> Singular values uses</h2>
+<li>Multivariate classification technique where you try to maximize the space between multiple categories of data. In other words, group data into clusters.</li>
+<li>LDA is meant to find basis vectors in the data space that maximally separate the categories of data.
 <ul>
-<li>The sum of the signular values is the total amount of variance in a matrix.</li>
-<li>The singular vectors point and the singular values say how far. Meaning the variance is all contained in the singular values because singular vectors are normalized to unit magnitude, meaning they do not provide any information about magnitude.</li>
-<li>It is often useful to convert singular values to the percent of total variance explained (PTVE): <span class="math display">\[
-\tilde{\sigma_i} = \frac{100\sigma_i}{\Sigma\sigma}
-\]</span>
-<ul>
-<li>This is often used in PCA to determine how much of the variance the components explain.</li>
+<li>We do this by finding a set of weights such that the weighted combo of variables maximally separate the categories. <span class="math display">\[
+  \lambda = \frac{\parallel X_Bw \parallel^2}{\parallel X_w w \parallel^2}
+  \]</span></li>
+<li>We want to find a set of weights <span class="math inline">\(w\)</span> that maximizes the ratio of the variance of data feature <span class="math inline">\(X_B\)</span> to the variance of data feature <span class="math inline">\(X_W\)</span>.</li>
+<li>We can do something like what we did with PCA above doing Eigendecomposition. <span class="math display">\[
+  \begin{aligned}
+  C_W = X_W^TX_W\\
+  C_B = X_B^TX_B\\
+  \Lambda = (W^TC_WW)^{-1}W^TC_BW\\
+  \Lambda = W^{-1}C^{-1}_WW^{-T}W^TC_BW\\
+  W\Lambda = C^{-1}_WC_BW\\
+  C_WW\Lambda = C_BW\\
+  \end{aligned}
+  \]</span></li>
+<li>Here we just do generalized eigendecomposition on two covariance matrices. The eigenvectors provide the weights and the generalized eigenvalues are the variance ratios of each ocmponent.</li>
+<li>To determine <span class="math inline">\(X_B\)</span> and <span class="math inline">\(X_W\)</span>, we can use a few different options depending on what kind of LDA you ae doing and that depends on use case. However, in typical LDA, <span class="math inline">\(X_B\)</span> is the between-category covariance while <span class="math inline">\(X_W\)</span> is the within-category covariance. The within-category covariance is the average of the covariances of the data samples within each class. The between-category covariance is the result of creating a new data matrix that contains the feature averages for each class.</li>
 </ul></li>
 </ul>
 </section>
-<section id="condition-number" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="condition-number"><span class="header-section-number">14.5</span> Condition number</h2>
+<section id="low-rank-appoximations-with-svd" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="low-rank-appoximations-with-svd"><span class="header-section-number">15.3</span> Low-rank appoximations with SVD</h2>
 <ul>
-<li>It is the ratio of the largest to the smallest singular value</li>
-<li>Denoted as <span class="math inline">\(\kappa\)</span> <span class="math display">\[
-\kappa = \frac{\sigma_{max}}{\sigma_{min}}
-\]</span></li>
-<li>It is often used as a measure of the stability of a matrix when computing the inverse and when using it to solve systems of equations. When we have a noninvertable matrix, the condition number is undetermined as the minimum singular value will be zero.</li>
-<li>It can also be interpreted as an amplification factor for noise. If we have a large condition number, then it tells us how large the noise would impact the solution to a least squares problem.</li>
-<li>It also can tell us the sensitivity of a solution to any perturbations in the data matrix. If we have a well-conditioned matrix then we can add more noise and it will have a minimum change to the solution. However, adding a small amount of noise to a ill-conditioned atrix will lead to massively different solutions.</li>
-</ul>
-</section>
-<section id="svd-and-the-mp-pseudoinverse" class="level2" data-number="14.6">
-<h2 data-number="14.6" class="anchored" data-anchor-id="svd-and-the-mp-pseudoinverse"><span class="header-section-number">14.6</span> SVD and the MP Pseudoinverse</h2>
-<ul>
-<li>We can use the SVD of a matrix to perform the MP pseudoinverse. If we have a square matrix that is invertable, then we can invert <span class="math inline">\(\Sigma\)</span>. <span class="math display">\[
-\begin{aligned}
-  A^{-1} = (U\Sigma V^T)^{-1} \\
-         = V\Sigma^{-1}U^{-1} \\
-         = V\Sigma^{-1}U^T\\
-\end{aligned}
-\]</span></li>
+<li>We can take the SVD of a data matrix or image, then reconstruct the data matrix using some subset of SVD components. We can do this by setting the selected <span class="math inline">\(\sigma\)</span>s to zero or create a new SVD matrix that are rectangular with the to-be-rejected vectors and singular values removed.</li>
+<li>This allows us to compress data into a smaller size.</li>
 </ul>
 
 
@@ -767,14 +780,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ch_13.html" class="pagination-link  aria-label=" &lt;span="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Eigendecomposition</span></span>
+      <a href="./ch_14.html" class="pagination-link  aria-label=" &lt;span="" value="" decomposition="" (svd)&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Singular Value Decomposition (SVD)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ch_15.html" class="pagination-link" aria-label="<span class='chapter-number'>15</span>&nbsp; <span class='chapter-title'>Applications of Eigendecomposition and SVD</span>">
-        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Applications of Eigendecomposition and SVD</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
