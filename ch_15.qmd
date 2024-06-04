@@ -1,0 +1,75 @@
+# Applications of Eigendecomposition and SVD
+
+```{julia}
+#| labels: setup
+# Load packages.
+using LinearAlgebra
+```
+
+## PCA
+- Is used for finding the component (set of variables) that maximally explain the amount of variance in a given matrix.
+- Because of this, PCA wants to find the maximal amount of variance and find the weighted linear combination of variables that maximize it.
+- Say that $X$ is our matrix. We want to find the weighted linear combination of column vectors in $X$ that maximize the variance explained. So, we would have a vector of weights, $w$, that provide all of the weights used to linearly combine the variables.
+    - With PCA, we will want to find the set of weights in $w$ so that $Xw$ provides the maximal variance, $\lambda$.
+    $$
+    \lambda = \parallel Xw \parallel^2
+    $$
+    - Note: the squared vector norm is the same thing as variance when the data is mean centered.
+    - The problem with the existing formulation is that we can specify really large values of $w$ as it will increase the variance by generating larger weights. So, we need to scale the norm of the weighted combination by the norm of the weights so it is fair.
+    $$
+    \lambda = \frac{\parallel Xw \parallel^2}{\parallel w \parallel^2}
+    $$
+    - This gives us the ratio of two vector norms. Which we can expand to be represented as dotproducts to make it clearer.
+    $$
+        \lambda = \frac{w^TX^TXw}{w^Tw}
+    $$
+    - How do we find $w$ that maximize $\lambda$? We can't just consider a single vector of weights, we need to consider all the possible vectors of weights so we need to consider $W$ rather than just $w$.
+    $$
+    \begin{aligned}
+        \Epsilon = (W^TW)^{-1}W^TX^TXW\\
+        \Epsilon = W^{-1}W^{-T}W^TX^TXW\\
+        \Epsilon = W^{-1}X^TXW\\
+        W\Epsilon = W^{-1}X^TXW\\
+        W^\Epsilon = X^TXW\\
+    \end{aligned}
+    $$
+    - So, we can just perform Eigendecomposition. The eigenvectors are the weights for the data variables and the eigenvalues are the variances of the data along each direction (each column of $W$).
+    - Since covariance matrices are symmetric, the eigenvectors - the principal components - are orthogonal.
+
+### The steps to PCA
+1. Compute the covariance matrix of the data. Each feature needs to be mean-centered before computing the covariance.
+2. Take the eigendecomposition of the covariance matrix.
+3. Sort the eigenvalues so that the largest are at the top. The eigenvectors should also be sorted.
+4. Compute the component scores as the weighted combination of all of the variables where the eigenvector provides the weights. The eigenvector with the largest eigenvalue is the most important component.
+5. Convert the eigenvalues to percent variance explained to help with interpreation.
+
+### PCA with SVD
+- Two options.
+    1. Take the SVD of the covariance matrix. It is identical to PCA with Eigendecomposition as SVD is just a way to do it with a nonsquare matrix.
+    2. Take the SVD of the data matrix. The right singular vectors will be the eigenvectors of the covariance matrix. The data needs to be meancentered before doing the SVD. The square root of your singular values will be the eigenvalues of the covariance matrix.
+
+## Linear Discriminant Analysis (LDA)
+- Multivariate classification technique where you try to maximize the space between multiple categories of data. In other words, group data into clusters.
+- LDA is meant to find basis vectors in the data space that maximally separate the categories of data.
+    - We do this by finding a set of weights such that the weighted combo of variables maximally separate the categories.
+    $$
+        \lambda = \frac{\parallel X_Bw \parallel^2}{\parallel X_w w \parallel^2}
+    $$
+    - We want to find a set of weights $w$ that maximizes the ratio of the variance of data feature $X_B$ to the variance of data feature $X_W$.
+    - We can do something like what we did with PCA above doing Eigendecomposition.
+    $$
+    \begin{aligned}
+        C_W = X_W^TX_W\\
+        C_B = X_B^TX_B\\
+        \Epsilon = (W^TC_WW)^{-1}W^TC_BW\\
+        \Epsilon = W^{-1}C^{-1}_WW^{-T}W^TC_BW\\
+        W\Epsilon = C^{-1}_WC_BW\\
+        C_WW\Epsilon = C_BW\\
+    \end{aligned}
+    $$
+    - Here we just do generalized eigendecomposition on two covariance matrices. The eigenvectors provide the weights and the generalized eigenvalues are the variance ratios of each ocmponent.
+    - To determine $X_B$ and $X_W$, we can use a few different options depending on what kind of LDA you ae doing and that depends on use case. However, in typical LDA, $X_B$ is the between-category covariance while $X_W$ is the within-category covariance. The within-category covariance is the average of the covariances of the data samples within each class. The between-category covariance is the result of creating a new data matrix that contains the feature averages for each class.
+
+## Low-rank appoximations with SVD
+- We can take the SVD of a data matrix or image, then reconstruct the data matrix using some subset of SVD components. We can do this by setting the selected $\sigma$s to zero or create a new SVD matrix that are rectangular with the to-be-rejected vectors and singular values removed.
+- This allows us to compress data into a smaller size.
