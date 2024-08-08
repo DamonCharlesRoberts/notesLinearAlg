@@ -1,6 +1,9 @@
 # Personal notes for the book, *Practical Linear Algebra for Data Science* by Michael X. Cohen
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/ebaf12d7-c0f8-4249-9c60-6849191a9bd8/deploy-status)](https://app.netlify.com/sites/linear-algebra-notes/deploys)
+![PROD Build Status](
+https://github.com/DamonCharlesRoberts/notesLinearAlg/actions/workflows/publish-workflow.yml/badge.svg?branch=main)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c2515454-8867-486f-b993-57696a123ee1/deploy-status)](https://app.netlify.com/sites/linalgnotes/deploys)
+
 
 My notes are published here: https://linear.alg.notes.damoncroberts.com/
 
