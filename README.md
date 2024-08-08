@@ -2,10 +2,8 @@
 
 [![PROD Build Status](
 https://github.com/DamonCharlesRoberts/notesLinearAlg/actions/workflows/publish-workflow.yml/badge.svg?branch=main)](https://github.com/DamonCharlesRoberts/notesLinearAlg/actions/workflows/publish-workflow.yml)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/c2515454-8867-486f-b993-57696a123ee1/deploy-status)](https://app.netlify.com/sites/linalgnotes/deploys)
 
-
-My notes are published here: https://linear.alg.notes.damoncroberts.com/
+My notes are published here: https://linalg.notes.Damoncroberts.io/
 
 The book provides code exercises using `Python`. However, I am trying to get a bit better with `Julia`. So, the code examples here are using `Julia` and NOT `Python`.
 
